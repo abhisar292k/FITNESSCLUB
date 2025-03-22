@@ -1,0 +1,2441 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Membership - FitLife Gym</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Membership-specific root variables */
+        :root {
+            --primary-color: #4caf50;
+            --secondary-color: #ffc107;
+            --dark: #111;
+            --light: #fff;
+            --glass: rgba(255, 255, 255, 0.1);
+            --card-bg: rgba(17, 17, 17, 0.95);
+        }
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        html body {
+            background: var(--dark);
+            color: var(--light) !important;
+            line-height: 1.6;
+        }
+
+        .page-wrapper {
+            padding-top: 100px;
+            position: relative;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .hero-section {
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, rgba(0, 0, 0, 0.9), rgba(0, 0, 0, 0.7)),
+                        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 120px 20px;
+            overflow: hidden;
+        }
+
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent, rgba(0, 0, 0, 0.8));
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            max-width: 900px;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .membership-badge {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: var(--dark);
+            padding: 12px 30px;
+            border-radius: 50px;
+            font-size: 1.2rem;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 30px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            animation: float 3s ease-in-out infinite;
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(5px);
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            line-height: 1.2;
+            background: linear-gradient(135deg, 
+                var(--light) 0%,
+                #ffffff 25%,
+                var(--secondary-color) 50%,
+                var(--primary-color) 75%,
+                var(--light) 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: shine 5s linear infinite;
+        }
+
+        .hero-description {
+            font-size: 1.4rem;
+            color: var(--light);
+            max-width: 700px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+            opacity: 0.9;
+        }
+
+        /* Hero CTA Button */
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 40px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--dark);
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-cta::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                transparent,
+                rgba(255, 255, 255, 0.3),
+                transparent
+            );
+            transform: rotate(45deg);
+            animation: shine 3s infinite;
+        }
+
+        /* Stats Section below Hero */
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-top: 50px;
+        }
+
+        .stat-item {
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+            display: inline-block;
+        }
+
+        .stat-label {
+            color: var(--light);
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+        }
+
+        @keyframes shine {
+            to {
+                background-position: 200% center;
+            }
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+
+            .hero-description {
+                font-size: 1.2rem;
+            }
+
+            .hero-stats {
+                flex-direction: column;
+                gap: 20px;
+            }
+
+            .stat-item {
+                padding: 20px;
+                background: rgba(255, 255, 255, 0.05);
+                border-radius: 15px;
+                backdrop-filter: blur(5px);
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+
+            .membership-badge {
+                font-size: 1rem;
+                padding: 10px 20px;
+            }
+
+            .hero-cta {
+                padding: 15px 30px;
+                font-size: 1.1rem;
+            }
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 60px auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 3;
+        }
+
+        /* Enhanced Purchase Grid Layout */
+        .purchase-grid {
+            display: grid;
+            grid-template-columns: 45% 55%;
+            gap: 30px;
+            max-width: 1100px;
+            margin: 0 auto 60px;
+            padding: 20px;
+        }
+
+        /* Enhanced Card Styles */
+        .card {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            height: fit-content;
+            max-width: 100%;
+        }
+
+        /* Membership Benefits Card */
+        .benefits-card {
+            position: relative;
+            padding-top: 40px;
+        }
+
+        .membership-title {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .membership-title i {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+        }
+
+        .price-tag {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--secondary-color);
+            margin: 20px 0;
+            display: flex;
+            align-items: baseline;
+            gap: 8px;
+        }
+
+        .price-tag span {
+            font-size: 1rem;
+            opacity: 0.7;
+            font-weight: normal;
+        }
+
+        .price-comparison {
+            display: inline-block;
+            padding: 6px 12px;
+            background: rgba(76, 175, 80, 0.1);
+            border-radius: 20px;
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            margin-bottom: 25px;
+        }
+
+        /* Enhanced Feature Lists */
+        .feature-category {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin: 25px 0 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 1.1rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .feature-list li {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 15px;
+            border-radius: 8px;
+            font-size: 0.95rem;
+            margin-bottom: 8px;
+        }
+
+        /* Enhanced Price Breakdown */
+        .price-breakdown {
+            margin: 25px 0;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 0.95rem;
+        }
+
+        .breakdown-item.total {
+            margin-top: 10px;
+            padding-top: 15px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            font-weight: 600;
+            color: var(--secondary-color);
+        }
+
+        /* Sign Up Form Card */
+        .signup-card {
+            padding: 35px;
+            transition: all 0.3s ease;
+        }
+
+        .signup-card.highlight {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.3);
+        }
+
+        .signup-card h2 {
+            font-size: 2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--light) 0%, #e0e0e0 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .signup-card p {
+            color: rgba(255, 255, 255, 0.7);
+            margin-bottom: 30px;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Form Input Styles */
+        .form-group {
+            position: relative;
+            margin-bottom: 25px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 1.1rem;
+            color: var(--light);
+            margin-bottom: 10px;
+        }
+
+        /* Input Container Style */
+        .input-container {
+            position: relative;
+            width: 100%;
+        }
+
+        /* Icon Positioning */
+        .input-container i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            z-index: 1;
+        }
+
+        /* Input Style with Left Padding for Icon */
+        .form-control {
+            width: 100%;
+            padding: 15px 15px 15px 45px; /* Added left padding for icon */
+            background: rgba(17, 17, 17, 0.8);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            border-radius: 10px;
+            color: var(--light);
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
+        }
+
+        /* Placeholder Style */
+        .form-control::placeholder {
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        /* Enhanced Submit Button */
+        .submit-btn {
+            width: 100%;
+            padding: 15px;
+            margin-top: 20px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 1rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .submit-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .payment-methods i {
+            font-size: 1.8rem;
+            color: rgba(255, 255, 255, 0.6);
+            transition: all 0.3s ease;
+        }
+
+        .payment-methods i:hover {
+            color: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .purchase-grid {
+                grid-template-columns: 1fr;
+                max-width: 600px;
+            }
+            
+            .benefits-card, .signup-card {
+                padding: 25px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .purchase-grid {
+                padding: 15px;
+            }
+            
+            .price-tag {
+                font-size: 2.5rem;
+            }
+            
+            .membership-title {
+                font-size: 1.5rem;
+            }
+            
+            .feature-list li {
+                font-size: 0.9rem;
+                padding: 10px;
+            }
+        }
+
+        .gallery-section {
+            margin: 80px 0;
+        }
+
+        .gallery-title {
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 50px;
+            position: relative;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .gallery-title::after {
+            content: '';
+            position: absolute;
+            bottom: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 3px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        }
+
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            grid-template-rows: repeat(2, 200px);
+            gap: 20px;
+        }
+
+        .gallery-item {
+            overflow: hidden;
+            border-radius: 15px;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: all 0.5s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.7));
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .gallery-item:hover::after {
+            opacity: 1;
+        }
+
+        .gallery-item:nth-child(1) {
+            grid-column: 1 / 3;
+            grid-row: 1 / 3;
+        }
+
+        .gallery-item:nth-child(2) {
+            grid-column: 3 / 4;
+            grid-row: 1 / 2;
+        }
+
+        .gallery-item:nth-child(3) {
+            grid-column: 4 / 5;
+            grid-row: 1 / 2;
+        }
+
+        .gallery-item:nth-child(4) {
+            grid-column: 3 / 5;
+            grid-row: 2 / 3;
+        }
+
+        .progress-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: transparent;
+            z-index: 1000;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+            width: 0%;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(20px);
+            transition: all 0.3s ease;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-5px);
+        }
+
+        /* Custom Select */
+        .custom-select {
+            position: relative;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            color: var(--light);
+            font-size: 0.9rem;
+        }
+
+        .select-header {
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .select-options {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            right: 0;
+            background: var(--card-bg);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+            display: none;
+            z-index: 10;
+        }
+
+        .custom-select.active .select-options {
+            display: block;
+        }
+
+        .select-option {
+            padding: 8px 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .select-option:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .select-option .price {
+            font-size: 0.85rem;
+        }
+
+        .select-option .savings {
+            font-size: 0.8rem;
+            color: var(--secondary-color);
+            margin-left: 5px;
+        }
+
+        /* FAQ Styles */
+        .faq-section {
+            background: var(--dark);
+            padding: 80px 0;
+        }
+
+        .faq-title {
+            text-align: center;
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 50px;
+            color: var(--light);
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .faq-item {
+            margin-bottom: 15px;
+            background: rgba(17, 17, 17, 0.8);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            border-radius: 10px;
+        }
+
+        .faq-question {
+            padding: 20px;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 1.2rem;
+            color: var(--light);
+            list-style: none;
+        }
+
+        /* Remove default details marker */
+        .faq-question::-webkit-details-marker {
+            display: none;
+        }
+
+        .faq-icon {
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            padding: 20px;
+            color: var(--light);
+            background: rgba(76, 175, 80, 0.1);
+            border-top: 1px solid rgba(76, 175, 80, 0.2);
+        }
+
+        /* Rotate icon when details is open */
+        details[open] .faq-icon {
+            transform: rotate(45deg);
+        }
+
+        details[open] .faq-question {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        .faq-answer p {
+            margin-bottom: 15px;
+            line-height: 1.6;
+        }
+
+        .faq-answer ul {
+            padding-left: 20px;
+        }
+
+        .faq-answer li {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            text-align: center;
+            margin: 80px 0;
+        }
+
+        .cta-section h2 {
+            font-size: 2.2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            font-size: 1.1rem;
+            max-width: 600px;
+            margin: 0 auto 30px;
+            opacity: 0.9;
+        }
+
+        /* Media Queries */
+        @media (max-width: 1200px) {
+            .gallery-grid {
+                grid-template-columns: repeat(2, 1fr);
+                grid-template-rows: repeat(3, 200px);
+            }
+            
+            .gallery-item:nth-child(1) {
+                grid-column: 1 / 3;
+                grid-row: 1 / 2;
+            }
+            
+            .gallery-item:nth-child(2) {
+                grid-column: 1 / 2;
+                grid-row: 2 / 3;
+            }
+            
+            .gallery-item:nth-child(3) {
+                grid-column: 2 / 3;
+                grid-row: 2 / 3;
+            }
+            
+            .gallery-item:nth-child(4) {
+                grid-column: 1 / 3;
+                grid-row: 3 / 4;
+            }
+        }
+
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3.5rem;
+            }
+            
+            .purchase-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .advantages-grid,
+            .faq-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .container {
+                margin-top: 60px;
+            }
+            
+            .hero-section {
+                min-height: auto;
+                padding: 80px 0;
+            }
+            
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .testimonial-card {
+                margin: 0 auto;
+                max-width: 400px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.8rem;
+            }
+            
+            .hero-description {
+                font-size: 1rem;
+            }
+            
+            .card {
+                padding: 15px;
+            }
+            
+            .price-tag {
+                font-size: 2rem;
+            }
+            
+            .guarantee-banner {
+                flex-direction: column;
+                text-align: center;
+                padding: 15px;
+            }
+            
+            .guarantee-icon {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+            
+            .gallery-grid {
+                grid-template-columns: 1fr;
+                grid-template-rows: repeat(4, 200px);
+            }
+            
+            .gallery-item:nth-child(n) {
+                grid-column: 1;
+            }
+            
+            .gallery-item:nth-child(1) {
+                grid-row: 1;
+            }
+            
+            .gallery-item:nth-child(2) {
+                grid-row: 2;
+            }
+            
+            .gallery-item:nth-child(3) {
+                grid-row: 3;
+            }
+            
+            .gallery-item:nth-child(4) {
+                grid-row: 4;
+            }
+            
+            .testimonial-title {
+                font-size: 2rem;
+            }
+
+            .testimonial-card {
+                padding: 20px;
+            }
+
+            .testimonial-avatar {
+                width: 50px;
+                height: 50px;
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-title {
+                font-size: 2.2rem;
+            }
+            
+            .membership-badge {
+                font-size: 0.9rem;
+                padding: 8px 15px;
+            }
+            
+            .card {
+                padding: 10px;
+                border-radius: 15px;
+            }
+            
+            .price-tag {
+                font-size: 1.8rem;
+            }
+            
+            .feature-list li {
+                font-size: 0.85rem;
+                margin-bottom: 4px;
+            }
+            
+            .form-control,
+            .submit-btn {
+                font-size: 0.85rem;
+                padding: 6px 10px;
+            }
+            
+            .testimonial-title {
+                font-size: 1.8rem;
+            }
+
+            .testimonial-card {
+                padding: 15px;
+            }
+
+            .testimonial-text {
+                font-size: 0.9rem;
+            }
+        }
+
+        .gallery-section .gallery-grid .gallery-item:nth-child(1) img {
+            content: url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800');
+        }
+
+        .gallery-section .gallery-grid .gallery-item:nth-child(2) img {
+            content: url('https://images.unsplash.com/photo-1576678927484-cc907957088c?w=400');
+        }
+
+        .gallery-section .gallery-grid .gallery-item:nth-child(3) img {
+            content: url('https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?w=400');
+        }
+
+        .gallery-section .gallery-grid .gallery-item:nth-child(4) img {
+            content: url('https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800');
+        }
+
+        /* Add floating shapes background */
+        .floating-shapes {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .shape {
+            position: absolute;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            border-radius: 50%;
+            opacity: 0.03;
+            animation: float 20s infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translate(0, 0); }
+            50% { transform: translate(100px, 100px); }
+            100% { transform: translate(0, 0); }
+        }
+
+        /* Unique Testimonial Section */
+        .testimonials {
+            padding: 80px 0;
+            background: var(--dark);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .testimonial-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            text-align: center;
+            margin-bottom: 60px;
+            background: linear-gradient(
+                45deg,
+                var(--light) 0%,
+                var(--primary-color) 25%,
+                var(--secondary-color) 50%,
+                var(--primary-color) 75%,
+                var(--light) 100%
+            );
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: gradientMove 8s linear infinite;
+        }
+
+        @keyframes gradientMove {
+            to { background-position: 200% center; }
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Compact testimonial card design */
+        .testimonial-card {
+            background: rgba(17, 17, 17, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            border-radius: 15px;
+            padding: 25px;
+            width: 100%;
+            position: relative;
+        }
+
+        /* Header design */
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        /* Compact initials container */
+        .testimonial-initials {
+            width: 45px;
+            height: 45px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        /* User info styling */
+        .testimonial-info {
+            flex: 1;
+        }
+
+        .testimonial-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--light);
+            margin-bottom: 3px;
+        }
+
+        .testimonial-duration {
+            font-size: 0.85rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-bottom: 8px;
+        }
+
+        /* Star rating */
+        .testimonial-rating {
+            display: flex;
+            gap: 3px;
+        }
+
+        .star-wrapper {
+            color: var(--secondary-color);
+            font-size: 0.9rem;
+        }
+
+        /* Testimonial text styling */
+        .testimonial-text {
+            position: relative;
+            color: var(--light);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            padding-left: 20px;
+        }
+
+        /* Quote design */
+        .testimonial-text::before {
+            content: '"';
+            position: absolute;
+            left: 0;
+            top: -5px;
+            font-size: 2rem;
+            color: var(--primary-color);
+            opacity: 0.5;
+        }
+
+        /* Responsive design */
+        @media (max-width: 1200px) {
+            .testimonial-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .testimonial-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+            
+            .testimonial-title {
+                font-size: 2.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .testimonial-card {
+                padding: 20px;
+            }
+            
+            .testimonial-title {
+                font-size: 2rem;
+            }
+        }
+
+        /* Why Choose Section Styles */
+        .why-choose-section {
+            background: var(--dark);
+            padding: 60px 0;
+            color: var(--light);
+        }
+
+        /* Money Back Guarantee Styles */
+        .guarantee-container {
+            background: rgba(17, 17, 17, 0.8);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 50px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+        }
+
+        .guarantee-icon {
+            font-size: 2rem;
+            color: var(--primary-color);
+            background: rgba(76, 175, 80, 0.1);
+            width: 50px;
+            height: 50px;
+            min-width: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 10px;
+        }
+
+        .guarantee-content h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+            color: var(--light);
+        }
+
+        .guarantee-content p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Why Choose Title */
+        .why-choose-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 40px 0;
+            color: var(--light);
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 20px;
+            background: rgba(17, 17, 17, 0.8);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            border-radius: 15px;
+        }
+
+        .feature-icon {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            background: rgba(76, 175, 80, 0.1);
+            width: 40px;
+            height: 40px;
+            min-width: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+
+        .feature-content h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: var(--light);
+        }
+
+        .feature-content p {
+            font-size: 1rem;
+            line-height: 1.5;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .guarantee-container {
+                flex-direction: column;
+                text-align: center;
+                align-items: center;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .feature-item {
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+            }
+
+            .why-choose-title {
+                font-size: 2rem;
+                text-align: center;
+            }
+
+            .guarantee-content h3 {
+                font-size: 1.3rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .guarantee-container,
+            .feature-item {
+                padding: 20px;
+            }
+
+            .guarantee-content p,
+            .feature-content p {
+                font-size: 0.95rem;
+            }
+        }
+
+        /* Transform Section Styles */
+        .transform-section {
+            background: var(--dark);
+            padding: 100px 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Background Gradient Effect */
+        .transform-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, rgba(76, 175, 80, 0.1) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        /* Title Animation */
+        @keyframes titleReveal {
+            0% { transform: translateY(20px); opacity: 0; }
+            100% { transform: translateY(0); opacity: 1; }
+        }
+
+        .transform-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            background: linear-gradient(45deg, 
+            var(--light) 0%,
+            var(--primary-color) 50%,
+            var(--secondary-color) 100%
+        );
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: titleReveal 0.8s ease forwards,
+                       textGradient 5s linear infinite;
+        }
+
+        @keyframes textGradient {
+            to { background-position: 200% center; }
+        }
+
+        .transform-description {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: rgba(255, 255, 255, 0.9);
+            max-width: 800px;
+            margin: 0 auto 50px;
+            animation: titleReveal 0.8s ease 0.2s forwards;
+            opacity: 0;
+        }
+
+        /* Membership Button Styles */
+        .membership-btn {
+            width: 100%;
+            padding: 18px 30px;
+            background: linear-gradient(45deg, 
+                var(--primary-color) 0%,
+                var(--secondary-color) 100%
+            );
+            border: none;
+            border-radius: 12px;
+            color: var(--dark);
+            font-size: 1.2rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 0 0 20px rgba(76, 175, 80, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        /* Icon Style */
+        .membership-btn i {
+            font-size: 1.4rem;
+            transition: transform 0.3s ease;
+        }
+
+        /* Hover Effects */
+        .membership-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.4);
+        }
+
+        .membership-btn:hover i {
+            transform: scale(1.1);
+        }
+
+        /* Active State */
+        .membership-btn:active {
+            transform: translateY(1px);
+            box-shadow: 0 0 15px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Shine Effect */
+        .membership-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                transparent,
+                rgba(255, 255, 255, 0.2),
+                transparent
+            );
+            transform: rotate(45deg);
+            transition: 0.5s;
+        }
+
+        .membership-btn:hover::after {
+            animation: buttonShine 1s;
+        }
+
+        @keyframes buttonShine {
+            0% { transform: translateX(-100%) rotate(45deg); }
+            100% { transform: translateX(100%) rotate(45deg); }
+        }
+
+        /* Glow Effect */
+        @keyframes glowPulse {
+            0% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.3); }
+            50% { box-shadow: 0 0 30px rgba(76, 175, 80, 0.5); }
+            100% { box-shadow: 0 0 20px rgba(76, 175, 80, 0.3); }
+        }
+
+        .membership-btn {
+            animation: glowPulse 2s infinite;
+        }
+
+        /* Loading State */
+        .membership-btn.loading {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+
+        .membership-btn.loading i {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .membership-btn {
+                padding: 16px 25px;
+                font-size: 1.1rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .membership-btn {
+                padding: 14px 20px;
+                font-size: 1rem;
+                letter-spacing: 1px;
+            }
+        }
+
+        /* Facilities Section */
+        .facilities-section {
+            background: var(--dark);
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Section Title */
+        .facilities-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .facilities-title h2 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, var(--light), var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+
+        .facilities-title p {
+            color: rgba(255, 255, 255, 0.9);
+            font-size: 1.2rem;
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* Facilities Grid */
+        .facilities-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 30px;
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Facility Card */
+        .facility-card {
+            width: 100%;
+            background: rgba(17, 17, 17, 0.8);
+            border-radius: 20px;
+            overflow: hidden;
+            height: 100%;
+        }
+
+        .facility-image {
+            width: 100%;
+            height: 300px;
+            position: relative;
+        }
+
+        .facility-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .facility-content {
+            padding: 25px;
+            position: relative;
+        }
+
+        .facility-name {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--light);
+            margin-bottom: 15px;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .facility-name::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary-color);
+            border-radius: 2px;
+        }
+
+        .facility-description {
+            color: rgba(255, 255, 255, 0.8);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        /* Features List */
+        .facility-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 15px;
+        }
+
+        .feature-tag {
+            padding: 6px 12px;
+            background: rgba(76, 175, 80, 0.1);
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            border-radius: 20px;
+            color: var(--primary-color);
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .feature-tag i {
+            font-size: 0.8rem;
+        }
+
+        /* Hover Effects */
+        .facility-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .facility-card:hover .facility-image img {
+            transform: scale(1.1);
+        }
+
+        /* Overlay Effect */
+        .facility-image::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(
+                to bottom,
+                transparent 0%,
+                rgba(0, 0, 0, 0.5) 100%
+            );
+        }
+
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .facilities-grid {
+                grid-template-columns: 1fr;
+                max-width: 500px;
+            }
+
+            .facility-image {
+                height: 250px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .facilities-grid {
+                padding: 0 15px;
+            }
+        }
+
+        /* Add or update these styles */
+        .header {
+            z-index: 1000; /* Ensure header is above other elements */
+        }
+
+        .nav-menu {
+            z-index: 999; /* Ensure menu is above page content but below header */
+        }
+
+        /* Fix for this specific page */
+        .page-wrapper {
+            position: relative;
+            z-index: 1; /* Lower z-index than header */
+        }
+
+        /* Update mobile menu styles */
+        @media (max-width: 768px) {
+            .nav-menu {
+                position: fixed;
+                left: -100%;
+                top: 100px; /* Adjust based on header height */
+                width: 100%;
+                background: var(--dark);
+                padding: 20px;
+                transition: 0.3s;
+                box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            }
+
+            .nav-menu.active {
+                left: 0;
+            }
+        }
+
+        /* Ensure the toggle button is clickable */
+        .nav-toggle {
+            z-index: 1001; /* Higher than header z-index */
+        }
+
+        /* Add to your existing styles */
+        .signup-card {
+            transition: all 0.3s ease;
+        }
+
+        .signup-card.highlight {
+            transform: scale(1.02);
+            box-shadow: 0 0 30px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Update hero-cta styles */
+        .hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 18px 40px;
+            background: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+            color: var(--dark);
+            font-size: 1.2rem;
+            font-weight: 600;
+            border-radius: 50px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-cta:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero-cta i {
+            transition: transform 0.3s ease;
+        }
+
+        .hero-cta:hover i {
+            transform: rotate(180deg);
+        }
+
+        /* Loading state */
+        .hero-cta i.fa-spin {
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+    <div class="progress-container">
+        <div class="progress-bar" id="progressBar"></div>
+    </div>
+
+    <div class="page-wrapper">
+        <section class="hero-section">
+            <div class="hero-content">
+                <div class="membership-badge">Basic Membership</div>
+                <h1 class="hero-title">Start Your Fitness Journey Today</h1>
+                <p class="hero-description">Join thousands of members who have transformed their lives with our comprehensive fitness programs and state-of-the-art facilities.</p>
+                <a href="#signup-form" class="hero-cta">
+                    <i class="fas fa-dumbbell"></i>
+                    Start Your Journey
+                </a>
+                
+                <div class="hero-stats">
+                    <div class="stat-item" style="animation-delay: 0.2s">
+                        <span class="stat-number">5000+</span>
+                        <p class="stat-label">Active Members</p>
+                    </div>
+                    <div class="stat-item" style="animation-delay: 0.4s">
+                        <span class="stat-number">50+</span>
+                        <p class="stat-label">Expert Trainers</p>
+                    </div>
+                    <div class="stat-item" style="animation-delay: 0.6s">
+                        <span class="stat-number">100%</span>
+                        <p class="stat-label">Satisfaction Rate</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="purchase-grid">
+                <div class="card benefits-card">
+                    <div class="most-popular-badge">Most Popular</div>
+                    <h2 class="membership-title">
+                        <i class="fas fa-award"></i>
+                        Basic Membership Benefits
+                    </h2>
+                    <div class="price-tag">
+                        ₹700 <span>/month</span>
+                    </div>
+                    <div class="price-comparison">Save 40% compared to day passes</div>
+                    
+                    <div class="feature-category">
+                        <i class="fas fa-check-circle"></i> Core Benefits
+                    </div>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i>Access to all basic gym equipment</li>
+                        <li><i class="fas fa-check"></i>Unlimited access during standard hours</li>
+                        <li><i class="fas fa-check"></i>Locker room and shower access</li>
+                    </ul>
+                    
+                    <div class="feature-category">
+                        <i class="fas fa-dumbbell"></i> Fitness Classes
+                    </div>
+                    <ul class="feature-list">
+                        <li><i class="fas fa-check"></i>2 group fitness classes per month</li>
+                        <li><i class="fas fa-check"></i>Virtual workout library access</li>
+                    </ul>
+                    
+                    <div class="price-breakdown">
+                        <div class="breakdown-item">
+                            <span>Registration Fee</span>
+                            <span>₹500</span>
+                        </div>
+                        <div class="breakdown-item">
+                            <span>Security Deposit</span>
+                            <span>₹1,000</span>
+                        </div>
+                        <div class="breakdown-item total">
+                            <span>Total First Payment</span>
+                            <span>₹2,200</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card signup-card" id="signup-form">
+                    <h2>Start Your Journey Today</h2>
+                    <p>Join our fitness community and transform your life with our comprehensive membership package.</p>
+                    
+                    <form>
+                        <div class="form-group">
+                            <label>Full Name</label>
+                            <div class="input-container">
+                                <i class="fas fa-user"></i>
+                                <input type="text" class="form-control" placeholder="Enter your full name">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Email Address</label>
+                            <div class="input-container">
+                                <i class="fas fa-envelope"></i>
+                                <input type="email" class="form-control" placeholder="Enter your email address">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Phone Number</label>
+                            <div class="input-container">
+                                <i class="fas fa-phone"></i>
+                                <input type="tel" class="form-control" placeholder="Enter your phone number">
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Membership Duration</label>
+                            <div class="input-container">
+                                <i class="fas fa-calendar"></i>
+                                <select class="form-control">
+                                    <option value="1">1 Month - ₹700</option>
+                                    <option value="3">3 Months - ₹1,890 (Save 10%)</option>
+                                    <option value="6">6 Months - ₹3,528 (Save 16%)</option>
+                                    <option value="12">12 Months - ₹6,300 (Save 25%)</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="terms-section">
+                            <input type="checkbox" id="terms">
+                            <label for="terms">I agree to the terms and conditions</label>
+                            <p>By signing up, you agree to our membership terms and privacy policy. Membership can be canceled anytime with 30 days notice.</p>
+                        </div>
+                        
+                        <button class="membership-btn">
+                            <i class="fas fa-dumbbell"></i>
+                            START YOUR MEMBERSHIP
+                        </button>
+                        
+                        <div class="payment-methods">
+                            <i class="fab fa-cc-visa"></i>
+                            <i class="fab fa-cc-mastercard"></i>
+                            <i class="fab fa-cc-amex"></i>
+                            <i class="fab fa-cc-paypal"></i>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <section class="why-choose-section">
+                <div class="container">
+                    <!-- Money Back Guarantee -->
+                    <div class="guarantee-container">
+                        <div class="guarantee-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <div class="guarantee-content">
+                            <h3>30-Day Money Back Guarantee</h3>
+                            <p>If you're not completely satisfied with your membership within the first 30 days, we'll refund your payment in full. No questions asked.</p>
+                        </div>
+                    </div>
+
+                    <!-- Why Choose Section -->
+                    <h2 class="why-choose-title">Why Choose FitLife Gym?</h2>
+                    
+                    <div class="features-grid">
+                        <!-- Modern Equipment -->
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Modern Equipment</h3>
+                                <p>Our gym features the latest fitness equipment to ensure you get the most effective workout possible.</p>
+                            </div>
+                        </div>
+
+                        <!-- Expert Trainers -->
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Expert Trainers</h3>
+                                <p>Our certified trainers are dedicated to helping you achieve your fitness goals safely and efficiently.</p>
+                            </div>
+                        </div>
+
+                        <!-- Flexible Hours -->
+                        <div class="feature-item">
+                            <div class="feature-icon">
+                                <i class="fas fa-clock"></i>
+                            </div>
+                            <div class="feature-content">
+                                <h3>Flexible Hours</h3>
+                                <p>With extended opening hours, you can work out on your schedule, not ours.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="facilities-section">
+                <div class="facilities-title">
+                    <h2>Our World-Class Facilities</h2>
+                    <p>Experience fitness excellence with our state-of-the-art equipment and specialized training areas designed for your success.</p>
+                </div>
+
+                <div class="facilities-grid">
+                    <!-- Cardio Zone -->
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?q=80&w=1470&auto=format&fit=crop" alt="Cardio Zone">
+                        </div>
+                        <div class="facility-content">
+                            <h3 class="facility-name">Cardio Zone</h3>
+                            <p class="facility-description">
+                                State-of-the-art cardio equipment featuring the latest technology for effective cardiovascular training.
+                            </p>
+                            <div class="facility-features">
+                                <span class="feature-tag">
+                                    <i class="fas fa-tv"></i>
+                                    Smart Displays
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-heart"></i>
+                                    Heart Rate Monitoring
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-wifi"></i>
+                                    Connected Equipment
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Strength Training -->
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?q=80&w=1470&auto=format&fit=crop" alt="Strength Training">
+                        </div>
+                        <div class="facility-content">
+                            <h3 class="facility-name">Strength Zone</h3>
+                            <p class="facility-description">
+                                Comprehensive selection of free weights and machines for building strength and muscle definition.
+                            </p>
+                            <div class="facility-features">
+                                <span class="feature-tag">
+                                    <i class="fas fa-dumbbell"></i>
+                                    Free Weights
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-cog"></i>
+                                    Modern Machines
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-users"></i>
+                                    Personal Training
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Functional Training -->
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?q=80&w=1470&auto=format&fit=crop" alt="Functional Training">
+                        </div>
+                        <div class="facility-content">
+                            <h3 class="facility-name">Functional Zone</h3>
+                            <p class="facility-description">
+                                Dynamic space for functional training, HIIT workouts, and group fitness sessions.
+                            </p>
+                            <div class="facility-features">
+                                <span class="feature-tag">
+                                    <i class="fas fa-running"></i>
+                                    HIIT Area
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-box"></i>
+                                    Equipment Storage
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-users"></i>
+                                    Group Sessions
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Yoga Studio -->
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <img src="https://images.unsplash.com/photo-1588286840104-8957b019727f?q=80&w=1470&auto=format&fit=crop" alt="Yoga Studio">
+                        </div>
+                        <div class="facility-content">
+                            <h3 class="facility-name">Yoga Studio</h3>
+                            <p class="facility-description">
+                                Peaceful and spacious studio for yoga, meditation, and mindfulness practices.
+                            </p>
+                            <div class="facility-features">
+                                <span class="feature-tag">
+                                    <i class="fas fa-spa"></i>
+                                    Meditation Area
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-wind"></i>
+                                    Climate Control
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-volume-down"></i>
+                                    Sound System
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recovery Zone -->
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <img src="https://images.unsplash.com/photo-1576678927484-cc907957088c?q=80&w=1470&auto=format&fit=crop" alt="Recovery Zone">
+                        </div>
+                        <div class="facility-content">
+                            <h3 class="facility-name">Recovery Zone</h3>
+                            <p class="facility-description">
+                                Dedicated area for post-workout recovery, stretching, and rehabilitation.
+                            </p>
+                            <div class="facility-features">
+                                <span class="feature-tag">
+                                    <i class="fas fa-hot-tub"></i>
+                                    Massage Area
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-temperature-low"></i>
+                                    Ice Baths
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-bed"></i>
+                                    Stretch Zone
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- CrossFit Arena -->
+                    <div class="facility-card">
+                        <div class="facility-image">
+                            <img src="https://images.unsplash.com/photo-1541534741688-6078c6bfb5c5?q=80&w=1469&auto=format&fit=crop" alt="CrossFit Arena">
+                        </div>
+                        <div class="facility-content">
+                            <h3 class="facility-name">CrossFit Arena</h3>
+                            <p class="facility-description">
+                                Specialized CrossFit area equipped with everything needed for intense functional workouts.
+                            </p>
+                            <div class="facility-features">
+                                <span class="feature-tag">
+                                    <i class="fas fa-fire"></i>
+                                    High Intensity
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-stopwatch"></i>
+                                    Timer Systems
+                                </span>
+                                <span class="feature-tag">
+                                    <i class="fas fa-trophy"></i>
+                                    Competition Area
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+           
+            
+            <section class="testimonials">
+                <h2 class="testimonial-title">What Our Members Say</h2>
+                <div class="testimonial-grid">
+                    <!-- Testimonial Card 1 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-initials">JD</div>
+                            <div class="testimonial-info">
+                                <h3 class="testimonial-name">John Doe</h3>
+                                <div class="testimonial-duration">Member for 6 months</div>
+                                <div class="testimonial-rating">
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            Joining FitLife was one of the best decisions I've made. The trainers are extremely knowledgeable and the equipment is top-notch!
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Card 2 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-initials">MS</div>
+                            <div class="testimonial-info">
+                                <h3 class="testimonial-name">Mary Smith</h3>
+                                <div class="testimonial-duration">Member for 1 year</div>
+                                <div class="testimonial-rating">
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            The atmosphere is so welcoming and motivating. I've achieved results I never thought possible!
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Card 3 -->
+                    <div class="testimonial-card">
+                        <div class="testimonial-header">
+                            <div class="testimonial-initials">RJ</div>
+                            <div class="testimonial-info">
+                                <h3 class="testimonial-name">Robert Johnson</h3>
+                                <div class="testimonial-duration">Member for 3 months</div>
+                                <div class="testimonial-rating">
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                    <div class="star-wrapper"><i class="fas fa-star"></i></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="testimonial-text">
+                            Great community, excellent facilities, and professional staff. Couldn't ask for more!
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <section class="faq-section">
+                <h2 class="faq-title">Frequently Asked Questions</h2>
+                <div class="faq-container">
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            What are your membership plans and pricing?
+                            <span class="faq-icon">+</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>We offer several membership options:</p>
+                            <ul>
+                                <li>Basic Plan: ₹700/month - Access to gym equipment and basic amenities</li>
+                                <li>Premium Plan: ₹1200/month - Includes group classes and premium facilities</li>
+                                <li>Elite Plan: ₹2000/month - All access pass with personal training sessions</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <details class="faq-item">
+                        <summary class="faq-question">
+                            What are your operating hours?
+                            <span class="faq-icon">+</span>
+                        </summary>
+                        <div class="faq-answer">
+                            <p>We are open 24/7 for premium members. Regular hours are:</p>
+                            <ul>
+                                <li>Monday to Friday: 5:00 AM - 11:00 PM</li>
+                                <li>Weekends: 6:00 AM - 10:00 PM</li>
+                                <li>Holidays: 8:00 AM - 8:00 PM</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <!-- Add more FAQ items using the same structure -->
+                </div>
+            </section>
+            
+            <section class="transform-section">
+                <div class="container">
+                    <h2 class="transform-title">Ready to Transform Your Life?</h2>
+                    <p class="transform-description">
+                        Join thousands of satisfied members who are achieving their fitness
+                        goals with FitLife Gym. Sign up today and start your journey to a
+                        healthier, stronger you.
+                    </p>
+                    <button class="membership-btn">
+                        <i class="fas fa-dumbbell"></i>
+                        GET STARTED NOW
+                    </button>
+                </div>
+            </section>
+        </div>
+    </div>
+    
+    <a href="#" class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+    
+    <div class="floating-shapes">
+        <div class="shape" style="width: 300px; height: 300px; top: 10%; left: 10%;"></div>
+        <div class="shape" style="width: 200px; height: 200px; top: 60%; right: 10%;"></div>
+        <div class="shape" style="width: 150px; height: 150px; bottom: 10%; left: 30%;"></div>
+    </div>
+    
+    <script>
+        // Wait for DOM to be fully loaded
+        document.addEventListener('DOMContentLoaded', function() {
+            // Progress bar and back to top functionality
+            window.onscroll = function() {
+                const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+                const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+                const scrolled = (winScroll / height) * 100;
+                const progressBar = document.getElementById("progressBar");
+                if (progressBar) {
+                    progressBar.style.width = scrolled + "%";
+                }
+                
+                const backToTop = document.getElementById("backToTop");
+                if (backToTop) {
+                    if (winScroll > 500) {
+                        backToTop.classList.add("visible");
+                    } else {
+                        backToTop.classList.remove("visible");
+                    }
+                }
+            };
+            
+            // Back to top button
+            const backToTop = document.getElementById("backToTop");
+            if (backToTop) {
+                backToTop.addEventListener("click", function(e) {
+                    e.preventDefault();
+                    window.scrollTo({
+                        top: 0,
+                        behavior: "smooth"
+                    });
+                });
+            }
+            
+            // Custom select functionality
+            const customSelect = document.getElementById("durationSelect");
+            if (customSelect) {
+                const selectHeader = customSelect.querySelector(".select-header");
+                const selectOptions = customSelect.querySelector(".select-options");
+                const selectOptionItems = customSelect.querySelectorAll(".select-option");
+                
+                if (selectHeader) {
+                    selectHeader.addEventListener("click", function() {
+                        customSelect.classList.toggle("active");
+                    });
+                }
+                
+                if (selectOptionItems) {
+                    selectOptionItems.forEach(option => {
+                        option.addEventListener("click", function() {
+                            const headerSpan = selectHeader.querySelector("span");
+                            if (headerSpan) {
+                                headerSpan.textContent = this.querySelector("span").textContent;
+                            }
+                            customSelect.classList.remove("active");
+                        });
+                    });
+                }
+                
+                // Close custom select when clicking outside
+                document.addEventListener("click", function(e) {
+                    if (customSelect && !customSelect.contains(e.target)) {
+                        customSelect.classList.remove("active");
+                    }
+                });
+            }
+            
+            // FAQ functionality
+            const faqButtons = document.querySelectorAll('.faq-button');
+            if (faqButtons) {
+                faqButtons.forEach(button => {
+                    button.addEventListener('click', () => {
+                        const faqItem = button.parentElement;
+                        
+                        document.querySelectorAll('.faq-item').forEach(item => {
+                            if (item !== faqItem) {
+                                item.classList.remove('active');
+                            }
+                        });
+                        faqItem.classList.toggle('active');
+                    });
+                });
+            }
+
+            // Smooth scroll for anchors
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    const targetId = this.getAttribute('href');
+                    if (targetId !== '#' && document.querySelector(targetId)) {
+                        e.preventDefault();
+                        document.querySelector(targetId).scrollIntoView({
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+
+            // Intersection Observer for animations
+            const observerOptions = {
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('fade-in');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.card, .testimonial-card, .advantage-card').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Form handling
+            const form = document.querySelector('form');
+            if (form) {
+                form.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const submitBtn = form.querySelector('.membership-btn');
+                    if (submitBtn) {
+                        submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Processing...';
+                        
+                        // Simulate form submission
+                        await new Promise(resolve => setTimeout(resolve, 1500));
+                        
+                        submitBtn.innerHTML = '<i class="fas fa-check"></i> Success!';
+                        submitBtn.style.background = 'var(--primary-color)';
+                        
+                        setTimeout(() => {
+                            form.reset();
+                            submitBtn.innerHTML = '<i class="fas fa-dumbbell"></i> Start Your Membership';
+                            submitBtn.style.background = '';
+                        }, 3000);
+                    }
+                });
+            }
+
+            // Create floating particles
+            function createTransformParticles() {
+                const section = document.querySelector('.transform-section');
+                if (section) {
+                    for (let i = 0; i < 20; i++) {
+                        const particle = document.createElement('div');
+                        particle.className = 'particle';
+                        
+                        const size = Math.random() * 4 + 2;
+                        particle.style.width = size + 'px';
+                        particle.style.height = size + 'px';
+                        
+                        particle.style.left = Math.random() * 100 + '%';
+                        particle.style.top = Math.random() * 100 + '%';
+                        
+                        const duration = Math.random() * 10 + 5;
+                        const delay = Math.random() * 5;
+                        particle.style.animation = `float ${duration}s ${delay}s infinite linear`;
+                        
+                        section.appendChild(particle);
+                    }
+                }
+            }
+
+            // Initialize particles
+            createTransformParticles();
+
+            // Get the CTA button and the form section
+            const startJourneyBtn = document.querySelector('.hero-cta');
+            const formSection = document.querySelector('.signup-card');
+            
+            // Add click event listener
+            startJourneyBtn.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                // Add loading state to button
+                this.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Loading...';
+                
+                // Smooth scroll to form
+                formSection.scrollIntoView({ 
+                    behavior: 'smooth',
+                    block: 'center'
+                });
+                
+                // Highlight the form section
+                formSection.classList.add('highlight');
+                
+                // Reset button text after animation
+                setTimeout(() => {
+                    this.innerHTML = '<i class="fas fa-dumbbell"></i> Start Your Journey';
+                    formSection.classList.remove('highlight');
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>

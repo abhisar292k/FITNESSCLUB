@@ -1,0 +1,946 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fitness Club - Hero Section</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+</head>
+
+<body>
+
+    {% include 'header.html' %}
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="carousel-container">
+            <div class="carousel-slide active">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=1600"
+                        alt="Modern Gym Equipment" />
+                </div>
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <span class="slide-subtitle">Welcome to Fitness Club</span>
+                        <h1 class="slide-title">Transform Your Body<span>Elevate Your Life</span></h1>
+                        <p class="slide-description">Experience state-of-the-art equipment and expert guidance in our
+                            premium fitness facility. Your journey to greatness starts here.</p>
+                        <div class="cta-container">
+                            <a href="{% url 'signup' %}" class="cta-primary">
+                                <span>Start Your Journey</span>
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                            <a href="#" class="cta-secondary">
+                                <span>Learn More</span>
+                                <i class="fas fa-info-circle"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=1600"
+                        alt="Group Training" />
+                </div>
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <span class="slide-subtitle">Community & Training</span>
+                        <h1 class="slide-title">Train Together<span>Achieve Together</span></h1>
+                        <p class="slide-description">Join our energetic group classes and be part of a community that
+                            pushes each other to new heights.</p>
+                        <div class="cta-container">
+                            <a href="#" class="cta-primary">
+                                <span>Join Our Community</span>
+                                <i class="fas fa-users"></i>
+                            </a>
+                            <a href="#" class="cta-secondary">
+                                <span>View Schedule</span>
+                                <i class="fas fa-calendar"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-slide">
+                <div class="slide-bg">
+                    <img src="https://images.unsplash.com/photo-1599058945522-28d584b6f0ff?w=1600"
+                        alt="Personal Training" />
+                </div>
+                <div class="slide-content">
+                    <div class="slide-text">
+                        <span class="slide-subtitle">Expert Guidance</span>
+                        <h1 class="slide-title">Personal Training<span>Custom Programs</span></h1>
+                        <p class="slide-description">Get personalized attention from certified trainers who are
+                            dedicated to helping you achieve your fitness goals.</p>
+                        <div class="cta-container">
+                            <a href="#" class="cta-primary">
+                                <span>Meet Our Trainers</span>
+                                <i class="fas fa-dumbbell"></i>
+                            </a>
+                            <a href="#" class="cta-secondary">
+                                <span>Free Consultation</span>
+                                <i class="fas fa-comments"></i>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="carousel-nav">
+                <div class="carousel-nav-btn active"></div>
+                <div class="carousel-nav-btn"></div>
+                <div class="carousel-nav-btn"></div>
+            </div>
+
+            <div class="slide-number">
+                <span class="current">01</span> / <span class="total">03</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Free Trial Section -->
+    <section class="free-trial-section">
+        <div class="fitness-bg"></div>
+        <div class="limited-time-banner">Exclusive Offer</div>
+        <div class="free-trial-container">
+            <div class="free-trial-content">
+                <div class="free-trial-text">
+                    <span class="section-subtitle">Limited Time Offer</span>
+                    <h2>Unleash Your Potential</h2>
+                    <p>Experience the ultimate fitness journey with our exclusive 7-day free trial. Transform your body,
+                        mind, and life with premium facilities and expert guidance.</p>
+                    <ul class="feature-list">
+                        <li>
+                            <i class="fas fa-dumbbell"></i>
+                            <span>State-of-the-art equipment & facilities</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-user-friends"></i>
+                            <span>Expert personal trainers & nutrition guidance</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-heartbeat"></i>
+                            <span>Diverse group fitness classes & programs</span>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock"></i>
+                            <span>24/7 access to premium facilities</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="free-trial-form">
+                    <h3>Start Your Transformation</h3>
+                    <form id="freeTrialForm">
+                        <div class="form-group">
+                            <label for="name">Full Name</label>
+                            <input type="text" id="name" name="name" required placeholder="Enter your full name" />
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" name="email" required placeholder="Enter your email" />
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" name="phone" required placeholder="Enter your phone number" />
+                        </div>
+                        <button type="submit" class="submit-btn">
+                            Claim Your Free Trial
+                        </button>
+                    </form>
+                    <div class="success-message" id="successMessage">
+                        🎉 Congratulations! You've successfully claimed your free trial. Our team will contact you
+                        shortly to schedule your first session. Get ready to transform your life!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- plan section -->
+
+
+    <!-- After Plan Section -->
+    <section class="challenge-section-new">
+        <div class="container-new">
+            <div class="section-title">
+                <span class="section-subtitle">Transform Your Journey</span>
+                <h2>Elite Fitness Challenges</h2>
+                <p>Join our signature challenges designed to push your limits and achieve extraordinary results</p>
+            </div>
+
+            <div class="challenge-filter">
+                <button class="filter-btn active" data-filter="all">All Challenges</button>
+                <button class="filter-btn" data-filter="strength">Strength</button>
+                <button class="filter-btn" data-filter="cardio">Cardio</button>
+                <button class="filter-btn" data-filter="nutrition">Nutrition</button>
+            </div>
+
+            <div class="challenge-cards-new">
+                <div class="challenge-card-new" data-category="strength">
+                    <div class="card-badge">Most Popular</div>
+                    <div class="challenge-stats">
+                        <span><i class="fas fa-users"></i> 2.5k+ Joined</span>
+                        <span><i class="fas fa-star"></i> 4.9/5</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1599058917765-a780eda07a3e?w=1600"
+                        alt="Strength Challenge" class="challenge-image-new" />
+                    <div class="challenge-details-new">
+                        <div class="challenge-header">
+                            <h3 class="challenge-title-new">90-Day Strength Mastery</h3>
+                            <span class="difficulty">Advanced</span>
+                        </div>
+                        <p class="challenge-description-new">
+                            Master advanced strength training techniques and build impressive muscle mass with our
+                            comprehensive program.
+                        </p>
+                        <div class="challenge-features">
+                            <span><i class="fas fa-dumbbell"></i> Progressive Overload</span>
+                            <span><i class="fas fa-clipboard-list"></i> Custom Plans</span>
+                            <span><i class="fas fa-medal"></i> Achievements</span>
+                        </div>
+                        <div class="challenge-footer">
+                            <div class="challenge-info">
+                                <span><i class="fas fa-calendar-alt"></i> 90 Days</span>
+                                <span><i class="fas fa-clock"></i> 1hr/day</span>
+                            </div>
+                            <a href="{% url 'ninety_days' %}" class="challenge-button-new">
+                                Accept Challenge
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 85%"></div>
+                            <span class="spots-left">15 spots left</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="challenge-card-new" data-category="cardio">
+                    <div class="card-badge">New</div>
+                    <div class="challenge-stats">
+                        <span><i class="fas fa-users"></i> 1.5k+ Joined</span>
+                        <span><i class="fas fa-star"></i> 4.8/5</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1517963879433-6ad2b056d712?w=1600" alt="HIIT Challenge"
+                        class="challenge-image-new" />
+                    <div class="challenge-details-new">
+                        <div class="challenge-header">
+                            <h3 class="challenge-title-new">Elite HIIT Revolution</h3>
+                            <span class="difficulty">Intermediate</span>
+                        </div>
+                        <p class="challenge-description-new">
+                            Transform your body with high-intensity interval training designed for maximum fat burn and
+                            muscle definition.
+                        </p>
+                        <div class="challenge-features">
+                            <span><i class="fas fa-fire"></i> Fat Burning</span>
+                            <span><i class="fas fa-heartbeat"></i> Cardio Boost</span>
+                            <span><i class="fas fa-stopwatch"></i> Timed Workouts</span>
+                        </div>
+                        <div class="challenge-footer">
+                            <div class="challenge-info">
+                                <span><i class="fas fa-calendar-alt"></i> 60 Days</span>
+                                <span><i class="fas fa-clock"></i> 1hr/day</span>
+                            </div>
+                            <a href="{% url 'hiit_revolution' %}" class="challenge-button-new">Start Challenge</a>
+
+                                Accept Challenge
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 75%"></div>
+                            <span class="spots-left">25 spots left</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="challenge-card-new" data-category="strength">
+                    <div class="card-badge">New</div>
+                    <div class="challenge-stats">
+                        <span><i class="fas fa-users"></i> 1k+ Joined</span>
+                        <span><i class="fas fa-star"></i> 4.7/5</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1518611012118-696072aa579a?w=1600"
+                        alt="Flexibility Challenge" class="challenge-image-new" />
+                    <div class="challenge-details-new">
+                        <div class="challenge-header">
+                            <h3 class="challenge-title-new">Flexibility & Core Power</h3>
+                            <span class="difficulty">Beginner</span>
+                        </div>
+                        <p class="challenge-description-new">
+                            Enhance your flexibility, core strength, and overall mobility with our specialized training
+                            program.
+                        </p>
+                        <div class="challenge-features">
+                            <span><i class="fas fa-child"></i> Mobility Training</span>
+                            <span><i class="fas fa-balance-scale"></i> Core Strength</span>
+                            <span><i class="fas fa-wind"></i> Flow Sequences</span>
+                        </div>
+                        <div class="challenge-footer">
+                            <div class="challenge-info">
+                                <span><i class="fas fa-calendar-alt"></i> 30 Days</span>
+                                <span><i class="fas fa-clock"></i> 30min/day</span>
+                            </div>
+                            <a href="{% url 'flexibility' %}" class="challenge-button-new">
+                                Accept Challenge
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 60%"></div>
+                            <span class="spots-left">40 spots left</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="challenge-card-new" data-category="nutrition">
+                    <div class="card-badge">New</div>
+                    <div class="challenge-stats">
+                        <span><i class="fas fa-users"></i> 1k+ Joined</span>
+                        <span><i class="fas fa-star"></i> 4.6/5</span>
+                    </div>
+                    <img src="https://images.unsplash.com/photo-1490645935967-10de6ba17061?w=1600"
+                        alt="Nutrition Challenge" class="challenge-image-new" />
+                    <div class="challenge-details-new">
+                        <div class="challenge-header">
+                            <h3 class="challenge-title-new">Ultimate Nutrition Reset</h3>
+                            <span class="difficulty">Advanced</span>
+                        </div>
+                        <p class="challenge-description-new">
+                            Revolutionize your eating habits with expert nutrition guidance, meal plans, and cooking
+                            workshops.
+                        </p>
+                        <div class="challenge-features">
+                            <span><i class="fas fa-apple-alt"></i> Meal Planning</span>
+                            <span><i class="fas fa-utensils"></i> Recipe Library</span>
+                            <span><i class="fas fa-chart-line"></i> Progress Tracking</span>
+                        </div>
+                        <div class="challenge-footer">
+                            <div class="challenge-info">
+                                <span><i class="fas fa-calendar-alt"></i> 60 Days</span>
+                                <span><i class="fas fa-clock"></i> 1hr/day</span>
+                            </div>
+                            <a href="/nutrition-reset" class="challenge-button-new">
+                                Accept Challenge
+                                <i class="fas fa-arrow-right"></i>
+                            </a>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress" style="width: 70%"></div>
+                            <span class="spots-left">30 spots left</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="et-section" role="main">
+        <!-- Add animated background elements -->
+        <div class="et-bg-elements" aria-hidden="true">
+            <div class="et-shape shape1"></div>
+            <div class="et-shape shape2"></div>
+            <div class="et-shape shape3"></div>
+        </div>
+
+        <div class="et-container">
+            <div class="et-header" role="banner">
+                <div class="et-header-content">
+                    <span class="section-subtitle">Meet Our Experts</span>
+                    <h2 class="section-title">Elite Training Team</h2>
+                    <p class="section-description">Transform your fitness journey with guidance from our certified professionals who are passionate about helping you achieve your goals.</p>
+                </div>
+                <div class="et-stats-container" role="region" aria-label="Training Statistics">
+                    <div class="et-stat-item">
+                        <span class="et-stat-number" data-count="15" aria-live="polite">0</span>
+                        <span class="et-stat-label">Expert Trainers</span>
+                    </div>
+                    <div class="et-stat-item">
+                        <span class="et-stat-number" data-count="1500" aria-live="polite">0</span>
+                        <span class="et-stat-label">Happy Clients</span>
+                    </div>
+                    <div class="et-stat-item">
+                        <span class="et-stat-number" data-count="10" aria-live="polite">0</span>
+                        <span class="et-stat-label">Years Experience</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="et-filter-container" role="navigation" aria-label="Trainer Filters">
+                <div class="et-filter-buttons">
+                    <button class="et-filter-btn active" data-filter="all" aria-label="Show all trainers">
+                        <span class="btn-text">All Trainers</span>
+                        <span class="btn-icon"><i class="fas fa-users"></i></span>
+                    </button>
+                    <button class="et-filter-btn" data-filter="strength" aria-label="Show strength trainers">
+                        <span class="btn-text">Strength</span>
+                        <span class="btn-icon"><i class="fas fa-dumbbell"></i></span>
+                    </button>
+                    <button class="et-filter-btn" data-filter="cardio" aria-label="Show cardio trainers">
+                        <span class="btn-text">Cardio</span>
+                        <span class="btn-icon"><i class="fas fa-heartbeat"></i></span>
+                    </button>
+                    <button class="et-filter-btn" data-filter="yoga" aria-label="Show yoga trainers">
+                        <span class="btn-text">Yoga</span>
+                        <span class="btn-icon"><i class="fas fa-spa"></i></span>
+                    </button>
+                </div>
+                <div class="et-search-container">
+                    <input type="text" class="et-search-input" placeholder="Search trainers..." aria-label="Search trainers">
+                    <i class="fas fa-search et-search-icon" aria-hidden="true"></i>
+                </div>
+            </div>
+
+            <div class="et-trainer-grid" role="list" aria-label="Trainer List">
+                <!-- Trainer Card 1 -->
+                <div class="et-trainer-card" data-category="strength" role="article" aria-label="Arjun Patel - Strength & Powerlifting Trainer">
+                    <div class="et-trainer-image">
+                        <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b?w=500" alt="Arjun Patel training" loading="lazy" />
+                        <div class="et-trainer-badges">
+                            <span class="et-badge certified">Certified</span>
+                            <span class="et-badge featured">Featured</span>
+                        </div>
+                        <div class="et-trainer-overlay">
+                            <div class="et-trainer-info">
+                                <div class="et-trainer-header">
+                                    <h3 class="et-trainer-name">Arjun Patel</h3>
+                                    <span class="et-experience">10+ Years</span>
+                                </div>
+                                <p class="et-trainer-specialty">Strength & Powerlifting</p>
+                                <div class="et-trainer-stats">
+                                    <span><i class="fas fa-star"></i> 4.9</span>
+                                    <span><i class="fas fa-users"></i> 150+ Clients</span>
+                                    <span><i class="fas fa-award"></i> ISSA</span>
+                                </div>
+                                <div class="et-trainer-schedule">
+                                    <span class="schedule-status available">Available Today</span>
+                                    <span class="schedule-time">Next Slot: 2:00 PM</span>
+                                </div>
+                                <div class="et-trainer-actions">
+                                    <a href="{% url "trainer_booking" %}" class="et-trainer-btn primary" aria-label="Book a session with Arjun Patel">Book Session</a>
+                                    <a href="{% url "trainer_booking" %}" class="et-trainer-btn secondary" aria-label="View Arjun Patel's profile">View Profile</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="et-card-bottom">
+                        <div class="et-trainer-tags">
+                            <span class="et-tag">Powerlifting</span>
+                            <span class="et-tag">Nutrition</span>
+                            <span class="et-tag">Strength</span>
+                        </div>
+                        <div class="et-rating">
+                            <div class="stars" data-rating="4.9">★★★★★</div>
+                            <span class="review-count">(120 reviews)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer Card 2 -->
+                <div class="et-trainer-card" data-category="cardio" role="article" aria-label="Priya Sharma - Cardio & HIIT Expert">
+                    <div class="et-trainer-image">
+                        <img src="https://images.unsplash.com/photo-1544367567-0f2fcb009e0b?w=500" alt="Priya Sharma training" loading="lazy" />
+                        <div class="et-trainer-overlay">
+                            <div class="et-trainer-info">
+                                <h3 class="et-trainer-name">Priya Sharma</h3>
+                                <p class="et-trainer-specialty">Cardio & HIIT Expert</p>
+                                <div class="et-trainer-stats">
+                                    <span><i class="fas fa-star"></i> 4.8</span>
+                                    <span><i class="fas fa-users"></i> 120+ Clients</span>
+                                </div>
+                                <a href="#" class="et-trainer-btn" aria-label="Book a session with Priya Sharma">Book Session</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Trainer Card 3 -->
+                <div class="et-trainer-card" data-category="yoga" role="article" aria-label="Rahul Verma - Yoga & Meditation Trainer">
+                    <div class="et-trainer-image">
+                        <img src="https://images.unsplash.com/photo-1575052814086-f385e2e2ad1b?w=500" alt="Rahul Verma training" loading="lazy" />
+                        <div class="et-trainer-overlay">
+                            <div class="et-trainer-info">
+                                <h3 class="et-trainer-name">Rahul Verma</h3>
+                                <p class="et-trainer-specialty">Yoga & Meditation</p>
+                                <div class="et-trainer-stats">
+                                    <span><i class="fas fa-star"></i> 4.9</span>
+                                    <span><i class="fas fa-users"></i> 200+ Clients</span>
+                                </div>
+                                <a href="#" class="et-trainer-btn" aria-label="Book a session with Rahul Verma">Book Session</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Add a CTA section -->
+            <div class="et-cta" role="region" aria-label="Call to Action">
+                <div class="et-cta-content">
+                    <h3>Ready to Start Your Transformation?</h3>
+                    <p>Book a free consultation with our expert trainers</p>
+                    <a href="{% url 'signup' %}" class="et-cta-btn" aria-label="Get started with a free consultation">
+                        <span>Get Started</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </a>
+                    
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="bmi-calculator-section">
+        <div class="container">
+            <div class="bmi-calculator">
+                <div class="content">
+                    <div class="bmi-header">
+                        <span class="section-subtitle">Calculate Your</span>
+                        <h2>Body Mass Index</h2>
+                        <p class="section-description">Get a comprehensive health assessment with our advanced
+                            calculator that provides BMI, BMR, and TDEE calculations</p>
+                    </div>
+
+                    <div class="calculator-grid">
+                        <div class="input-section">
+                            <div class="measurement-toggle">
+                                <button class="unit-btn active" data-unit="metric">Metric</button>
+                                <button class="unit-btn" data-unit="imperial">Imperial</button>
+                            </div>
+                            <div class="input-container">
+                                <!-- Metric Inputs -->
+                                <div class="metric-inputs">
+                                    <div class="input-group">
+                                        <label for="height">
+                                            <i class="fas fa-ruler-vertical"></i>
+                                            Height (cm)
+                                        </label>
+                                        <input type="number" id="height" required placeholder="e.g., 175">
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="weight">
+                                            <i class="fas fa-weight"></i>
+                                            Weight (kg)
+                                        </label>
+                                        <input type="number" id="weight" required placeholder="e.g., 70">
+                                    </div>
+                                </div>
+                                <!-- Imperial Inputs (initially hidden) -->
+                                <div class="imperial-inputs" style="display: none;">
+                                    <div class="input-group split">
+                                        <div>
+                                            <label for="feet">Feet</label>
+                                            <input type="number" id="feet" placeholder="5">
+                                        </div>
+                                        <div>
+                                            <label for="inches">Inches</label>
+                                            <input type="number" id="inches" placeholder="10">
+                                        </div>
+                                    </div>
+                                    <div class="input-group">
+                                        <label for="weightLbs">Weight (lbs)</label>
+                                        <input type="number" id="weightLbs" placeholder="154">
+                                    </div>
+                                </div>
+                                <!-- Common Inputs -->
+                                <div class="input-group">
+                                    <label for="age">
+                                        <i class="fas fa-calendar-alt"></i>
+                                        Age
+                                    </label>
+                                    <input type="number" id="age" required placeholder="e.g., 30">
+                                </div>
+                                <div class="input-group">
+                                    <label for="gender">
+                                        <i class="fas fa-venus-mars"></i>
+                                        Gender
+                                    </label>
+                                    <select id="gender" required>
+                                        <option value="" disabled selected>Select Gender</option>
+                                        <option value="male">Male</option>
+                                        <option value="female">Female</option>
+                                        <option value="other">Other</option>
+                                    </select>
+                                </div>
+                                <div class="input-group">
+                                    <label for="activityLevel">
+                                        <i class="fas fa-running"></i>
+                                        Activity Level
+                                    </label>
+                                    <select id="activityLevel" required>
+                                        <option value="" disabled selected>Select Activity Level</option>
+                                        <option value="1.2">Sedentary (Office Job)</option>
+                                        <option value="1.375">Light Exercise (1-2 days/week)</option>
+                                        <option value="1.55">Moderate Exercise (3-5 days/week)</option>
+                                        <option value="1.725">Heavy Exercise (6-7 days/week)</option>
+                                        <option value="1.9">Athlete (2x per day)</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <button class="calculate-btn" onclick="calculateBiometrics()">
+                                <span>Calculate</span>
+                                <i class="fas fa-calculator"></i>
+                            </button>
+                        </div>
+
+                        <div class="results-section">
+                            <div class="results-grid">
+                                <div class="result-card" data-aos="fade-up" data-aos-delay="100">
+                                    <div class="result-icon">
+                                        <i class="fas fa-calculator"></i>
+                                    </div>
+                                    <h3>BMI</h3>
+                                    <div id="bmiValue" class="result-value">-</div>
+                                    <div class="unit">kg/m²</div>
+                                    <div class="result-status">
+                                        <span id="weightStatus">-</span>
+                                    </div>
+                                    <div class="result-info">Body Mass Index</div>
+                                </div>
+
+                                <div class="result-card" data-aos="fade-up" data-aos-delay="200">
+                                    <div class="result-icon">
+                                        <i class="fas fa-fire"></i>
+                                    </div>
+                                    <h3>BMR</h3>
+                                    <div id="bmrValue" class="result-value">-</div>
+                                    <div class="unit">calories/day</div>
+                                    <div class="result-info">Calories needed at complete rest</div>
+                                </div>
+
+                                <div class="result-card" data-aos="fade-up" data-aos-delay="300">
+                                    <div class="result-icon">
+                                        <i class="fas fa-bolt"></i>
+                                    </div>
+                                    <h3>TDEE</h3>
+                                    <div id="tdeeValue" class="result-value">-</div>
+                                    <div class="unit">calories/day</div>
+                                    <div class="result-info">Daily calorie needs with activity</div>
+                                </div>
+                            </div>
+
+                            <div class="bmi-scale">
+                                <div class="scale-marker underweight" data-range="< 18.5">
+                                    <span class="marker-label">Underweight</span>
+                                    <span class="range-value">&lt; 18.5</span>
+                                </div>
+                                <div class="scale-marker normal" data-range="18.5 - 24.9">
+                                    <span class="marker-label">Normal</span>
+                                    <span class="range-value">18.5 - 24.9</span>
+                                </div>
+                                <div class="scale-marker overweight" data-range="25 - 29.9">
+                                    <span class="marker-label">Overweight</span>
+                                    <span class="range-value">25 - 29.9</span>
+                                </div>
+                                <div class="scale-marker obese" data-range="≥ 30">
+                                    <span class="marker-label">Obese</span>
+                                    <span class="range-value">≥ 30</span>
+                                </div>
+                            </div>
+
+                            <div class="results-info-panel">
+                                <div class="info-header">
+                                    <i class="fas fa-info-circle"></i>
+                                    <span>Understanding Your Results</span>
+                                </div>
+                                <div class="info-content">
+                                    <p id="bmiExplanation"></p>
+                                    <p id="recommendedActions"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- Advanced Dynamic Testimonials Section -->
+    <section class="dynamic-testimonials">
+        <div class="testimonial-bg">
+            <div class="animated-shapes">
+                <div class="shape shape-1"></div>
+                <div class="shape shape-2"></div>
+                <div class="shape shape-3"></div>
+            </div>
+        </div>
+
+        <div class="container">
+            <div class="testimonial-header" data-aos="fade-up">
+                <span class="testimonial-badge">Success Stories</span>
+                <h2 class="testimonial-title">Transforming Lives</h2>
+                <p class="testimonial-subtitle">Real results, real people, real stories</p>
+            </div>
+
+            <div class="testimonial-carousel" data-aos="fade-up">
+                <div class="testimonial-track">
+                    <!-- Testimonial Card 1 -->
+                    <div class="testimonial-card">
+                        <div class="card-content">
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <div class="testimonial-text">
+                                <p>"Joining this gym changed my life. Lost 30 pounds in 6 months with the help of
+                                    amazing trainers. The supportive community made all the difference."</p>
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-image">
+                                    <img src="https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?w=100"
+                                        alt="Client">
+                                    <div class="achievement-badge">
+                                        <span>-30 lbs</span>
+                                    </div>
+                                </div>
+                                <div class="author-info">
+                                    <h4>John Mitchell</h4>
+                                    <p>Member since 2022</p>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Card 2 -->
+                    <div class="testimonial-card">
+                        <div class="card-content">
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <div class="testimonial-text">
+                                <p>"The trainers here are exceptional. They helped me achieve my fitness goals and
+                                    pushed me beyond what I thought was possible."</p>
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-image">
+                                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100"
+                                        alt="Client">
+                                    <div class="achievement-badge success">
+                                        <span>+Strength</span>
+                                    </div>
+                                </div>
+                                <div class="author-info">
+                                    <h4>Sarah Wilson</h4>
+                                    <p>Member since 2023</p>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Testimonial Card 3 -->
+                    <div class="testimonial-card">
+                        <div class="card-content">
+                            <div class="quote-icon">
+                                <i class="fas fa-quote-right"></i>
+                            </div>
+                            <div class="testimonial-text">
+                                <p>"The atmosphere is incredible. State-of-the-art equipment and a motivating
+                                    environment. Best fitness investment I've made!"</p>
+                            </div>
+                            <div class="testimonial-author">
+                                <div class="author-image">
+                                    <img src="https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=100"
+                                        alt="Client">
+                                    <div class="achievement-badge fitness">
+                                        <span>Pro Level</span>
+                                    </div>
+                                </div>
+                                <div class="author-info">
+                                    <h4>Mike Anderson</h4>
+                                    <p>Member since 2021</p>
+                                    <div class="rating">
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                        <i class="fas fa-star"></i>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Controls -->
+                <div class="testimonial-controls">
+                    <button class="nav-btn prev-btn" aria-label="Previous testimonial">
+                        <i class="fas fa-arrow-left"></i>
+                    </button>
+                    <div class="testimonial-dots"></div>
+                    <button class="nav-btn next-btn" aria-label="Next testimonial">
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Stats Counter -->
+            <div class="testimonial-stats" data-aos="fade-up">
+                <div class="stat-item">
+                    <div class="stat-value" data-value="500">0</div>
+                    <div class="stat-label">Happy Members</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" data-value="50">0</div>
+                    <div class="stat-label">Expert Trainers</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-value" data-value="1000">0</div>
+                    <div class="stat-label">Success Stories</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Fitness Gallery Showcase Section -->
+    <section class="fitness-showcase">
+        <div class="showcase-header" data-aos="fade-up">
+            <span class="showcase-badge">Our Facility</span>
+            <h2 class="showcase-title">World Class Equipment</h2>
+            <p class="showcase-description">Experience premium fitness with state-of-the-art machines</p>
+        </div>
+
+        <div class="showcase-grid">
+            <!-- Gallery Item 1 -->
+            <div class="showcase-item" data-aos="fade-up">
+                <div class="showcase-image">
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48?w=800"
+                        alt="Cardio Equipment">
+                    <div class="showcase-overlay">
+                        <h3>Cardio Zone</h3>
+                        <p>State-of-the-art cardio equipment</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Item 2 -->
+            <div class="showcase-item" data-aos="fade-up" data-aos-delay="100">
+                <div class="showcase-image">
+                    <img src="https://images.unsplash.com/photo-1571902943202-507ec2618e8f?w=800"
+                        alt="Strength Training">
+                    <div class="showcase-overlay">
+                        <h3>Strength Zone</h3>
+                        <p>Premium weight training equipment</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Item 3 -->
+            <div class="showcase-item" data-aos="fade-up" data-aos-delay="200">
+                <div class="showcase-image">
+                    <img src="https://images.unsplash.com/photo-1540497077202-7c8a3999166f?w=800"
+                        alt="Functional Training">
+                    <div class="showcase-overlay">
+                        <h3>Functional Area</h3>
+                        <p>Versatile training space</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Gallery Item 4 -->
+            <div class="showcase-item" data-aos="fade-up" data-aos-delay="300">
+                <div class="showcase-image">
+                    <img src="https://images.unsplash.com/photo-1593079831268-3381b0db4a77?w=800"
+                        alt="Personal Training">
+                    <div class="showcase-overlay">
+                        <h3>Personal Training</h3>
+                        <p>Dedicated training spaces</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="showcase-cta" data-aos="fade-up">
+            <a href="#" class="showcase-button">
+                <span>Explore More</span>
+                <i class="fas fa-arrow-right"></i>
+            </a>
+        </div>
+    </section>
+
+    <!-- Fitness Shorts Section -->
+    <section class="fitness-shorts-wrapper">
+        <div class="fitness-shorts-container">
+            <!-- Section Header -->
+            <div class="fitness-shorts-header" data-aos="fade-up">
+                <span class="shorts-subtitle">Quick Workouts</span>
+                <h2 class="shorts-title">Fitness Shorts</h2>
+                <p class="shorts-description">Learn perfect form with bite-sized workout videos</p>
+            </div>
+
+            <!-- Main Content Layout -->
+            <div class="shorts-content-layout">
+                <!-- Video Player Container -->
+                <div class="shorts-player-container">
+                    <div class="shorts-video-feed">
+                        <!-- Videos will be injected here by JavaScript -->
+                    </div>
+                </div>
+
+                <!-- Info Sidebar (visible on desktop) -->
+                <div class="shorts-info-sidebar">
+                    <div class="shorts-exercise-details">
+                        <h3 class="exercise-title">Dumbbell Workout</h3>
+
+                        <!-- Exercise Metadata -->
+                        <div class="exercise-metadata">
+                            <span>
+                                <i class="fas fa-bullseye"></i>
+                                Shoulders, Upper Body
+                            </span>
+                            <span>
+                                <i class="fas fa-clock"></i>
+                                3 sets × 12 reps
+                            </span>
+                            <span>
+                                <i class="fas fa-signal"></i>
+                                Intermediate
+                            </span>
+                        </div>
+
+                        <!-- Form Guide -->
+
+
+                        <!-- Pro Tip -->
+                        <div class="exercise-pro-tip">
+                            <i class="fas fa-lightbulb"></i>
+                            <p>Breathe out as you press up, inhale as you lower the weights</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        window.videoUrls = {
+            video1: "{% static 'videos/vid1.mp4' %}",
+            video2: "{% static 'videos/vid2.mp4' %}",
+            video3: "{% static 'videos/vid3.mp4' %}",
+            video4: "{% static 'videos/vid4.mp4' %}",
+            video5: "{% static 'videos/vid2.mp4' %}"
+        };
+    </script>
+    {% include 'footer.html' %}
+    <script src="{% static 'js/script.js' %}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+
+</body>
+
+</html>

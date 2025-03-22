@@ -1,0 +1,145 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shop | Fitness Club</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/shop.css' %}">
+</head>
+<body>
+    <div class="shop-header-wrapper">
+        {% include 'header.html' %}
+    </div>
+
+    <section class="shop-hero">
+        <div class="hero-content">
+            <h1 class="hero-title">Fitness Essentials</h1>
+            <p class="hero-description">Discover premium quality fitness equipment and supplements</p>
+        </div>
+    </section>
+
+    <section class="deals-section">
+        <div class="container">
+            <h2 class="section-title">Special Offers</h2>
+            <div class="deals-grid">
+                <div class="deal-card">
+                    <span class="deal-badge">Save 20%</span>
+                    <img src="https://images.unsplash.com/photo-1534438327276-14e5300c3a48" alt="Gym Equipment">
+                    <div class="deal-content">
+                        <h3>New Year Bundle</h3>
+                        <button class="deal-btn">Shop Now</button>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <span class="deal-badge">Save 15%</span>
+                    <img src="https://images.unsplash.com/photo-1517836357463-d25dfeac3438" alt="Supplements">
+                    <div class="deal-content">
+                        <h3>Protein Bundle</h3>
+                        <button class="deal-btn">Shop Now</button>
+                    </div>
+                </div>
+                <div class="deal-card">
+                    <span class="deal-badge">Save 25%</span>
+                    <img src="https://images.unsplash.com/photo-1571019614242-c5c5dee9f50b" alt="Accessories">
+                    <div class="deal-content">
+                        <h3>Accessories Pack</h3>
+                        <button class="deal-btn">Shop Now</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="shop-main">
+        <div class="container">
+            <div class="shop-controls">
+                <div class="search-sort">
+                    <div class="search-box">
+                        <input type="text" id="searchInput" placeholder="Search products...">
+                       
+                    </div>
+                    <div class="sort-select-container">
+                        <select id="sortSelect">
+                            <option value="featured">Featured</option>
+                            <option value="price-low">Price: Low to High</option>
+                            <option value="price-high">Price: High to Low</option>
+                            <option value="name-asc">Name: A to Z</option>
+                            <option value="name-desc">Name: Z to A</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="category-filter">
+                    <button class="filter-btn active" data-category="all">All Products</button>
+                    <button class="filter-btn" data-category="equipment">Equipment</button>
+                    <button class="filter-btn" data-category="supplements">Supplements</button>
+                    <button class="filter-btn" data-category="accessories">Accessories</button>
+                    <button class="filter-btn" data-category="clothing">Clothing</button>
+                    <button class="filter-btn" data-category="nutrition">Nutrition</button>
+                    <button class="filter-btn" data-category="recovery">Recovery</button>
+                    <button class="filter-btn" data-category="tech">Tech & Gadgets</button>
+                </div>
+            </div>
+            <div class="products-grid" id="productsGrid">
+                <!-- Products will be dynamically added here -->
+            </div>
+        </div>
+    </section>
+
+    <section class="benefits-section">
+        <div class="container">
+            <h2 class="section-title">Why Shop With Us</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-truck moving-truck"></i>
+                    <h3>Free Shipping</h3>
+                    <p>On orders above ₹2999</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h3>Secure Payment</h3>
+                    <p>100% secure transactions</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-exchange-alt"></i>
+                    <h3>Easy Returns</h3>
+                    <p>30-day return policy</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-headset"></i>
+                    <h3>24/7 Support</h3>
+                    <p>Dedicated customer service</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   
+
+    <div class="cart-icon" onclick="toggleCart()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="cart-count">0</span>
+    </div>
+
+    <div class="cart-sidebar" id="cartSidebar">
+        <div class="cart-header">
+            <h2>Your Cart</h2>
+            <button class="cart-close-btn" onclick="toggleCart()">×</button>
+        </div>
+        <div class="cart-items" id="cartItems">
+            <!-- Cart items will be added here dynamically -->
+        </div>
+        <div class="cart-footer">
+            <div class="cart-total">
+                <span>Total:</span>
+                <span class="total-amount">₹0</span>
+            </div>
+            <button class="checkout-btn">Proceed to Checkout</button>
+        </div>
+    </div>
+    {% include 'footer.html' %}
+    <script src="{% static 'js/shop.js' %}"></script>
+</body>
+</html>

@@ -1,0 +1,426 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Modern Fitness Footer</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+    <!-- AOS Animation -->
+    <link rel="stylesheet" href="https://unpkg.com/aos@next/dist/aos.css" />
+
+    <!-- Custom CSS -->
+
+
+    <!-- Internal CSS -->
+    <style>
+        /* Reset and Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Updated Color Scheme */
+        :root {
+            --primary-color: #95EC6C;
+            --secondary-color: #FCEE21;
+            --dark: #1a1a1a;
+            --light: #ffffff;
+            --gradient: linear-gradient(45deg, var(--primary-color), var(--secondary-color));
+        }
+
+        /* Footer Styles */
+        .modern-footer {
+            background: var(--dark);
+            color: var(--light);
+            position: relative;
+        }
+
+        /* Newsletter Section */
+        .newsletter-section {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 60px 0;
+        }
+
+        .newsletter-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .newsletter-text h3 {
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .newsletter-form .form-group {
+            display: flex;
+            gap: 10px;
+            margin-top: 25px;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 15px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        .newsletter-form button {
+            background: var(--gradient);
+            color: var(--dark);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 5px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-form button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 20px rgba(149, 236, 108, 0.2);
+        }
+
+        /* Footer Grid */
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 40px;
+            padding: 80px 0;
+        }
+
+        /* Footer Info */
+        .footer-logo img {
+            max-width: 150px;
+            margin-bottom: 20px;
+        }
+
+        .footer-description {
+            margin-bottom: 25px;
+            color: #cccccc;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            transition: all 0.3s;
+        }
+
+        .social-icon:hover {
+            background: var(--gradient);
+            color: var(--dark);
+        }
+
+        /* Footer Links */
+        .footer-links h4, .footer-hours h4, .footer-contact h4 {
+            font-size: 20px;
+            margin-bottom: 20px;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .footer-links h4::after, .footer-hours h4::after, .footer-contact h4::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 50px;
+            height: 2px;
+            background: var(--gradient);
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links ul li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links ul li a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links ul li a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Working Hours */
+        .hours-list li {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            color: #cccccc;
+        }
+
+        .special-hours {
+            color: var(--primary-color);
+        }
+
+        /* Contact Info */
+        .contact-item {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .contact-item i {
+            color: var(--primary-color);
+            font-size: 20px;
+        }
+
+        .contact-details h5 {
+            margin-bottom: 5px;
+        }
+
+        .contact-details p, .contact-details a {
+            color: #cccccc;
+            text-decoration: none;
+        }
+
+        .contact-details a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Footer Bottom */
+        .footer-bottom {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 20px 0;
+        }
+
+        .bottom-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .bottom-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .bottom-links a {
+            color: #cccccc;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .bottom-links a:hover {
+            color: var(--primary-color);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .footer-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .newsletter-form .form-group {
+                flex-direction: column;
+            }
+
+            .bottom-content {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .bottom-links {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Modern Gradient Footer -->
+<footer class="modern-footer">
+    <!-- Footer Top Pattern -->
+    <div class="footer-pattern">
+        <div class="pattern-overlay"></div>
+    </div>
+
+    <!-- Newsletter Section -->
+    <div class="newsletter-section">
+        <div class="container">
+            <div class="newsletter-content" data-aos="fade-up">
+                <div class="newsletter-text">
+                    <h3>Join Our Fitness Community</h3>
+                    <p>Get exclusive workout tips, nutrition advice, and special offers</p>
+                </div>
+                <form class="newsletter-form">
+                    <div class="form-group">
+                        <input type="email" placeholder="Enter your email">
+                        <button type="submit">
+                            <span>Subscribe</span>
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Footer Content -->
+    <div class="footer-content">
+        <div class="container">
+            <div class="footer-grid">
+                <!-- Brand Info -->
+                <div class="footer-info" data-aos="fade-up">
+                    <div class="footer-logo">
+                        <img src="" alt="Fitness Logo">
+                    </div>
+                    <p class="footer-description">
+                        Elevate your fitness journey with state-of-the-art equipment and expert guidance. Join our community of fitness enthusiasts.
+                    </p>
+                    <div class="social-links">
+                        <a href="#" class="social-icon facebook">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="social-icon instagram">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="social-icon twitter">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="social-icon linkedin">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div class="footer-links" data-aos="fade-up" data-aos-delay="100">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#home">Home</a></li>
+                        <li><a href="#about">About Us</a></li>
+                        <li><a href="#classes">Classes</a></li>
+                        <li><a href="#trainers">Trainers</a></li>
+                        <li><a href="#pricing">Pricing</a></li>
+                        <li><a href="#contact">Contact</a></li>
+                    </ul>
+                </div>
+
+                <!-- Working Hours -->
+                <div class="footer-hours" data-aos="fade-up" data-aos-delay="200">
+                    <h4>Working Hours</h4>
+                    <ul class="hours-list">
+                        <li>
+                            <span>Monday - Friday:</span>
+                            <span>6:00 AM - 10:00 PM</span>
+                        </li>
+                        <li>
+                            <span>Saturday:</span>
+                            <span>7:00 AM - 9:00 PM</span>
+                        </li>
+                        <li>
+                            <span>Sunday:</span>
+                            <span>8:00 AM - 8:00 PM</span>
+                        </li>
+                        <li class="special-hours">
+                            <span>Public Holidays:</span>
+                            <span>8:00 AM - 6:00 PM</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Contact Info -->
+                <div class="footer-contact" data-aos="fade-up" data-aos-delay="300">
+                    <h4>Contact Info</h4>
+                    <div class="contact-list">
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <div class="contact-details">
+                                <h5>Location</h5>
+                                <p>123 Fitness Street, Workout City, FL 12345</p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone-alt"></i>
+                            <div class="contact-details">
+                                <h5>Call Us</h5>
+                                <p><a href="tel:+1234567890">+1 (234) 567-890</a></p>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <div class="contact-details">
+                                <h5>Email Us</h5>
+                                <p><a href="mailto:info@fitnessclub.com">info@fitnessclub.com</a></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer Bottom -->
+    <div class="footer-bottom">
+        <div class="container">
+            <div class="bottom-content">
+                <p class="copyright">
+                    © 2025 Modern Fitness. All rights reserved. Developed by 
+                    <a href="https://abhisar29-portfolio.netlify.app/" target="_blank" style="color: white; text-decoration: none;" onmouseover="this.style.color='#FFD700'; this.style.textDecoration='underline'; this.style.cursor='pointer'" onmouseout="this.style.color='white'; this.style.textDecoration='none';">Abhisar</a>
+
+                </p>
+                
+                <div class="bottom-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms of Service</a>
+                    <a href="#">Cookie Policy</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- AOS Animation Script -->
+<script src="https://unpkg.com/aos@next/dist/aos.js"></script>
+<script>
+    AOS.init({
+        duration: 800,
+        offset: 100,
+        once: true
+    });
+</script>
+
+</body>
+</html>

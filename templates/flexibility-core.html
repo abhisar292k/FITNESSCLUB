@@ -1,0 +1,1196 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flexibility & Core Program - FitLife</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        .fitness-challenge-page {
+            --fc-primary: #4CAF50;
+            --fc-secondary: #FFC107;
+            --fc-dark: #111;
+            --fc-light: #fff;
+            --fc-gradient: linear-gradient(135deg, #95EC6C, #FCEE21);
+            --fc-gradient-alt: linear-gradient(135deg, #4CAF50, #95EC6C);
+            --fc-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            --fc-transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            --fc-header-height: 80px;
+            
+            font-family: 'Poppins', sans-serif;
+            background-color: #111;
+            color: #fff;
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Enhanced Challenge Header */
+        .fc-challenge-header {
+            position: relative;
+            padding: 180px 0 150px;
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.9)), 
+                       url('https://images.unsplash.com/photo-1518611012118-696072aa579a') center/cover;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .fc-challenge-header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, transparent 0%, rgba(0,0,0,0.8) 100%);
+        }
+
+        /* Animated particles */
+        .fc-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .fc-particle {
+            position: absolute;
+            display: block;
+            background: rgba(149, 236, 108, 0.2);
+            border-radius: 50%;
+            animation: fc-float 15s infinite ease-in-out;
+        }
+
+        .fc-particle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+            animation-duration: 20s;
+        }
+
+        .fc-particle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            left: 70%;
+            top: 30%;
+            animation-delay: 2s;
+            animation-duration: 25s;
+            background: rgba(252, 238, 33, 0.1);
+        }
+
+        .fc-particle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            left: 30%;
+            top: 60%;
+            animation-delay: 4s;
+            animation-duration: 18s;
+        }
+
+        .fc-particle:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            left: 80%;
+            top: 70%;
+            animation-delay: 6s;
+            animation-duration: 22s;
+            background: rgba(252, 238, 33, 0.1);
+        }
+
+        @keyframes fc-float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-60px) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+                opacity: 0.5;
+            }
+        }
+
+        .fc-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .fc-header-content {
+            max-width: 800px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        .fc-challenge-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 30px;
+            font-size: 0.9rem;
+            margin-bottom: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
+            backdrop-filter: blur(5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            transform: translateY(0);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .fc-challenge-badge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+        }
+
+        .fc-header-title {
+            font-size: 4.5rem;
+            font-weight: 800;
+            margin-bottom: 25px;
+            background: var(--fc-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.1;
+            text-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+        }
+
+        .fc-header-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--fc-gradient);
+            border-radius: 2px;
+        }
+
+        .fc-header-subtitle {
+            font-size: 1.3rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 45px;
+            max-width: 80%;
+            margin-left: auto;
+            margin-right: auto;
+            line-height: 1.6;
+        }
+
+        /* Enhanced Workout Toggle */
+        .fc-workout-toggle {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 20px;
+            backdrop-filter: blur(10px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            max-width: 500px;
+            margin: 0 auto;
+            border: 1px solid rgba(255,255,255,0.1);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .fc-workout-toggle:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
+        }
+
+        .fc-workout-toggle span {
+            font-weight: 500;
+            letter-spacing: 0.5px;
+        }
+
+        .fc-toggle-switch {
+            position: relative;
+            width: 60px;
+            height: 34px;
+        }
+
+        .fc-toggle-switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .fc-slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(255,255,255,0.2);
+            transition: .4s;
+            border-radius: 34px;
+            overflow: hidden;
+        }
+
+        .fc-slider:before {
+            position: absolute;
+            content: "";
+            height: 26px;
+            width: 26px;
+            left: 4px;
+            bottom: 4px;
+            background-color: white;
+            transition: .4s;
+            border-radius: 50%;
+            z-index: 2;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+        }
+
+        .fc-slider::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 200%;
+            height: 100%;
+            background: var(--fc-gradient);
+            transition: .4s;
+            opacity: 0;
+        }
+
+        .fc-toggle-switch input:checked + .fc-slider::after {
+            opacity: 1;
+            left: 0;
+        }
+
+        .fc-toggle-switch input:checked + .fc-slider:before {
+            transform: translateX(26px);
+        }
+
+        /* Enhanced Challenge Layout */
+        .fc-challenge-layout {
+            display: flex;
+            gap: 40px;
+            margin: 60px 0;
+        }
+
+        .fc-week-progress {
+            width: 40px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 20px;
+        }
+
+        .fc-progress-bar {
+            width: 100%;
+            height: 6px;
+        }
+
+        .fc-progress {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            background: var(--fc-gradient);
+            border-radius: 4px;
+            transition: height 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 -2px 10px rgba(149, 236, 108, 0.4);
+        }
+
+        .fc-week-indicator {
+            writing-mode: horizontal-tb;
+            transform: none;
+            margin-top: 10px;
+            margin-left: 0;
+        }
+
+        .fc-challenge-grid {
+            flex-grow: 1;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        /* Enhanced Day Cards */
+        .fc-day-card {
+            background: rgba(255,255,255,0.05);
+            border-radius: 20px;
+            padding: 35px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.1);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            z-index: 1;
+        }
+
+        .fc-day-card:hover {
+            transform: translateY(-15px);
+            border-color: #4CAF50;
+            box-shadow: 0 20px 40px rgba(76, 175, 80, 0.2);
+        }
+
+        .fc-day-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(76, 175, 80, 0.1) 0%, transparent 70%);
+            animation: fc-rotate 15s linear infinite;
+            z-index: -1;
+        }
+
+        .fc-day-card::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(149, 236, 108, 0.05) 0%, transparent 100%);
+            z-index: -1;
+        }
+
+        @keyframes fc-rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .fc-day-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 25px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .fc-day-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: var(--fc-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1;
+            position: relative;
+        }
+
+        .fc-day-number::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: var(--fc-gradient);
+            border-radius: 2px;
+        }
+
+        .fc-difficulty-badge {
+            padding: 8px 18px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.1);
+        }
+
+        .fc-workout-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 15px;
+            position: relative;
+            z-index: 1;
+            border: 1px solid rgba(255,255,255,0.05);
+            transition: all 0.3s ease;
+        }
+
+        .fc-workout-item:hover {
+            background: rgba(255,255,255,0.05);
+            transform: translateX(5px);
+        }
+
+        .fc-workout-item i {
+            font-size: 1.4rem;
+            color: #4CAF50;
+            margin-top: 3px;
+        }
+
+        .fc-workout-item span {
+            color: rgba(255,255,255,0.9);
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-bottom: 5px;
+            display: block;
+        }
+
+        .fc-workout-content {
+            color: rgba(255,255,255,0.7);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .fc-completed {
+            border-color: rgba(76, 175, 80, 0.3);
+            position: relative;
+            background: rgba(76, 175, 80, 0.05);
+        }
+
+        .fc-completed::after {
+            content: '\f00c';
+            font-family: 'Font Awesome 5 Free';
+            font-weight: 900;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            color: #4CAF50;
+            font-size: 1.2rem;
+            background: rgba(76, 175, 80, 0.1);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 3px 10px rgba(76, 175, 80, 0.2);
+        }
+
+        /* Enhanced Navigation Controls */
+        .fc-navigation-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 40px 0;
+        }
+
+        .fc-nav-btn {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 12px 25px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 30px;
+            color: #fff;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fc-nav-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+            transition: 0.5s;
+        }
+
+        .fc-nav-btn:hover:not(:disabled)::before {
+            left: 100%;
+        }
+
+        .fc-nav-btn:hover:not(:disabled) {
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(76, 175, 80, 0.5);
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        }
+
+        .fc-nav-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            background: rgba(255,255,255,0.03);
+        }
+
+        .fc-nav-btn i {
+            font-size: 0.9rem;
+        }
+
+        /* Enhanced Join Challenge Section */
+        .fc-join-challenge {
+            margin: 100px 0;
+            background: rgba(255,255,255,0.03);
+            border-radius: 30px;
+            padding: 70px 50px;
+            backdrop-filter: blur(10px);
+            position: relative;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            border: 1px solid rgba(255,255,255,0.05);
+        }
+
+        .fc-join-challenge::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at top right, rgba(76, 175, 80, 0.1), transparent 70%);
+            z-index: 0;
+        }
+
+        .fc-join-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 50px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .fc-join-badge {
+            display: inline-block;
+            padding: 10px 25px;
+            background: rgba(76, 175, 80, 0.1);
+            color: #4CAF50;
+            border-radius: 30px;
+            margin-bottom: 25px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            border: 1px solid rgba(76, 175, 80, 0.2);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.1);
+        }
+
+        .fc-join-text h2 {
+            font-size: 3rem;
+            margin-bottom: 25px;
+            background: var(--fc-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            line-height: 1.2;
+            position: relative;
+        }
+
+        .fc-join-text h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: var(--fc-gradient);
+            border-radius: 2px;
+        }
+
+        .fc-join-text p {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 30px;
+            line-height: 1.6;
+        }
+
+        .fc-benefits-list {
+            list-style: none;
+            margin: 30px 0;
+        }
+
+        .fc-benefits-list li {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+            color: rgba(255,255,255,0.9);
+            font-size: 1.05rem;
+            position: relative;
+            padding-left: 10px;
+            transition: transform 0.3s ease;
+        }
+
+        .fc-benefits-list li:hover {
+            transform: translateX(5px);
+        }
+
+        .fc-benefits-list i {
+            color: #4CAF50;
+            font-size: 1.2rem;
+            background: rgba(76, 175, 80, 0.1);
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .fc-spots-counter {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-top: 40px;
+            padding: 20px 25px;
+            background: rgba(76, 175, 80, 0.05);
+            border-radius: 15px;
+            color: #4CAF50;
+            border: 1px solid rgba(76, 175, 80, 0.1);
+            box-shadow: 0 8px 20px rgba(76, 175, 80, 0.1);
+        }
+
+        .fc-spots-counter i {
+            font-size: 1.4rem;
+        }
+
+        .fc-spots-number {
+            font-weight: 700;
+            font-size: 1.3rem;
+            background: var(--fc-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .fc-join-form {
+            background: rgba(255,255,255,0.02);
+            padding: 50px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fc-join-form::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(76, 175, 80, 0.05) 0%, transparent 100%);
+            z-index: -1;
+        }
+
+        .fc-join-form h3 {
+            margin-bottom: 35px;
+            color: #fff;
+            font-size: 1.8rem;
+            position: relative;
+            padding-bottom: 15px;
+        }
+
+        .fc-join-form h3::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--fc-gradient);
+            border-radius: 2px;
+        }
+
+        .fc-form-group {
+            margin-bottom: 25px;
+        }
+
+        .fc-form-group input,
+        .fc-form-group select {
+            width: 100%;
+            padding: 18px 20px;
+            border: 1px solid rgba(255,255,255,0.1);
+            background: rgba(255,255,255,0.03);
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 5px rgba(0,0,0,0.05);
+        }
+
+        .fc-form-group input:focus,
+        .fc-form-group select:focus {
+            border-color: rgba(76, 175, 80, 0.5);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
+        }
+
+        .fc-join-btn {
+            width: 100%;
+            padding: 18px;
+            border: none;
+            background: var(--fc-gradient-alt);
+            color: #fff;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .fc-join-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            transition: 0.5s;
+        }
+
+        .fc-join-btn:hover::before {
+            left: 100%;
+        }
+
+        .fc-join-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(76,175,80,0.3);
+        }
+
+        /* Eye-catching Stats Section */
+        .fc-stats-container {
+            margin: 100px 0;
+            position: relative;
+        }
+
+        .fc-stats-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .fc-stats-header h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+            background: var(--fc-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            display: inline-block;
+        }
+
+        .fc-stats-header p {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.8);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .fc-challenge-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 25px;
+        }
+
+        .fc-stat-card {
+            background: rgba(20, 20, 20, 0.95);
+            border-radius: 20px;
+            padding: 40px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.4s ease, box-shadow 0.4s ease;
+            border: 1px solid rgba(255,255,255,0.05);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            z-index: 1;
+            backdrop-filter: blur(5px);
+        }
+
+        .fc-stat-card:hover {
+            transform: translateY(-15px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+            border-color: rgba(255,255,255,0.2);
+        }
+
+        .fc-stat-icon-wrapper {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            margin: 0 auto 25px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255,255,255,0.05);
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+
+        .fc-stat-card:hover .fc-stat-icon-wrapper {
+            transform: scale(1.1) rotate(5deg);
+            box-shadow: 0 15px 35px rgba(255,255,255,0.1);
+        }
+
+        .fc-stat-icon-wrapper i {
+            font-size: 2.8rem;
+            color: #fff;
+        }
+
+        .fc-stat-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        .fc-stat-number {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 10px;
+            color: #fff;
+            line-height: 1;
+            letter-spacing: -1px;
+        }
+
+        .fc-stat-label {
+            font-size: 1.1rem;
+            color: rgba(255,255,255,0.9);
+            font-weight: 500;
+            margin: 0;
+        }
+
+        .fc-stat-glow {
+            display: none;
+        }
+
+        @media (max-width: 992px) {
+            .fc-challenge-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 576px) {
+            .fc-challenge-stats {
+                grid-template-columns: 1fr;
+            }
+            
+            .fc-stat-number {
+                font-size: 3rem;
+            }
+        }
+    </style>
+</head>
+<body class="fitness-challenge-page">
+    {% include 'header.html' %}
+
+    <!-- Progress Tracker -->
+    <div class="fc-progress-tracker">
+        <div class="fc-progress-fill" id="progressFill"></div>
+    </div>
+
+    <section class="fc-challenge-header">
+        <div class="fc-particles">
+            <div class="fc-particle"></div>
+            <div class="fc-particle"></div>
+            <div class="fc-particle"></div>
+            <div class="fc-particle"></div>
+        </div>
+        <div class="fc-container">
+            <div class="fc-header-content">
+                <span class="fc-challenge-badge">Flexibility & Core Program</span>
+                <h1 class="fc-header-title">Unlock Your Body's<br>Full Potential</h1>
+                <p class="fc-header-subtitle">Join our comprehensive flexibility and core training program designed to improve mobility, stability, and overall functional fitness</p>
+                <div class="fc-workout-toggle">
+                    <span>Beginner</span>
+                    <label class="fc-toggle-switch">
+                        <input type="checkbox" id="workout-toggle">
+                        <span class="fc-slider"></span>
+                    </label>
+                    <span>Advanced</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <div class="fc-container">
+        <div class="fc-challenge-layout">
+            <!-- Week Progress Bar -->
+            <div class="fc-week-progress">
+                <div class="fc-progress-bar">
+                    <div class="fc-progress" style="height: 7.7%"></div>
+                </div>
+                <div class="fc-week-indicator">Week 1 of 13</div>
+            </div>
+
+            <!-- Challenge Grid -->
+            <div class="fc-challenge-grid" id="challenge-grid">
+                <!-- Cards will be dynamically inserted here -->
+            </div>
+        </div>
+
+        <div class="fc-navigation-controls">
+            <button class="fc-nav-btn fc-prev-btn" disabled>
+                <i class="fas fa-arrow-left"></i> Previous Week
+            </button>
+            <button class="fc-nav-btn fc-next-btn">
+                Next Week <i class="fas fa-arrow-right"></i>
+            </button>
+        </div>
+
+        <!-- Join Challenge Section -->
+        <section class="fc-join-challenge">
+            <div class="fc-join-content">
+                <div class="fc-join-text">
+                    <span class="fc-join-badge">Premium Program</span>
+                    <h2>Enhance Your Flexibility & Core</h2>
+                    <p>Join our specialized program and get access to:</p>
+                    <ul class="fc-benefits-list">
+                        <li><i class="fas fa-check-circle"></i> Expert-designed flexibility routines</li>
+                        <li><i class="fas fa-check-circle"></i> Core strengthening exercises</li>
+                        <li><i class="fas fa-check-circle"></i> Posture improvement techniques</li>
+                        <li><i class="fas fa-check-circle"></i> Mobility enhancement training</li>
+                        <li><i class="fas fa-check-circle"></i> Personalized progress tracking</li>
+                        <li><i class="fas fa-check-circle"></i> Injury prevention strategies</li>
+                    </ul>
+                    <div class="fc-spots-counter">
+                        <i class="fas fa-users"></i>
+                        <span>Limited Spots Available: </span>
+                        <span class="fc-spots-number">35</span>
+                    </div>
+                </div>
+                <div class="fc-join-form">
+                    <h3>Join The Program</h3>
+                    <form id="challengeForm">
+                        <div class="fc-form-group">
+                            <input type="text" placeholder="Full Name" required>
+                        </div>
+                        <div class="fc-form-group">
+                            <input type="email" placeholder="Email Address" required>
+                        </div>
+                        <div class="fc-form-group">
+                            <input type="tel" placeholder="Phone Number" required>
+                        </div>
+                        <div class="fc-form-group">
+                            <select required>
+                                <option value="">Select Your Flexibility Level</option>
+                                <option value="beginner">Beginner</option>
+                                <option value="intermediate">Intermediate</option>
+                                <option value="advanced">Advanced</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="fc-join-btn">
+                            Start Your Journey
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Challenge Stats -->
+        <section class="fc-stats-container">
+            <div class="fc-stats-header">
+                <h2>Program Impact</h2>
+                <p>Real results from our flexibility & core community</p>
+            </div>
+            <div class="fc-challenge-stats">
+                <div class="fc-stat-card">
+                    <div class="fc-stat-icon-wrapper">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <div class="fc-stat-content">
+                        <h3 class="fc-stat-number">2,300+</h3>
+                        <p class="fc-stat-label">Active Members</p>
+                    </div>
+                </div>
+                <div class="fc-stat-card">
+                    <div class="fc-stat-icon-wrapper">
+                        <i class="fas fa-award"></i>
+                    </div>
+                    <div class="fc-stat-content">
+                        <h3 class="fc-stat-number">85%</h3>
+                        <p class="fc-stat-label">Improved Flexibility</p>
+                    </div>
+                </div>
+                <div class="fc-stat-card">
+                    <div class="fc-stat-icon-wrapper">
+                        <i class="fas fa-bolt"></i>
+                    </div>
+                    <div class="fc-stat-content">
+                        <h3 class="fc-stat-number">70%</h3>
+                        <p class="fc-stat-label">Less Back Pain</p>
+                    </div>
+                </div>
+                <div class="fc-stat-card">
+                    <div class="fc-stat-icon-wrapper">
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <div class="fc-stat-content">
+                        <h3 class="fc-stat-number">4.8/5</h3>
+                        <p class="fc-stat-label">Satisfaction Rating</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // First, define the workout data arrays
+        const beginnerWorkouts = [
+            // Week 1
+            { exercise: "Introduction & Flexibility Assessment", duration: "40 minutes" },
+            { exercise: "Basic Hamstring & Hip Stretches", duration: "35 minutes" },
+            { exercise: "Core Activation Fundamentals", duration: "30 minutes" },
+            { exercise: "Gentle Spine Mobility", duration: "35 minutes" },
+            { exercise: "Basic Plank Variations", duration: "25 minutes" },
+            { exercise: "Full Body Gentle Stretching", duration: "40 minutes" },
+            { exercise: "Rest & Recovery", duration: "20 minutes" },
+            // ... add more weeks as needed
+        ];
+
+        const advancedWorkouts = [
+            // Week 1
+            { exercise: "Advanced Flexibility Assessment", duration: "45 minutes" },
+            { exercise: "Dynamic Hamstring & Hip Mobility", duration: "50 minutes" },
+            { exercise: "Advanced Core Stabilization", duration: "40 minutes" },
+            { exercise: "Thoracic & Lumbar Mobility Flow", duration: "45 minutes" },
+            { exercise: "Complex Plank & Hollow Body Work", duration: "35 minutes" },
+            { exercise: "Deep Fascial Release Techniques", duration: "50 minutes" },
+            { exercise: "Active Recovery & Mobility", duration: "30 minutes" },
+            // ... add more weeks as needed
+        ];
+
+        const challengeGrid = document.getElementById('challenge-grid');
+        let currentWeek = 1;
+        const totalWeeks = 13;
+        const daysPerWeek = 7;
+        let isBeginner = true; // Default to beginner workouts
+
+        // Function to create a day card
+        function createDayCard(day, workout) {
+            if (!workout) {
+                workout = {
+                    exercise: "Rest Day",
+                    duration: "30 minutes"
+                };
+            }
+
+            const card = document.createElement('div');
+            card.className = 'fc-day-card';
+            card.setAttribute('data-day', day);
+            
+            const difficulty = day <= 30 ? 'Foundation' : day <= 60 ? 'Development' : 'Mastery';
+            
+            card.innerHTML = `
+                <div class="fc-day-header">
+                    <h2 class="fc-day-number">Day ${day}</h2>
+                    <span class="fc-difficulty-badge">${difficulty}</span>
+                </div>
+                <div class="fc-workout-item">
+                    <i class="fas fa-yoga workout-icon"></i>
+                    <span>Practice</span>
+                    <div class="fc-workout-content">${workout.exercise}</div>
+                </div>
+                <div class="fc-workout-item">
+                    <i class="fas fa-clock workout-icon"></i>
+                    <span>Duration</span>
+                    <div class="fc-workout-content">${workout.duration}</div>
+                </div>
+            `;
+            
+            card.addEventListener('click', () => saveProgress(day));
+            return card;
+        }
+
+        // Function to display specific week
+        function displayWeek(weekNumber) {
+            const startDay = (weekNumber - 1) * daysPerWeek + 1;
+            const endDay = startDay + daysPerWeek - 1;
+            
+            // Clear existing cards
+            challengeGrid.innerHTML = '';
+
+            // Add cards for current week only
+            for (let i = startDay; i <= endDay; i++) {
+                const workoutIndex = i - 1;
+                const workout = isBeginner ? 
+                    beginnerWorkouts[workoutIndex % beginnerWorkouts.length] : 
+                    advancedWorkouts[workoutIndex % advancedWorkouts.length];
+                const dayCard = createDayCard(i, workout);
+                challengeGrid.appendChild(dayCard);
+            }
+
+            // Update week indicator and progress
+            document.querySelector('.fc-week-indicator').textContent = `Week ${weekNumber} of ${totalWeeks}`;
+            document.querySelector('.fc-progress').style.height = `${(weekNumber / totalWeeks) * 100}%`;
+            
+            // Update button states
+            document.querySelector('.fc-prev-btn').disabled = weekNumber === 1;
+            document.querySelector('.fc-next-btn').disabled = weekNumber === totalWeeks;
+
+            // Update progress tracker
+            updateProgressTracker();
+        }
+
+        // Event listeners for navigation buttons
+        document.querySelector('.fc-next-btn').addEventListener('click', () => {
+            if (currentWeek < totalWeeks) {
+                currentWeek++;
+                displayWeek(currentWeek);
+            }
+        });
+
+        document.querySelector('.fc-prev-btn').addEventListener('click', () => {
+            if (currentWeek > 1) {
+                currentWeek--;
+                displayWeek(currentWeek);
+            }
+        });
+
+        // Toggle between beginner and advanced workouts
+        const toggleSwitch = document.getElementById('workout-toggle');
+        toggleSwitch.addEventListener('change', () => {
+            isBeginner = !toggleSwitch.checked;
+            displayWeek(currentWeek);
+        });
+
+        // Save progress function
+        function saveProgress(dayNumber) {
+            const card = document.querySelector(`[data-day="${dayNumber}"]`);
+            card.classList.toggle('fc-completed');
+            localStorage.setItem(`flex-day-${dayNumber}`, card.classList.contains('fc-completed'));
+        }
+
+        // Load saved progress
+        function loadProgress() {
+            const cards = document.querySelectorAll('.fc-day-card');
+            cards.forEach(card => {
+                const day = card.getAttribute('data-day');
+                const isCompleted = localStorage.getItem(`flex-day-${day}`) === 'true';
+                if (isCompleted) {
+                    card.classList.add('fc-completed');
+                }
+            });
+        }
+
+        // Update progress tracker based on scroll
+        function updateProgressTracker() {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.getElementById('progressFill').style.width = `${scrolled}%`;
+        }
+
+        // Initialize the first week and add scroll event for progress tracker
+        document.addEventListener('DOMContentLoaded', () => {
+            displayWeek(1);
+            loadProgress();
+            window.addEventListener('scroll', updateProgressTracker);
+        });
+    </script>
+</body>
+</html>

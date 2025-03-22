@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - FitnessClub</title>
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --primary-color: #95EC6C;
+            --primary-dark: #7ac754;
+            --dark: #1a1a1a;
+            --darker: #121212;
+            --light: #ffffff;
+            --gray: rgba(255, 255, 255, 0.7);
+            --error: #ff4444;
+            --success: #00C851;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            min-height: 100vh;
+            background: var(--dark);
+            color: var(--light);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Animated Background */
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(rgba(0, 0, 0, 0.85), rgba(0, 0, 0, 0.85)),
+                        url('https://images.unsplash.com/photo-1534438327276-14e5300c3a48') center/cover fixed;
+            overflow: hidden;
+        }
+
+        .animated-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at 20% 30%, rgba(149, 236, 108, 0.05) 0%, transparent 40%),
+                        radial-gradient(circle at 80% 70%, rgba(149, 236, 108, 0.05) 0%, transparent 40%);
+        }
+
+        .animated-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: rgba(149, 236, 108, 0.03);
+            animation: float 20s infinite linear;
+        }
+
+        .shape-1 {
+            width: 400px;
+            height: 400px;
+            top: -100px;
+            left: -100px;
+            animation-duration: 35s;
+        }
+
+        .shape-2 {
+            width: 300px;
+            height: 300px;
+            bottom: -50px;
+            right: -50px;
+            animation-duration: 25s;
+            animation-delay: -5s;
+        }
+
+        .shape-3 {
+            width: 200px;
+            height: 200px;
+            top: 50%;
+            left: 50%;
+            animation-duration: 30s;
+            animation-delay: -10s;
+        }
+
+        @keyframes float {
+            0% {
+                transform: rotate(0deg) translate(0, 0) scale(1);
+            }
+            33% {
+                transform: rotate(120deg) translate(50px, 50px) scale(1.1);
+            }
+            66% {
+                transform: rotate(240deg) translate(-50px, 50px) scale(0.9);
+            }
+            100% {
+                transform: rotate(360deg) translate(0, 0) scale(1);
+            }
+        }
+
+        /* Fitness Icons Background */
+        .fitness-icons {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .fitness-icon {
+            position: absolute;
+            font-size: 24px;
+            color: var(--primary-color);
+            animation: iconFloat 15s infinite linear;
+        }
+
+        @keyframes iconFloat {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Main Container */
+        .main-container {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        /* Card Layout */
+        .signup-card {
+            display: flex;
+            width: 100%;
+            max-width: 1000px;
+            background: rgba(26, 26, 26, 0.8);
+            border-radius: 24px;
+            overflow: hidden;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4),
+                        0 0 0 1px rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Left Side - Promo Content */
+        .promo-side {
+            flex: 1;
+            background: linear-gradient(135deg, rgba(149, 236, 108, 0.1), rgba(26, 26, 26, 0.9)),
+                        url('https://images.unsplash.com/photo-1549060279-7e168fcee0c2') center/cover;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .promo-side::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(to bottom, transparent, rgba(26, 26, 26, 0.9));
+            z-index: 0;
+        }
+
+        .promo-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .promo-logo {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .promo-logo i {
+            font-size: 40px;
+            color: var(--primary-color);
+            filter: drop-shadow(0 0 10px rgba(149, 236, 108, 0.3));
+        }
+
+        .promo-logo h1 {
+            font-size: 28px;
+            font-weight: 700;
+            background: linear-gradient(to right, #ffffff, var(--primary-color));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            letter-spacing: 1px;
+        }
+
+        .promo-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .promo-title span {
+            color: var(--primary-color);
+        }
+
+        .promo-features {
+            margin: 30px 0;
+        }
+
+        .promo-feature {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+
+        .feature-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(149, 236, 108, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary-color);
+            font-size: 18px;
+        }
+
+        .feature-text {
+            flex: 1;
+        }
+
+        .feature-text h3 {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        .feature-text p {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .testimonial {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 16px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            margin-bottom: 15px;
+            font-size: 15px;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .author-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .author-avatar img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .author-info h4 {
+            font-size: 16px;
+            margin-bottom: 2px;
+        }
+
+        .author-info p {
+            font-size: 12px;
+            color: var(--gray);
+        }
+
+        /* Right Side - Form Content */
+        .form-side {
+            flex: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        .form-header h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .form-header p {
+            color: var(--gray);
+        }
+
+        .form-progress {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .form-progress::before {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-50%);
+            z-index: 0;
+        }
+
+        .progress-step {
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: var(--dark);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--gray);
+            position: relative;
+            z-index: 1;
+        }
+
+        .progress-step.active {
+            background: var(--primary-color);
+            color: var(--dark);
+            border-color: var(--primary-color);
+        }
+
+        .progress-step.completed {
+            background: var(--primary-dark);
+            color: var(--dark);
+            border-color: var(--primary-dark);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .input-wrapper {
+            position: relative;
+        }
+
+        .input-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+            font-size: 18px;
+        }
+
+        .form-input {
+            width: 100%;
+            padding: 15px 15px 15px 45px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(149, 236, 108, 0.1);
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            color: var(--gray);
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        .password-strength {
+            height: 4px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 2px;
+            margin-top: 8px;
+            overflow: hidden;
+        }
+
+        .strength-bar {
+            height: 100%;
+            width: 0;
+            transition: width 0.3s ease, background 0.3s ease;
+        }
+
+        .gender-options {
+            display: flex;
+            gap: 15px;
+        }
+
+        .gender-option {
+            flex: 1;
+            position: relative;
+        }
+
+        .gender-input {
+            position: absolute;
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+
+        .gender-label {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .gender-label i {
+            font-size: 24px;
+            margin-bottom: 8px;
+            color: var(--gray);
+            transition: color 0.3s ease;
+        }
+
+        .gender-input:checked + .gender-label {
+            border-color: var(--primary-color);
+            background: rgba(149, 236, 108, 0.1);
+        }
+
+        .gender-input:checked + .gender-label i,
+        .gender-input:checked + .gender-label span {
+            color: var(--primary-color);
+        }
+
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .checkbox-input {
+            width: 18px;
+            height: 18px;
+            margin-top: 3px;
+            accent-color: var(--primary-color);
+        }
+
+        .checkbox-label {
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .checkbox-label a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .form-button {
+            width: 100%;
+            padding: 16px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 12px;
+            color: var(--dark);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: all 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .form-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(149, 236, 108, 0.2);
+        }
+
+        .form-divider {
+            display: flex;
+            align-items: center;
+            margin: 25px 0;
+            color: var(--gray);
+            font-size: 14px;
+        }
+
+        .form-divider::before,
+        .form-divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .form-divider::before {
+            margin-right: 15px;
+        }
+
+        .form-divider::after {
+            margin-left: 15px;
+        }
+
+        .social-buttons {
+            display: flex;
+            gap: 15px;
+        }
+
+        .social-button {
+            flex: 1;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: var(--light);
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .social-button:hover {
+            background: rgba(255, 255, 255, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .social-button.google i {
+            color: #DB4437;
+        }
+
+        .social-button.facebook i {
+            color: #4267B2;
+        }
+
+        .login-link {
+            text-align: center;
+            margin-top: 25px;
+            font-size: 14px;
+            color: var(--gray);
+        }
+
+        .login-link a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .loader {
+            position: relative;
+            width: 60px;
+            height: 60px;
+        }
+
+        .loader-circle {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border: 3px solid transparent;
+            border-top-color: var(--primary-color);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        .loader-circle:nth-child(2) {
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+            border-top-color: transparent;
+            border-right-color: var(--primary-color);
+            animation-duration: 0.8s;
+            animation-direction: reverse;
+        }
+
+        .loader-circle:nth-child(3) {
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+            border-top-color: transparent;
+            border-bottom-color: var(--primary-color);
+            animation-duration: 1.2s;
+        }
+
+        .loader-text {
+            position: absolute;
+            bottom: -30px;
+            color: var(--light);
+            font-size: 14px;
+            white-space: nowrap;
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        /* Success Modal */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            backdrop-filter: blur(5px);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .modal-content {
+            background: var(--darker);
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transform: scale(0.9);
+            opacity: 0;
+            transition: all 0.3s ease;
+        }
+
+        .modal.active .modal-content {
+            transform: scale(1);
+            opacity: 1;
+        }
+
+        .success-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(0, 200, 81, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
+
+        .success-icon i {
+            font-size: 40px;
+            color: var(--success);
+        }
+
+        .modal-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .modal-text {
+            color: var(--gray);
+            margin-bottom: 25px;
+        }
+
+        .modal-button {
+            padding: 12px 30px;
+            background: var(--primary-color);
+            border: none;
+            border-radius: 10px;
+            color: var(--dark);
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .modal-button:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(149, 236, 108, 0.2);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 992px) {
+            .signup-card {
+                flex-direction: column;
+                max-width: 600px;
+            }
+
+            .promo-side {
+                padding: 30px;
+            }
+
+            .promo-features {
+                display: none;
+            }
+
+            .testimonial {
+                margin-top: 20px;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .main-container {
+                padding: 20px 10px;
+            }
+
+            .signup-card {
+                border-radius: 16px;
+            }
+
+            .promo-side, .form-side {
+                padding: 20px;
+            }
+
+            .promo-title {
+                font-size: 28px;
+            }
+
+            .form-header h2 {
+                font-size: 24px;
+            }
+
+            .gender-options {
+                flex-direction: column;
+            }
+
+            .social-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg">
+        <div class="animated-shape shape-1"></div>
+        <div class="animated-shape shape-2"></div>
+        <div class="animated-shape shape-3"></div>
+    </div>
+
+    <!-- Fitness Icons Background -->
+    <div class="fitness-icons" id="fitnessIcons"></div>
+
+    <!-- Main Container -->
+    <div class="main-container">
+        <div class="signup-card">
+            <!-- Left Side - Promo Content -->
+            <div class="promo-side">
+                <div class="promo-content">
+                    <div class="promo-logo">
+                        <i class="fas fa-dumbbell"></i>
+                        <h1>FitnessClub</h1>
+                    </div>
+                    <h2 class="promo-title">Transform Your Body, <span>Transform Your Life</span></h2>
+                    <p>Join thousands of members who have already changed their lives with our personalized fitness programs.</p>
+
+                    <div class="promo-features">
+                        <div class="promo-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-calendar-check"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h3>Personalized Plans</h3>
+                                <p>Custom workout routines tailored to your goals</p>
+                            </div>
+                        </div>
+                        <div class="promo-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-users"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h3>Community Support</h3>
+                                <p>Connect with like-minded fitness enthusiasts</p>
+                            </div>
+                        </div>
+                        <div class="promo-feature">
+                            <div class="feature-icon">
+                                <i class="fas fa-chart-line"></i>
+                            </div>
+                            <div class="feature-text">
+                                <h3>Progress Tracking</h3>
+                                <p>Monitor your improvements with detailed analytics</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="testimonial">
+                    <p class="testimonial-text">"FitnessClub completely changed my approach to fitness. I've lost 30 pounds and gained confidence I never thought possible!"</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar">
+                            <img src="https://randomuser.me/api/portraits/women/42.jpg" alt="Sarah J.">
+                        </div>
+                        <div class="author-info">
+                            <h4>Sarah Johnson</h4>
+                            <p>Member since 2022</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right Side - Form Content -->
+            <div class="form-side">
+                <div class="form-header">
+                    <h2>Create Your Account</h2>
+                    <p>Start your fitness journey today</p>
+                </div>
+
+                <div class="form-progress">
+                    <div class="progress-step active">1</div>
+                    <div class="progress-step">2</div>
+                    <div class="progress-step">3</div>
+                </div>
+
+                <!-- Display Messages -->
+                {% if messages %}
+                    <div class="messages">
+                        {% for message in messages %}
+                            <p class="{{ message.tags }}">{{ message }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- Django Form -->
+                <form id="signupForm" method="POST" action="{% url 'signup' %}">
+                    {% csrf_token %}
+
+                    {% if form.errors %}
+                        <div class="error-messages">
+                            {% for field in form %}
+                                {% for error in field.errors %}
+                                    <p class="error-message">{{ error }}</p>
+                                {% endfor %}
+                            {% endfor %}
+                            {% for error in form.non_field_errors %}
+                                <p class="error-message">{{ error }}</p>
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+
+                    <div class="form-group">
+                        <label for="id_full_name">Full Name</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-user input-icon"></i>
+                            <input type="text" name="full_name" id="id_full_name" class="form-input" required value="{{ form.full_name.value|default:'' }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_email">Email Address</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-envelope input-icon"></i>
+                            <input type="email" name="email" id="id_email" class="form-input" required value="{{ form.email.value|default:'' }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_phone">Phone Number</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-phone input-icon"></i>
+                            <input type="tel" name="phone" id="id_phone" class="form-input" required value="{{ form.phone.value|default:'' }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password1">Create Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" name="password1" id="id_password1" class="form-input" required>
+                            <button type="button" class="password-toggle" id="passwordToggle">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-strength">
+                            <div class="strength-bar" id="strengthBar"></div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_password2">Confirm Password</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-lock input-icon"></i>
+                            <input type="password" name="password2" id="id_password2" class="form-input" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="id_dob">Date of Birth</label>
+                        <div class="input-wrapper">
+                            <i class="fas fa-calendar input-icon"></i>
+                            <input type="date" name="dob" id="id_dob" class="form-input" required value="{{ form.dob.value|default:'' }}">
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Gender</label>
+                        <div class="gender-options">
+                            <div class="gender-option">
+                                <input type="radio" name="gender" id="id_gender_male" class="gender-input" value="male" {% if form.gender.value == 'male' %}checked{% endif %} required>
+                                <label for="id_gender_male" class="gender-label">
+                                    <i class="fas fa-mars"></i>
+                                    <span>Male</span>
+                                </label>
+                            </div>
+                            <div class="gender-option">
+                                <input type="radio" name="gender" id="id_gender_female" class="gender-input" value="female" {% if form.gender.value == 'female' %}checked{% endif %}>
+                                <label for="id_gender_female" class="gender-label">
+                                    <i class="fas fa-venus"></i>
+                                    <span>Female</span>
+                                </label>
+                            </div>
+                            <div class="gender-option">
+                                <input type="radio" name="gender" id="id_gender_other" class="gender-input" value="other" {% if form.gender.value == 'other' %}checked{% endif %}>
+                                <label for="id_gender_other" class="gender-label">
+                                    <i class="fas fa-transgender"></i>
+                                    <span>Other</span>
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="terms" id="id_terms" class="checkbox-input" required {% if form.terms.value %}checked{% endif %}>
+                        <label for="id_terms" class="checkbox-label">
+                            I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>
+                        </label>
+                    </div>
+
+                    <div class="checkbox-group">
+                        <input type="checkbox" name="newsletter" id="id_newsletter" class="checkbox-input" {% if form.newsletter.value %}checked{% endif %}>
+                        <label for="id_newsletter" class="checkbox-label">
+                            Send me fitness tips, workout plans, and special offers
+                        </label>
+                    </div>
+
+                    <button type="submit" class="form-button">
+                        <span>Create Account</span>
+                        <i class="fas fa-arrow-right"></i>
+                    </button>
+
+                    <div class="form-divider">or continue with</div>
+
+                    <div class="social-buttons">
+                        <button type="button" class="social-button google">
+                            <i class="fab fa-google"></i>
+                            <span>Google</span>
+                        </button>
+                        <button type="button" class="social-button facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            <span>Facebook</span>
+                        </button>
+                    </div>
+
+                    <p class="login-link">
+                        Already have an account? <a href="{% url 'login' %}">Log in</a>
+                    </p>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div class="loading-overlay" id="loadingOverlay">
+        <div class="loader">
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+            <div class="loader-circle"></div>
+            <div class="loader-text">Creating your account...</div>
+        </div>
+    </div>
+
+    <!-- Success Modal (Optional - Handled by Django redirect) -->
+    <div class="modal" id="successModal">
+        <div class="modal-content">
+            <div class="success-icon">
+                <i class="fas fa-check"></i>
+            </div>
+            <h3 class="modal-title">Welcome to FitnessClub!</h3>
+            <p class="modal-text">Your account has been created successfully. Get ready to start your fitness journey!</p>
+            <button class="modal-button" onclick="window.location.href='{% url 'hero' %}'">Go to Dashboard</button>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const fitnessIcons = document.getElementById('fitnessIcons');
+            const icons = [
+                'fa-dumbbell', 'fa-running', 'fa-bicycle', 'fa-heartbeat', 
+                'fa-apple-alt', 'fa-swimmer', 'fa-walking', 'fa-weight'
+            ];
+            
+            for (let i = 0; i < 30; i++) {
+                const icon = document.createElement('i');
+                const randomIcon = icons[Math.floor(Math.random() * icons.length)];
+                icon.className = `fas ${randomIcon} fitness-icon`;
+                const left = Math.random() * 100;
+                const delay = Math.random() * 15;
+                const duration = 15 + Math.random() * 10;
+                icon.style.left = `${left}%`;
+                icon.style.animationDelay = `${delay}s`;
+                icon.style.animationDuration = `${duration}s`;
+                fitnessIcons.appendChild(icon);
+            }
+            
+            const passwordInput = document.getElementById('id_password1');
+            const strengthBar = document.getElementById('strengthBar');
+            passwordInput.addEventListener('input', function() {
+                const password = this.value;
+                let strength = 0;
+                if (password.length >= 8) strength += 25;
+                if (/[A-Z]/.test(password)) strength += 25;
+                if (/[0-9]/.test(password)) strength += 25;
+                if (/[^A-Za-z0-9]/.test(password)) strength += 25;
+                strengthBar.style.width = `${strength}%`;
+                if (strength <= 25) {
+                    strengthBar.style.background = '#ff4444';
+                } else if (strength <= 50) {
+                    strengthBar.style.background = '#ffbb33';
+                } else if (strength <= 75) {
+                    strengthBar.style.background = '#00C851';
+                } else {
+                    strengthBar.style.background = '#00C851';
+                }
+            });
+            
+            const passwordToggle = document.getElementById('passwordToggle');
+            passwordToggle.addEventListener('click', function() {
+                const type = passwordInput.type === 'password' ? 'text' : 'password';
+                passwordInput.type = type;
+                this.querySelector('i').className = `fas fa-${type === 'password' ? 'eye' : 'eye-slash'}`;
+            });
+            
+            const signupForm = document.getElementById('signupForm');
+            const loadingOverlay = document.getElementById('loadingOverlay');
+            signupForm.addEventListener('submit', function() {
+                loadingOverlay.style.display = 'flex'; // Show loading overlay on submit
+            });
+        });
+    </script>
+</body>
+</html>
+                   

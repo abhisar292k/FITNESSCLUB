@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FitnessClub - Premium</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
+    <script src="{% static 'js/script.js' %}" defer></script>
+</head>
+<body>
+<div class="navbar">
+    <a href="tel:+919874456123" class="contact-link">
+        <div class="contact-info">
+            <i class="fas fa-phone-alt"></i>
+            <span>+91 9874 456 123</span>
+        </div>
+    </a>
+
+    <ul>
+        <div class="social-icons">
+            <a href="#" class="social-link instagram">
+                <i class="fab fa-instagram"></i>
+            </a>
+            <a href="#" class="social-link facebook">
+                <i class="fab fa-facebook-f"></i>
+            </a>
+            <a href="#" class="social-link twitter">
+                <i class="fab fa-twitter"></i>
+            </a>
+            <a href="#" class="social-link email">
+                <i class="far fa-envelope"></i>
+            </a>
+        </div>
+        <li class="user-section">
+            {% if user.is_authenticated %}
+                <a href="{% url 'user_dashboard' %}" class="login-link" aria-label="User Dashboard" title="Go to Dashboard">
+                    <i class="fas fa-user"></i>
+                    <span class="login-text">Hello, {{ user.full_name.split|first|default:user.email.split|first }}</span>
+                </a>
+                <a href="{% url 'logout' %}" class="logout-link desktop-only" aria-label="Logout">
+                    <i class="fas fa-sign-out-alt"></i>
+                    <span>Logout</span>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="login-link" aria-label="Login or Signup">
+                    <i class="fas fa-user"></i>
+                    <span class="login-text">Login / Signup</span>
+                </a>
+            {% endif %}
+        </li>
+    </ul>
+</div>
+
+<header>
+    <a href="{% url 'hero' %}" class="logo">
+        Fitness <span>Club</span>
+    </a>
+
+    <nav>
+        <ul>
+            <li><a href="{% url 'hero' %}">Home</a></li>
+            <li><a href="{% url 'about' %}">About</a></li>
+            <li class="dropdown services-dropdown">
+                <a href="{% url 'services' %}">Services</a>
+                <div class="dropdown-content">
+                    <a href="#"><i class="fas fa-dumbbell"></i> Personal Training</a>
+                    <a href="#"><i class="fas fa-users"></i> Group Classes</a>
+                    <a href="#"><i class="fas fa-heart"></i> Cardio Sessions</a>
+                    <a href="#"><i class="fas fa-balance-scale"></i> Nutrition Planning</a>
+                    <a href="#"><i class="fas fa-running"></i> Sports Training</a>
+                </div>
+            </li>
+            <li><a href="{% url 'blog' %}">Blog</a></li>
+            <li class="dropdown">
+                <a href="{% url 'membership' %}">Membership</a>
+                <div class="dropdown-content">
+                    <a href="#"><i class="fas fa-rocket"></i> Starter Plan</a>
+                    <a href="#"><i class="fas fa-trophy"></i> Gold Plan</a>
+                    <a href="#"><i class="fas fa-fire"></i> Platinum Plan</a>
+                    <a href="#"><i class="fas fa-crown"></i> Elite Plan</a>
+                </div>
+            </li>
+            <li class="dropdown" data-dropdown="shop">
+                <a href="{% url 'shop' %}">Shop</a>
+                <div class="dropdown-content">
+                    <a href="#"><i class="fas fa-pills"></i> Supplements</a>
+                    <a href="#"><i class="fas fa-dumbbell"></i> Equipment</a>
+                    <a href="#"><i class="fas fa-tshirt"></i> Apparel</a>
+                </div>
+            </li>
+            <li><a href="{% url 'contact' %}">Contact</a></li>
+        </ul>
+    </nav>
+    
+    <div class="mobile-menu-trigger">
+        <span></span>
+        <span></span>
+        <span></span>
+    </div>
+</header>
+
+<div class="mobile-menu">
+    <button class="mobile-menu__close">
+        <i class="fas fa-times"></i>
+    </button>
+    <div class="mobile-menu__nav">
+        <div class="mobile-menu__item">
+            <a href="{% url 'hero' %}" class="mobile-menu__link">
+                <span><i class="fas fa-home"></i> Home</span>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+        <div class="mobile-menu__item">
+            <a href="{% url 'about' %}" class="mobile-menu__link">
+                <span><i class="fas fa-info-circle"></i> About</span>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+        <div class="mobile-menu__item">
+            <a href="{% url 'services' %}" class="mobile-menu__link" data-submenu="services">
+                <span><i class="fas fa-dumbbell"></i> Services</span>
+                <i class="fas fa-chevron-down"></i>
+            </a>
+            <div class="mobile-submenu">
+                <a href="#" class="mobile-submenu__link">Personal Training</a>
+                <a href="#" class="mobile-submenu__link">Group Classes</a>
+                <a href="#" class="mobile-submenu__link">Cardio Sessions</a>
+                <a href="#" class="mobile-submenu__link">Nutrition Planning</a>
+                <a href="#" class="mobile-submenu__link">Sports Training</a>
+            </div>
+        </div>
+        <div class="mobile-menu__item">
+            <a href="{% url 'membership' %}" class="mobile-menu__link" data-submenu="membership">
+                <span><i class="fas fa-id-card"></i> Membership</span>
+                <i class="fas fa-chevron-down"></i>
+            </a>
+            <div class="mobile-submenu">
+                <a href="#" class="mobile-submenu__link">Starter Plan</a>
+                <a href="#" class="mobile-submenu__link">Gold Plan</a>
+                <a href="#" class="mobile-submenu__link">Platinum Plan</a>
+                <a href="#" class="mobile-submenu__link">Elite Plan</a>
+            </div>
+        </div>
+        <div class="mobile-menu__item">
+            <a href="{% url 'shop' %}" class="mobile-menu__link" data-submenu="shop">
+                <span><i class="fas fa-shopping-cart"></i> Shop</span>
+                <i class="fas fa-chevron-down"></i>
+            </a>
+            <div class="mobile-submenu">
+                <a href="#" class="mobile-submenu__link">Supplements</a>
+                <a href="#" class="mobile-submenu__link">Equipment</a>
+                <a href="#" class="mobile-submenu__link">Apparel</a>
+            </div>
+        </div>
+        <div class="mobile-menu__item">
+            <a href="{% url 'contact' %}" class="mobile-menu__link">
+                <span><i class="fas fa-phone-alt"></i> Contact</span>
+                <i class="fas fa-chevron-right"></i>
+            </a>
+        </div>
+        <!-- User Actions in Mobile Menu -->
+        <div class="mobile-menu__item">
+            {% if user.is_authenticated %}
+                <a href="{% url 'user_dashboard' %}" class="mobile-menu__link">
+                    <span><i class="fas fa-tachometer-alt"></i> Dashboard</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+                <a href="{% url 'logout' %}" class="mobile-menu__link">
+                    <span><i class="fas fa-sign-out-alt"></i> Logout</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            {% else %}
+                <a href="{% url 'login' %}" class="mobile-menu__link">
+                    <span><i class="fas fa-user"></i> Login / Signup</span>
+                    <i class="fas fa-chevron-right"></i>
+                </a>
+            {% endif %}
+        </div>
+    </div>
+</div>
+</body>
+</html>

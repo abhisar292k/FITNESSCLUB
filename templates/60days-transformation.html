@@ -1,0 +1,599 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>60-Day Transformation Challenge - FitLife</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* Reset and Base Styles */
+        body, html {
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #111;
+            color: #fff;
+        }
+
+        /* Hero Section */
+        .hero-section {
+            position: relative;
+            height: 80vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), 
+                       url('https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?w=1600') center/cover;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding-top: 80px; /* Space for the header */
+        }
+
+        .hero-content {
+            max-width: 800px;
+            padding: 0 20px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hero-title {
+            font-size: 5rem;
+            font-weight: 800;
+            margin-bottom: 30px;
+            line-height: 1.1;
+            color: #fff;
+        }
+
+        .hero-description {
+            font-size: 1.2rem;
+            color: rgba(255,255,255,0.9);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .hero-btn {
+            display: inline-block;
+            padding: 15px 30px;
+            background: linear-gradient(135deg, #4CAF50, #95EC6C);
+            color: #fff;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            box-shadow: 0 10px 20px rgba(76, 175, 80, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .hero-btn:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(76, 175, 80, 0.4);
+        }
+
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .particle {
+            position: absolute;
+            display: block;
+            background: rgba(149, 236, 108, 0.2);
+            border-radius: 50%;
+            animation: float 15s infinite ease-in-out;
+        }
+
+        .particle:nth-child(1) {
+            width: 80px;
+            height: 80px;
+            left: 10%;
+            top: 20%;
+            animation-delay: 0s;
+            animation-duration: 20s;
+        }
+
+        .particle:nth-child(2) {
+            width: 120px;
+            height: 120px;
+            left: 70%;
+            top: 30%;
+            animation-delay: 2s;
+            animation-duration: 25s;
+            background: rgba(252, 238, 33, 0.1);
+        }
+
+        .particle:nth-child(3) {
+            width: 60px;
+            height: 60px;
+            left: 30%;
+            top: 60%;
+            animation-delay: 4s;
+            animation-duration: 18s;
+        }
+
+        .particle:nth-child(4) {
+            width: 100px;
+            height: 100px;
+            left: 80%;
+            top: 70%;
+            animation-delay: 6s;
+            animation-duration: 22s;
+            background: rgba(252, 238, 33, 0.1);
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translateY(-60px) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: translateY(0) rotate(360deg);
+                opacity: 0.5;
+            }
+        }
+
+        /* Challenge Progress Section */
+        .challenge-progress {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            margin-top: -50px;
+            position: relative;
+            z-index: 2;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            max-width: 900px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .progress-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #333;
+            margin: 0;
+        }
+
+        .view-options {
+            display: flex;
+            gap: 10px;
+        }
+
+        .view-btn {
+            padding: 8px 15px;
+            background: #4CAF50;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .view-btn:hover {
+            background: #388E3C;
+        }
+
+        .view-btn.inactive {
+            background: #f5f5f5;
+            color: #333;
+        }
+
+        /* Your Progress Section */
+        .your-progress {
+            padding: 60px 0;
+            background: #f9f9f9;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .progress-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+
+        .progress-heading {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 20px;
+        }
+
+        .progress-bar-container {
+            height: 10px;
+            background: #eee;
+            border-radius: 5px;
+            overflow: hidden;
+            margin-top: 10px;
+        }
+
+        .progress-bar-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(135deg, #4CAF50, #95EC6C);
+            border-radius: 5px;
+            transition: width 0.5s ease;
+        }
+
+        /* Week Grid */
+        .week-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .week-card {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .week-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+        }
+
+        .week-header {
+            background: linear-gradient(135deg, #4CAF50, #95EC6C);
+            padding: 15px 20px;
+            color: #fff;
+        }
+
+        .week-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 0;
+        }
+
+        .week-content {
+            padding: 20px;
+        }
+
+        .week-progress-text {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            color: #555;
+        }
+
+        .week-progress-bar {
+            height: 8px;
+            background: #eee;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .week-progress-fill {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(135deg, #4CAF50, #95EC6C);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+
+        .day-list {
+            margin-top: 20px;
+        }
+
+        .day-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+            color: #333;
+            cursor: pointer;
+        }
+
+        .day-item:last-child {
+            border-bottom: none;
+        }
+
+        .day-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .status-icon {
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            color: #fff;
+        }
+
+        .status-pending {
+            background: #FFC107;
+        }
+
+        .status-completed {
+            background: #4CAF50;
+        }
+
+        .complete-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: linear-gradient(135deg, #4CAF50, #95EC6C);
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .complete-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+            
+            .progress-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+            
+            .week-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    {% include 'header.html' %}
+
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="particles">
+            <span class="particle"></span>
+            <span class="particle"></span>
+            <span class="particle"></span>
+            <span class="particle"></span>
+        </div>
+        <div class="hero-content">
+            <h1 class="hero-title">60-Day Transformation Challenge</h1>
+            <p class="hero-description">Transform your body and mind with our comprehensive 60-day fitness program designed to maximize results through progressive training and nutrition guidance.</p>
+            <a href="#join-challenge" class="hero-btn">Join the Challenge</a>
+        </div>
+    </section>
+
+    <!-- Challenge Progress Section -->
+    <div class="container">
+        <div class="challenge-progress">
+            <div class="progress-header">
+                <h2 class="progress-title">Challenge Progress</h2>
+                <div class="view-options">
+                    <button class="view-btn" id="calendar-view">Calendar View</button>
+                    <button class="view-btn inactive" id="list-view">List View</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Your Progress Section -->
+    <section class="your-progress">
+        <div class="container">
+            <div class="progress-container">
+                <h3 class="progress-heading">Your Progress</h3>
+                <p>Overall Completion <span id="completion-percentage">0%</span></p>
+                <div class="progress-bar-container">
+                    <div class="progress-bar-fill" id="overall-progress-bar"></div>
+                </div>
+
+                <div class="week-grid" id="week-grid">
+                    <!-- Week cards will be dynamically inserted here -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Initialize variables
+            const totalWeeks = 8;
+            const daysPerWeek = 7;
+            const totalDays = totalWeeks * daysPerWeek;
+            let completedDays = 0;
+            
+            // Create week data
+            const weeks = [
+                { name: "Week 1: Foundation", days: generateDays(1, 7) },
+                { name: "Week 2: Build", days: generateDays(8, 14) },
+                { name: "Week 3: Intensity", days: generateDays(15, 21) },
+                { name: "Week 4: Power", days: generateDays(22, 28) },
+                { name: "Week 5: Strength", days: generateDays(29, 35) },
+                { name: "Week 6: Endurance", days: generateDays(36, 42) },
+                { name: "Week 7: Sculpt", days: generateDays(43, 49) },
+                { name: "Week 8: Peak", days: generateDays(50, 56) }
+            ];
+            
+            // Generate days for each week
+            function generateDays(start, end) {
+                const days = [];
+                for (let i = start; i <= end; i++) {
+                    days.push({
+                        day: i,
+                        completed: false
+                    });
+                }
+                return days;
+            }
+            
+            // Render week cards
+            function renderWeeks() {
+                const weekGrid = document.getElementById('week-grid');
+                weekGrid.innerHTML = '';
+                
+                weeks.forEach((week, index) => {
+                    const completedInWeek = week.days.filter(day => day.completed).length;
+                    const weekProgress = (completedInWeek / week.days.length) * 100;
+                    
+                    const weekCard = document.createElement('div');
+                    weekCard.className = 'week-card';
+                    weekCard.innerHTML = `
+                        <div class="week-header">
+                            <h4 class="week-title">${week.name}</h4>
+                        </div>
+                        <div class="week-content">
+                            <div class="week-progress-text">
+                                <span>Progress</span>
+                                <span>${completedInWeek}/${week.days.length} days</span>
+                            </div>
+                            <div class="week-progress-bar">
+                                <div class="week-progress-fill" style="width: ${weekProgress}%"></div>
+                            </div>
+                            <div class="day-list">
+                                ${week.days.map(day => `
+                                    <div class="day-item" data-day="${day.day}">
+                                        <span>Day ${day.day}</span>
+                                        <div class="day-status">
+                                            <span class="status-icon ${day.completed ? 'status-completed' : 'status-pending'}">
+                                                ${day.completed ? '<i class="fas fa-check"></i>' : ''}
+                                            </span>
+                                            ${day.completed ? 'Completed' : 'Pending'}
+                                        </div>
+                                    </div>
+                                `).join('')}
+                            </div>
+                            <button class="complete-btn" data-week="${index}">View Workouts</button>
+                        </div>
+                    `;
+                    weekGrid.appendChild(weekCard);
+                });
+                
+                // Add event listeners to complete buttons
+                document.querySelectorAll('.complete-btn').forEach(btn => {
+                    btn.addEventListener('click', function() {
+                        const weekIndex = parseInt(this.getAttribute('data-week'));
+                        viewWorkouts(weekIndex);
+                    });
+                });
+                
+                // Add event listeners to day items
+                document.querySelectorAll('.day-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const dayNumber = parseInt(this.getAttribute('data-day'));
+                        completeDay(dayNumber);
+                    });
+                });
+            }
+            
+            // Function to view workouts for a specific week
+            function viewWorkouts(weekIndex) {
+                alert(`Viewing workouts for ${weeks[weekIndex].name}`);
+                // This would typically navigate to a detailed view of the week's workouts
+            }
+            
+            // Toggle between calendar and list view
+            document.getElementById('calendar-view').addEventListener('click', function() {
+                this.classList.remove('inactive');
+                document.getElementById('list-view').classList.add('inactive');
+                document.getElementById('week-grid').style.display = 'grid';
+            });
+            
+            document.getElementById('list-view').addEventListener('click', function() {
+                this.classList.remove('inactive');
+                document.getElementById('calendar-view').classList.add('inactive');
+                document.getElementById('week-grid').style.display = 'block';
+            });
+            
+            // Mark a day as completed
+            function completeDay(dayNumber) {
+                // Find the day in the weeks array
+                for (const week of weeks) {
+                    const day = week.days.find(d => d.day === dayNumber);
+                    if (day) {
+                        day.completed = !day.completed;
+                        if (day.completed) {
+                            completedDays++;
+                        } else {
+                            completedDays--;
+                        }
+                        break;
+                    }
+                }
+                
+                // Update progress
+                updateProgress();
+                
+                // Re-render weeks
+                renderWeeks();
+                
+                // Save progress to localStorage
+                saveProgress();
+            }
+            
+            // Update overall progress
+            function updateProgress() {
+                const progressPercentage = (completedDays / totalDays) * 100;
+                document.getElementById('completion-percentage').textContent = `${Math.round(progressPercentage)}%`;
+                document.getElementById('overall-progress-bar').style.width = `${progressPercentage}%`;
+            }
+            
+            // Save progress to localStorage
+            function saveProgress() {
+                localStorage.setItem('60dayChallenge', JSON.stringify({
+                    weeks: weeks,
+                    completedDays: completedDays
+                }));
+            }
+            
+            // Load progress from localStorage
+            function loadProgress() {
+                const savedData = localStorage.getItem('60dayChallenge');
+                if (savedData) {
+                    const data = JSON.parse(savedData);
+                    
+                    // Update weeks with saved data
+                    data.weeks.forEach((savedWeek, weekIndex) => {
+                        savedWeek.days.forEach((savedDay, dayIndex) => {
+                            weeks[weekIndex].days[dayIndex].completed = savedDay.completed;
+                        });
+                    });
+                    
+                    completedDays = data.completedDays;
+                    updateProgress();
+                }
+            }
+            
+            // Initialize the page
+            loadProgress();
+            renderWeeks();
+        });
+    </script>
+</body>
+</html> 

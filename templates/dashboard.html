@@ -1,0 +1,3354 @@
+<!DOCTYPE html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="FitnessClub Dashboard - Track your fitness journey with style! 💪">
+    <title>FitnessClub Dashboard 🏋️‍♂️</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Poppins:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Dark theme and animation styles */
+        :root {
+            /* Primary colors as specified */
+            --primary: #4caf50;
+            --primary-light: #81c784;
+            --primary-dark: #2e7d32;
+            --secondary: #ffc107;
+            --secondary-light: #ffdb58;
+            --secondary-dark: #ff8f00;
+            
+            /* UI colors - updated for dark theme */
+            --bg-main: #000000;
+            --bg-card: #121212;
+            --bg-darker: #0a0a0a;
+            --text-dark: #e0e0e0;
+            --text-medium: #b0b0b0;
+            --text-light: #909090;
+            --text-white: #ffffff;
+            --border-light: #2a2a2a;
+            
+            /* Feedback colors */
+            --success: #4caf50;
+            --warning: #ffc107;
+            --danger: #ef4444;
+            --info: #3b82f6;
+            
+            /* Effects */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.2);
+            --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.3);
+            --shadow-lg: 0 8px 15px rgba(0, 0, 0, 0.4);
+            --shadow-xl: 0 12px 25px rgba(0, 0, 0, 0.5);
+            
+            /* Glow effects */
+            --glow-primary: 0 0 15px rgba(76, 175, 80, 0.5);
+            --glow-secondary: 0 0 15px rgba(255, 193, 7, 0.5);
+            
+            /* Spacing */
+            --spacing-1: 0.25rem;
+            --spacing-2: 0.5rem;
+            --spacing-3: 0.75rem;
+            --spacing-4: 1rem;
+            --spacing-6: 1.5rem;
+            --spacing-8: 2rem;
+            --spacing-12: 3rem;
+            
+            /* Border radius */
+            --radius-sm: 0.375rem;
+            --radius-md: 0.5rem;
+            --radius-lg: 0.75rem;
+            --radius-xl: 1rem;
+            --radius-full: 9999px;
+            
+            /* Transitions */
+            --transition-fast: 150ms cubic-bezier(0.4, 0, 0.2, 1);
+            --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+        
+        body {
+            background-color: var(--bg-main);
+            color: var(--text-dark);
+            font-size: 16px;
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            position: relative;
+            overflow-x: hidden;
+        }
+        
+        /* Background Animation */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 15% 30%, rgba(76, 175, 80, 0.08) 0%, transparent 25%),
+                radial-gradient(circle at 85% 70%, rgba(255, 193, 7, 0.08) 0%, transparent 25%);
+            z-index: -2;
+        }
+        
+        @keyframes floatingOrbs {
+            0% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+            25% { transform: translate(-10px, 10px) scale(1.05); opacity: 0.7; }
+            50% { transform: translate(10px, 20px) scale(1); opacity: 0.5; }
+            75% { transform: translate(0, -10px) scale(0.95); opacity: 0.7; }
+            100% { transform: translate(0, 0) scale(1); opacity: 0.5; }
+        }
+        
+        .animated-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            overflow: hidden;
+        }
+        
+        .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(60px);
+            opacity: 0.5;
+            animation: floatingOrbs 20s ease-in-out infinite;
+        }
+        
+        .orb-1 {
+            width: 400px;
+            height: 400px;
+            background-color: rgba(76, 175, 80, 0.1);
+            top: -100px;
+            left: -100px;
+            animation-delay: 0s;
+        }
+        
+        .orb-2 {
+            width: 300px;
+            height: 300px;
+            background-color: rgba(255, 193, 7, 0.1);
+            bottom: -50px;
+            right: -50px;
+            animation-delay: -5s;
+        }
+        
+        .orb-3 {
+            width: 200px;
+            height: 200px;
+            background-color: rgba(76, 175, 80, 0.1);
+            bottom: 30%;
+            left: 10%;
+            animation-delay: -10s;
+        }
+        
+        .orb-4 {
+            width: 250px;
+            height: 250px;
+            background-color: rgba(255, 193, 7, 0.1);
+            top: 20%;
+            right: 10%;
+            animation-delay: -15s;
+        }
+        
+        /* Layout */
+        .app {
+            display: flex;
+            min-height: 100vh;
+        }
+        
+        /* Sidebar */
+        .sidebar {
+            width: 280px;
+            background-color: var(--bg-darker);
+            border-right: 1px solid var(--border-light);
+            display: flex;
+            flex-direction: column;
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 100vh;
+            z-index: 30;
+            transition: transform var(--transition-normal);
+        }
+        
+        .sidebar-header {
+            padding: var(--spacing-6);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+        }
+        
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background-color: var(--primary);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+            font-size: 1.5rem;
+        }
+        
+        .logo-text {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.25rem;
+            color: var(--text-dark);
+        }
+        
+        .nav {
+            padding: var(--spacing-4);
+            flex: 1;
+            overflow-y: auto;
+            scrollbar-width: thin; /* For Firefox */
+            scrollbar-color: var(--primary-dark) var(--bg-darker); /* For Firefox */
+        }
+        
+        /* Custom scrollbar for Webkit browsers (Chrome, Safari, Edge) */
+        .nav::-webkit-scrollbar {
+            width: 6px;
+        }
+        
+        .nav::-webkit-scrollbar-track {
+            background-color: var(--bg-darker);
+            border-radius: var(--radius-full);
+        }
+        
+        .nav::-webkit-scrollbar-thumb {
+            background-color: rgba(76, 175, 80, 0.3);
+            border-radius: var(--radius-full);
+        }
+        
+        .nav::-webkit-scrollbar-thumb:hover {
+            background-color: var(--primary);
+        }
+        
+        .nav-section {
+            margin-bottom: var(--spacing-6);
+        }
+        
+        .nav-heading {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-light);
+            padding: var(--spacing-3) var(--spacing-4);
+        }
+        
+        .nav-list {
+            list-style: none;
+        }
+        
+        .nav-item {
+            margin-bottom: var(--spacing-1);
+        }
+        
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            padding: var(--spacing-3) var(--spacing-4);
+            border-radius: var(--radius-md);
+            color: var(--text-medium);
+            font-weight: 500;
+            text-decoration: none;
+            transition: all var(--transition-fast);
+        }
+        
+        .nav-link:hover {
+            background-color: rgba(76, 175, 80, 0.05);
+            color: var(--primary);
+        }
+        
+        .nav-link.active {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .nav-link i {
+            font-size: 1.15rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .sidebar-footer {
+            padding: var(--spacing-4);
+            border-top: 1px solid var(--border-light);
+        }
+        
+        .user-menu {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            padding: var(--spacing-3);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: background-color var(--transition-fast);
+        }
+        
+        .user-menu:hover {
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+        
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            object-fit: cover;
+            border: 2px solid var(--primary-light);
+        }
+        
+        .user-info {
+            flex: 1;
+            min-width: 0;
+        }
+        
+        .user-name {
+            font-weight: 600;
+            font-size: 0.9375rem;
+            color: var(--text-dark);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        .user-email {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+        
+        /* Main Content */
+        .main {
+            flex: 1;
+            margin-left: 280px;
+            padding: var(--spacing-6);
+            max-width: 1400px;
+        }
+        
+        .header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .page-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.875rem;
+            font-weight: 700;
+            color: var(--text-dark);
+        }
+        
+        .page-title span {
+            display: block;
+            font-size: 1rem;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-top: var(--spacing-1);
+        }
+        
+        .header-actions {
+            display: flex;
+            gap: var(--spacing-3);
+        }
+        
+        .header-btn {
+            position: relative;
+            width: 42px;
+            height: 42px;
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .header-btn:hover {
+            background-color: var(--primary);
+            color: var(--text-white);
+            border-color: var(--primary);
+        }
+        
+        .header-btn .badge {
+            position: absolute;
+            top: -6px;
+            right: -6px;
+            background-color: var(--secondary);
+            color: var(--text-dark);
+            font-size: 0.75rem;
+            font-weight: 600;
+            min-width: 20px;
+            height: 20px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 var(--spacing-1);
+        }
+        
+        /* Profile Card */
+        .profile-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            margin-bottom: var(--spacing-8);
+            overflow: hidden;
+        }
+        
+        .profile-header {
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary), var(--secondary));
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .profile-header::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 200%;
+            height: 100%;
+            background: linear-gradient(90deg, 
+                rgba(76, 175, 80, 0.5) 0%, 
+                rgba(255, 193, 7, 0.5) 50%, 
+                rgba(76, 175, 80, 0.5) 100%);
+            animation: shimmer 8s linear infinite;
+        }
+        
+        @keyframes shimmer {
+            0% { transform: translateX(-50%); }
+            100% { transform: translateX(0%); }
+        }
+        
+        .profile-body {
+            padding: var(--spacing-8) var(--spacing-6) var(--spacing-6);
+            display: grid;
+            grid-template-columns: auto 1fr auto;
+            gap: var(--spacing-6);
+            position: relative;
+        }
+        
+        .profile-avatar-wrapper {
+            position: absolute;
+            top: -60px;
+            left: var(--spacing-6);
+            width: 120px;
+            height: 120px;
+            border-radius: var(--radius-full);
+            border: 4px solid var(--bg-card);
+            overflow: hidden;
+            background-color: var(--bg-card);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .profile-avatar-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .upload-avatar {
+            position: absolute;
+            bottom: 5px;
+            right: 5px;
+            width: 32px;
+            height: 32px;
+            background-color: var(--secondary);
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-dark);
+            border: 2px solid var(--bg-card);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .upload-avatar:hover {
+            background-color: var(--secondary-dark);
+            color: var(--text-white);
+        }
+        
+        .profile-info {
+            padding-top: 60px;
+        }
+        
+        .profile-name {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-3);
+        }
+        
+        .profile-detail {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            margin-bottom: var(--spacing-3);
+            color: var(--text-medium);
+        }
+        
+        .profile-detail i {
+            color: var(--primary);
+            width: 16px;
+            text-align: center;
+        }
+        
+        .profile-actions {
+            display: flex;
+            flex-direction: column;
+            gap: var(--spacing-3);
+            padding-top: 60px;
+        }
+        
+        .progress-circle {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: var(--spacing-3);
+        }
+        
+        .progress-svg {
+            transform: rotate(-90deg);
+            width: 100%;
+            height: 100%;
+        }
+        
+        .progress-track {
+            stroke: #f0f0f0;
+            stroke-width: 8;
+            fill: none;
+        }
+        
+        .progress-fill {
+            stroke: var(--primary);
+            stroke-width: 8;
+            fill: none;
+            stroke-linecap: round;
+            transition: stroke-dashoffset 1s ease;
+        }
+        
+        .progress-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+        
+        .progress-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            line-height: 1;
+        }
+        
+        .progress-label {
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+        
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-2);
+            padding: var(--spacing-3) var(--spacing-6);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 0.9375rem;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            white-space: nowrap;
+            text-decoration: none;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary);
+            color: var(--text-white);
+            border: none;
+        }
+        
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 1px solid var(--border-light);
+            color: var(--text-medium);
+        }
+        
+        .btn-outline:hover {
+            border-color: var(--text-medium);
+            color: var(--text-dark);
+        }
+        
+        .btn-danger {
+            background-color: transparent;
+            color: var(--danger);
+            border: 1px solid var(--danger);
+        }
+        
+        .btn-danger:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+        }
+        
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .stat-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-6);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--glow-primary);
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-white);
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .stat-icon.primary {
+            background-color: var(--primary);
+        }
+        
+        .stat-icon.secondary {
+            background-color: var(--secondary);
+        }
+        
+        .stat-icon.info {
+            background-color: var(--info);
+        }
+        
+        .stat-label {
+            font-size: 0.875rem;
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .stat-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .stat-value .unit {
+            font-size: 1rem;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+        
+        .stat-trend {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-1);
+            padding: var(--spacing-1) var(--spacing-2);
+            border-radius: var(--radius-md);
+            font-size: 0.75rem;
+            font-weight: 600;
+        }
+        
+        .stat-trend.up {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+        }
+        
+        .stat-trend.down {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        
+        /* Charts Section */
+        .charts-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: var(--spacing-6);
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .chart-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-6);
+        }
+        
+        .chart-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--spacing-6);
+        }
+        
+        .chart-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+        }
+        
+        .chart-title i {
+            color: var(--primary);
+        }
+        
+        .chart-actions {
+            display: flex;
+            gap: var(--spacing-2);
+        }
+        
+        .chart-btn {
+            width: 32px;
+            height: 32px;
+            background-color: transparent;
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .chart-btn:hover {
+            background-color: var(--primary);
+            color: var(--text-white);
+            border-color: var(--primary);
+        }
+        
+        .chart-container {
+            width: 100%;
+            height: 300px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .chart-placeholder {
+            width: 100%;
+            height: 100%;
+            border-radius: var(--radius-md);
+            object-fit: cover;
+        }
+        
+        /* Activity Feed */
+        .activity-card {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .activity-list {
+            flex: 1;
+            overflow-y: auto;
+        }
+        
+        .activity-item {
+            display: flex;
+            gap: var(--spacing-3);
+            padding: var(--spacing-3) 0;
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .activity-item:last-child {
+            border-bottom: none;
+        }
+        
+        .activity-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+        
+        .activity-icon.workout {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary);
+        }
+        
+        .activity-icon.achievement {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--secondary-dark);
+        }
+        
+        .activity-icon.nutrition {
+            background-color: rgba(59, 130, 246, 0.1);
+            color: var(--info);
+        }
+        
+        .activity-content {
+            flex: 1;
+        }
+        
+        .activity-title {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-1);
+        }
+        
+        .activity-time {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-1);
+        }
+        
+        /* Edit Profile Modal */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 50;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity var(--transition-normal), visibility var(--transition-normal);
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-xl);
+            width: 90%;
+            max-width: 500px;
+            max-height: 90vh;
+            overflow-y: auto;
+            transform: translateY(20px);
+            opacity: 0;
+            transition: transform var(--transition-normal), opacity var(--transition-normal);
+        }
+        
+        .modal-overlay.active .modal {
+            transform: translateY(0);
+            opacity: 1;
+        }
+        
+        .modal-header {
+            padding: var(--spacing-6);
+            border-bottom: 1px solid var(--border-light);
+            position: relative;
+        }
+        
+        .modal-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+        }
+        
+        .modal-title i {
+            color: var(--primary);
+        }
+        
+        .modal-close {
+            position: absolute;
+            top: var(--spacing-6);
+            right: var(--spacing-6);
+            width: 32px;
+            height: 32px;
+            background-color: transparent;
+            border: none;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .modal-close:hover {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+        }
+        
+        .modal-body {
+            padding: var(--spacing-6);
+        }
+        
+        .form-group {
+            margin-bottom: var(--spacing-4);
+        }
+        
+        .form-label {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            font-weight: 500;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .form-label i {
+            color: var(--primary);
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: var(--spacing-3);
+            border: 1px solid var(--border-light);
+            border-radius: var(--radius-md);
+            background-color: var(--bg-darker);
+            color: var(--text-dark);
+            font-size: 0.9375rem;
+            transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        
+        .form-control::placeholder {
+            color: var(--text-light);
+        }
+        
+        .modal-footer {
+            padding: var(--spacing-6);
+            border-top: 1px solid var(--border-light);
+            display: flex;
+            justify-content: flex-end;
+            gap: var(--spacing-3);
+        }
+        
+        /* Message alerts */
+        .message {
+            padding: var(--spacing-3) var(--spacing-4);
+            border-radius: var(--radius-md);
+            margin-bottom: var(--spacing-4);
+            font-size: 0.9375rem;
+        }
+        
+        .message.success {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--success);
+            border-left: 4px solid var(--success);
+        }
+        
+        .message.error {
+            background-color: rgba(239, 68, 68, 0.1);
+            color: var(--danger);
+            border-left: 4px solid var(--danger);
+        }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .charts-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar.open {
+                transform: translateX(0);
+            }
+            
+            .main {
+                margin-left: 0;
+                padding: var(--spacing-4);
+            }
+            
+            .profile-body {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .profile-avatar-wrapper {
+                position: relative;
+                top: -80px;
+                left: 50%;
+                transform: translateX(-50%);
+                margin-bottom: -60px;
+            }
+            
+            .profile-info {
+                padding-top: 0;
+            }
+            
+            .profile-detail {
+                justify-content: center;
+            }
+            
+            .profile-actions {
+                padding-top: 0;
+            }
+            
+            .progress-circle {
+                margin: 0 auto var(--spacing-3);
+            }
+        }
+        
+        .mobile-menu-btn {
+            position: fixed;
+            bottom: var(--spacing-4);
+            right: var(--spacing-4);
+            width: 56px;
+            height: 56px;
+            background-color: var(--primary);
+            color: var(--text-white);
+            border-radius: var(--radius-full);
+            display: none;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            z-index: 40;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            border: none;
+        }
+        
+        @media (max-width: 768px) {
+            .mobile-menu-btn {
+                display: flex;
+            }
+        }
+        
+        /* Class Schedule Section */
+        .schedule-section {
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-4);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-2);
+        }
+        
+        .section-title i {
+            color: var(--primary);
+        }
+        
+        .class-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-4);
+        }
+        
+        .class-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-4);
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-4);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        
+        .class-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow-primary);
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+        
+        .class-time {
+            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+            color: var(--text-white);
+            padding: var(--spacing-3);
+            border-radius: var(--radius-md);
+            text-align: center;
+            min-width: 70px;
+        }
+        
+        .class-time .day {
+            font-weight: 700;
+            font-size: 0.875rem;
+            margin-bottom: var(--spacing-1);
+        }
+        
+        .class-time .time {
+            font-size: 0.75rem;
+            opacity: 0.9;
+        }
+        
+        .class-info {
+            flex: 1;
+        }
+        
+        .class-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-1);
+        }
+        
+        .class-details {
+            display: flex;
+            flex-wrap: wrap;
+            gap: var(--spacing-3);
+            font-size: 0.75rem;
+            color: var(--text-medium);
+        }
+        
+        .class-details span {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-1);
+        }
+        
+        .class-action {
+            margin-left: auto;
+        }
+        
+        .btn-book {
+            width: 36px;
+            height: 36px;
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary);
+            border: none;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .btn-book:hover {
+            background-color: var(--primary);
+            color: var(--text-white);
+        }
+        
+        /* Nutrition Summary */
+        .nutrition-summary {
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .nutrition-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: var(--spacing-4);
+        }
+        
+        .nutrition-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-4);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-3);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        
+        .nutrition-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow-primary);
+            border-color: rgba(76, 175, 80, 0.3);
+        }
+        
+        .nutrition-icon {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary);
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.125rem;
+        }
+        
+        .nutrition-data {
+            flex: 1;
+        }
+        
+        .nutrition-value {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-1);
+        }
+        
+        .nutrition-value span {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-light);
+        }
+        
+        .nutrition-label {
+            font-size: 0.875rem;
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .nutrition-progress {
+            background-color: rgba(255, 255, 255, 0.1);
+            height: 8px;
+        }
+        
+        .nutrition-bar {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nutrition-bar::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(90deg, 
+                transparent 0%, 
+                rgba(255, 255, 255, 0.2) 50%, 
+                transparent 100%);
+            animation: shimmer 2s linear infinite;
+        }
+        
+        .nutrition-target {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            text-align: right;
+        }
+        
+        /* Glowing elements */
+        .stat-icon::after,
+        .activity-icon::after,
+        .nutrition-icon::after,
+        .class-time::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            border-radius: inherit;
+            z-index: -1;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .stat-icon:hover::after,
+        .activity-icon:hover::after,
+        .nutrition-icon:hover::after,
+        .class-time:hover::after {
+            opacity: 1;
+        }
+        
+        .stat-icon.primary::after,
+        .activity-icon.workout::after,
+        .nutrition-icon::after {
+            box-shadow: var(--glow-primary);
+        }
+        
+        .stat-icon.secondary::after,
+        .activity-icon.achievement::after {
+            box-shadow: var(--glow-secondary);
+        }
+        
+        /* Button improvements */
+        .btn-primary,
+        .mobile-menu-btn {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .btn-primary::after,
+        .mobile-menu-btn::after {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        
+        .btn-primary:hover::after,
+        .mobile-menu-btn:hover::after {
+            opacity: 1;
+            animation: pulse 2s ease infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.3; }
+            50% { transform: scale(1.2); opacity: 0.5; }
+            100% { transform: scale(0.8); opacity: 0.3; }
+        }
+        
+        /* Dark theme form updates */
+        .form-control {
+            background-color: var(--bg-darker);
+            color: var(--text-dark);
+            border-color: var(--border-light);
+        }
+        
+        .form-control:focus {
+            background-color: var(--bg-darker);
+            box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+        }
+        
+        /* Modal updates for dark theme */
+        .modal {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-light);
+        }
+        
+        /* Waving hand animation */
+        @keyframes wave {
+            0% { transform: rotate(0deg); }
+            10% { transform: rotate(14deg); }
+            20% { transform: rotate(-8deg); }
+            30% { transform: rotate(14deg); }
+            40% { transform: rotate(-4deg); }
+            50% { transform: rotate(10deg); }
+            60% { transform: rotate(0deg); }
+            100% { transform: rotate(0deg); }
+        }
+        
+        .wave {
+            display: inline-block;
+            animation: wave 2.5s infinite;
+            transform-origin: 70% 70%;
+            font-size: 1.5em;
+            margin-left: 0.3em;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.3);
+        }
+        
+        /* Stylish welcome text */
+        .welcome-text {
+            display: flex;
+            align-items: baseline;
+            flex-wrap: wrap;
+            gap: var(--spacing-2);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .greeting {
+            font-weight: 400;
+            color: var(--text-medium);
+            font-size: 1.5rem;
+        }
+        
+        .user-highlight {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 2rem;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-fill-color: transparent;
+            position: relative;
+            display: inline-block;
+        }
+        
+        .user-highlight::after {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 4px;
+            bottom: -4px;
+            left: 0;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--radius-full);
+            transform: scaleX(0);
+            transform-origin: bottom right;
+            transition: transform 0.5s ease-out;
+        }
+        
+        .page-title:hover .user-highlight::after {
+            transform: scaleX(1);
+            transform-origin: bottom left;
+        }
+        
+        /* Update datetime display styling for better vertical alignment */
+        .datetime-display {
+            display: flex;
+            flex-direction: column;
+            font-size: 0.9rem;
+            font-weight: 400;
+            color: var(--text-light);
+            margin-top: var(--spacing-2);
+            line-height: 1.3;
+            position: relative;
+            padding-left: var(--spacing-3);
+        }
+        
+        .datetime-display::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: linear-gradient(to bottom, var(--primary), var(--secondary));
+            border-radius: var(--radius-full);
+        }
+        
+        #current-date, #current-time {
+            display: block;
+            position: relative;
+        }
+        
+        #current-time {
+            font-family: 'Inter', monospace;
+            color: var(--primary-light);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Tips Section - Updated */
+        .tips-section {
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .tips-carousel {
+            position: relative;
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        
+        .tip-card {
+            display: none; /* Initially hide all cards */
+            flex-direction: column;
+            transition: transform var(--transition-normal);
+        }
+        
+        .tip-card.active {
+            display: flex; /* Show only active card */
+        }
+        
+        .tip-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .tip-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .tip-card:hover .tip-image img {
+            transform: scale(1.05);
+        }
+        
+        .tip-content {
+            padding: var(--spacing-6);
+        }
+        
+        .tip-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .tip-text {
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-4);
+            line-height: 1.6;
+        }
+        
+        .tip-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .tip-link:hover {
+            color: var(--secondary);
+        }
+        
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-4);
+            border-top: 1px solid var(--border-light);
+        }
+        
+        .carousel-btn {
+            background: transparent;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .carousel-btn:hover {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary);
+        }
+        
+        .carousel-dots {
+            display: flex;
+            gap: var(--spacing-1);
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: var(--radius-full);
+            background-color: var(--text-light);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+        
+        .dot.active {
+            width: 24px;
+            background-color: var(--primary);
+        }
+        
+        /* Workout Plan Section */
+        .workout-plan-section {
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .workout-plan-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: var(--spacing-4);
+        }
+        
+        .workout-day-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-4);
+            position: relative;
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+        }
+        
+        .workout-day-card:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow-primary);
+        }
+        
+        .workout-day-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: var(--spacing-3);
+            padding-bottom: var(--spacing-3);
+            border-bottom: 1px solid var(--border-light);
+        }
+        
+        .day-name {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+            font-size: 1.125rem;
+            color: var(--text-dark);
+        }
+        
+        .workout-type {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            padding: var(--spacing-1) var(--spacing-3);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-white);
+        }
+        
+        .workout-exercises {
+            list-style: none;
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .exercise-item {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            padding: var(--spacing-2) 0;
+            color: var(--text-medium);
+            font-size: 0.9375rem;
+            position: relative;
+        }
+        
+        .exercise-item i {
+            color: var(--primary);
+            font-size: 0.875rem;
+        }
+        
+        .exercise-detail {
+            margin-left: auto;
+            font-size: 0.75rem;
+            color: var(--text-light);
+            font-weight: 500;
+        }
+        
+        .btn-workout-details {
+            position: absolute;
+            bottom: var(--spacing-4);
+            right: var(--spacing-4);
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-full);
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary);
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .btn-workout-details:hover {
+            background-color: var(--primary);
+            color: var(--text-white);
+        }
+        
+        /* Achievements Section */
+        .achievements-section {
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .achievements-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: var(--spacing-4);
+        }
+        
+        .achievement-card {
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            padding: var(--spacing-4);
+            display: flex;
+            align-items: flex-start;
+            gap: var(--spacing-3);
+            transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+            position: relative;
+        }
+        
+        .achievement-card.unlocked:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--glow-secondary);
+        }
+        
+        .achievement-card.locked {
+            opacity: 0.7;
+        }
+        
+        .achievement-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            flex-shrink: 0;
+        }
+        
+        .achievement-card.unlocked .achievement-icon {
+            background-color: rgba(255, 193, 7, 0.1);
+            color: var(--secondary);
+        }
+        
+        .achievement-card.locked .achievement-icon {
+            background-color: rgba(255, 255, 255, 0.05);
+            color: var(--text-light);
+        }
+        
+        .achievement-info {
+            flex: 1;
+        }
+        
+        .achievement-name {
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-1);
+        }
+        
+        .achievement-desc {
+            font-size: 0.8125rem;
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .achievement-date {
+            position: absolute;
+            top: var(--spacing-4);
+            right: var(--spacing-4);
+            font-size: 0.75rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+        
+        .achievement-progress {
+            background-color: rgba(255, 255, 255, 0.1);
+            height: 6px;
+            border-radius: var(--radius-full);
+            overflow: hidden;
+            margin-bottom: var(--spacing-1);
+            position: relative;
+        }
+        
+        .progress-bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary) 0%, var(--secondary) 100%);
+            border-radius: var(--radius-full);
+        }
+        
+        .achievement-progress span {
+            position: absolute;
+            top: -20px;
+            right: 0;
+            font-size: 0.75rem;
+            color: var(--text-light);
+        }
+        
+        /* Tips Section */
+        .tips-section {
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .tips-carousel {
+            position: relative;
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-md);
+            overflow: hidden;
+        }
+        
+        .tip-card {
+            display: none; /* Initially hide all cards */
+            flex-direction: column;
+            transition: transform var(--transition-normal);
+        }
+        
+        .tip-card.active {
+            display: flex; /* Show only active card */
+        }
+        
+        .tip-image {
+            width: 100%;
+            height: 200px;
+            overflow: hidden;
+        }
+        
+        .tip-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .tip-card:hover .tip-image img {
+            transform: scale(1.05);
+        }
+        
+        .tip-content {
+            padding: var(--spacing-6);
+        }
+        
+        .tip-title {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: var(--spacing-2);
+        }
+        
+        .tip-text {
+            color: var(--text-medium);
+            margin-bottom: var(--spacing-4);
+            line-height: 1.6;
+        }
+        
+        .tip-link {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--spacing-2);
+            color: var(--primary);
+            font-weight: 600;
+            text-decoration: none;
+            transition: color var(--transition-fast);
+        }
+        
+        .tip-link:hover {
+            color: var(--secondary);
+        }
+        
+        .carousel-controls {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--spacing-4);
+            border-top: 1px solid var(--border-light);
+        }
+        
+        .carousel-btn {
+            background: transparent;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-medium);
+            cursor: pointer;
+            transition: all var(--transition-fast);
+        }
+        
+        .carousel-btn:hover {
+            background-color: rgba(76, 175, 80, 0.1);
+            color: var(--primary);
+        }
+        
+        .carousel-dots {
+            display: flex;
+            gap: var(--spacing-1);
+        }
+        
+        .dot {
+            width: 8px;
+            height: 8px;
+            border-radius: var(--radius-full);
+            background-color: var(--text-light);
+            transition: all var(--transition-fast);
+            cursor: pointer;
+        }
+        
+        .dot.active {
+            width: 24px;
+            background-color: var(--primary);
+        }
+        
+        /* Share Achievement Button */
+        .share-achievement {
+            position: relative;
+            margin-bottom: var(--spacing-8);
+        }
+        
+        .btn-share {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-2);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--text-white);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: var(--spacing-3) var(--spacing-6);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-share:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .share-dropdown {
+            position: absolute;
+            top: 100%;
+            right: 0;
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-2);
+            width: 200px;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: all var(--transition-fast);
+        }
+        
+        .share-achievement:hover .share-dropdown,
+        .btn-share:focus + .share-dropdown {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(5px);
+        }
+        
+        .share-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            padding: var(--spacing-3) var(--spacing-4);
+            color: var(--text-medium);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+        
+        .share-option:hover {
+            background-color: rgba(76, 175, 80, 0.05);
+        }
+        
+        .share-option i {
+            width: 20px;
+            text-align: center;
+        }
+        
+        .share-option.facebook i {
+            color: #4267B2;
+        }
+        
+        .share-option.twitter i {
+            color: #1DA1F2;
+        }
+        
+        .share-option.instagram i {
+            color: #E1306C;
+        }
+        
+        .share-option.whatsapp i {
+            color: #25D366;
+        }
+        
+        /* Responsive adjustments */
+        @media (max-width: 1024px) {
+            .workout-plan-grid,
+            .achievements-grid {
+                grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .workout-plan-grid,
+            .achievements-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .share-achievement {
+                display: flex;
+                justify-content: center;
+            }
+            
+            .share-dropdown {
+                left: 50%;
+                right: auto;
+                transform: translateX(-50%) translateY(10px);
+            }
+            
+            .share-achievement:hover .share-dropdown,
+            .btn-share:focus + .share-dropdown {
+                transform: translateX(-50%) translateY(5px);
+            }
+        }
+        
+        /* Share Progress Button - Updated */
+        .share-section {
+            margin-bottom: var(--spacing-8);
+            display: flex;
+            justify-content: center;
+        }
+        
+        .share-container {
+            position: relative;
+            display: inline-block;
+        }
+        
+        .btn-share {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--spacing-2);
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            color: var(--text-white);
+            border: none;
+            border-radius: var(--radius-md);
+            padding: var(--spacing-3) var(--spacing-6);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all var(--transition-fast);
+            box-shadow: var(--shadow-md);
+        }
+        
+        .btn-share:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .share-options {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--bg-card);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-lg);
+            padding: var(--spacing-2);
+            width: 220px;
+            z-index: 10;
+            opacity: 0;
+            visibility: hidden;
+            transition: all var(--transition-normal);
+            border: 1px solid var(--border-light);
+        }
+        
+        .share-options.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .share-options::before {
+            content: '';
+            position: absolute;
+            top: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 0;
+            height: 0;
+            border-left: 10px solid transparent;
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid var(--bg-card);
+        }
+        
+        .share-option {
+            display: flex;
+            align-items: center;
+            gap: var(--spacing-3);
+            padding: var(--spacing-3) var(--spacing-4);
+            color: var(--text-medium);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all var(--transition-fast);
+        }
+        
+        .share-option:hover {
+            background-color: rgba(76, 175, 80, 0.05);
+            color: var(--text-dark);
+        }
+        
+        .share-option i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.125rem;
+        }
+        
+        .share-option.facebook i {
+            color: #4267B2;
+        }
+        
+        .share-option.twitter i {
+            color: #1DA1F2;
+        }
+        
+        .share-option.instagram i {
+            color: #E1306C;
+        }
+        
+        .share-option.whatsapp i {
+            color: #25D366;
+        }
+        
+        @media (max-width: 768px) {
+            .share-options {
+                width: 200px;
+            }
+        }
+
+        /* Add these responsive styles to your existing CSS */
+        .share-options {
+            position: absolute;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            max-width: 300px;
+            width: 100%;
+        }
+
+        .share-options.active {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .share-option {
+            padding: 12px 15px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            transition: background-color 0.2s;
+        }
+
+        .share-option:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .share-option i {
+            margin-right: 10px;
+        }
+        
+        /* Modal styles for Instagram and error messages */
+        .share-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+        
+        .share-modal-content {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 90%;
+            width: 400px;
+        }
+        
+        .share-modal-buttons {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 15px;
+            gap: 10px;
+        }
+        
+        .share-modal-buttons button {
+            padding: 8px 15px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        
+        .primary-button {
+            background-color: #007bff;
+            color: white;
+        }
+        
+        /* Media queries for responsive design */
+        @media (max-width: 768px) {
+            .share-options {
+                max-width: 250px;
+            }
+            
+            .share-option {
+                padding: 10px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .share-modal-content {
+                width: 85%;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="animated-bg">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+        <div class="orb orb-4"></div>
+    </div>
+    <div class="app">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <div class="logo">
+                    <div class="logo-icon">
+                        <i class="fas fa-dumbbell"></i>
+                    </div>
+                    <div class="logo-text">Fitness<span style="color: var(--secondary); -webkit-text-fill-color: var(--secondary);">Club</span></div>
+                </div>
+            </div>
+            
+            <nav class="nav">
+                <!-- Sidebar nav links -->
+                <div class="nav-section">
+                    <div class="nav-heading">Main</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="{% url 'hero' %}" class="nav-link">
+                                <i class="fas fa-home"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="{% url 'user_dashboard' %}" class="nav-link active">
+                                <i class="fas fa-th-large"></i>
+                                <span>Dashboard</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="fas fa-calendar-alt"></i>
+                                <span>Calendar</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="fas fa-dumbbell"></i>
+                                <span>Workouts</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="fas fa-utensils"></i>
+                                <span>Nutrition</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="nav-section">
+                    <div class="nav-heading">Fitness</div>
+                    <ul class="nav-list">
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="fas fa-chart-line"></i>
+                                <span>Progress</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="fas fa-medal"></i>
+                                <span>Challenges</span>
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a href="" class="nav-link">
+                                <i class="fas fa-users"></i>
+                                <span>Community</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="user-menu">
+                    <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}https://via.placeholder.com/40?text=User{% endif %}" alt="User profile" class="user-avatar">
+                    <div class="user-info">
+                        <div class="user-name">{{ user.full_name }}</div>
+                        <div class="user-email">{{ user.email }}</div>
+                    </div>
+                    <i class="fas fa-chevron-down"></i>
+                </div>
+            </div>
+        </aside>
+        
+        <!-- Main Content -->
+        <main class="main">
+            <header class="header">
+                <h1 class="page-title">
+                    <div class="welcome-text">
+                        <span class="greeting">Welcome,</span>
+                        <span class="user-highlight">{{ user.full_name }}</span>
+                        <span class="wave">👋</span>
+                    </div>
+                    <span class="datetime-display">
+                        <span id="current-date">Saturday, 22 March 2024</span>
+                        <span id="current-time">12:00:00 PM IST</span>
+                    </span>
+                </h1>
+                <div class="header-actions">
+                    <button class="header-btn">
+                        <i class="fas fa-bell"></i>
+                        <span class="badge">3</span>
+                    </button>
+                    <button class="header-btn">
+                        <i class="fas fa-cog"></i>
+                    </button>
+                </div>
+            </header>
+            
+            <!-- Profile Card -->
+            <section class="profile-card">
+                <div class="profile-header"></div>
+                <div class="profile-body">
+                    <div class="profile-avatar-wrapper">
+                        <img src="{% if user.profile_image %}{{ user.profile_image.url }}{% else %}https://via.placeholder.com/120?text=User{% endif %}" alt="Profile picture" class="profile-avatar-image">
+                        <label class="upload-avatar" for="profile_image">
+                            <i class="fas fa-camera"></i>
+                            <input type="file" id="profile_image" name="profile_image" accept="image/*" style="display: none;">
+                        </label>
+                    </div>
+                    
+                    <div class="profile-info">
+                        <h2 class="profile-name">{{ user.full_name }}</h2>
+                        <div class="profile-detail">
+                            <i class="fas fa-envelope"></i>
+                            <span>{{ user.email }}</span>
+                        </div>
+                        <div class="profile-detail">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>{{ user.location|default:"Not set" }}</span>
+                        </div>
+                        <div class="profile-detail">
+                            <i class="fas fa-bullseye"></i>
+                            <span>Fitness Goal: {{ user.fitness_goal|default:"Not set" }}</span>
+                        </div>
+                    </div>
+                    
+                    <div class="profile-actions">
+                        <div class="progress-circle">
+                            <svg class="progress-svg" viewBox="0 0 100 100">
+                                <circle class="progress-track" cx="50" cy="50" r="46" />
+                                <circle class="progress-fill" cx="50" cy="50" r="46" stroke-dasharray="289.27" stroke-dashoffset="144.635" />
+                            </svg>
+                            <div class="progress-text">
+                                <div class="progress-value">50%</div>
+                                <div class="progress-label">Goal Progress</div>
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" onclick="openEditModal()">
+                            <i class="fas fa-edit"></i>
+                            Edit Profile
+                        </button>
+                        <a href="{% url 'logout' %}" class="btn btn-danger">
+                            <i class="fas fa-sign-out-alt"></i>
+                            Logout
+                        </a>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Stats Grid -->
+            <section class="stats-grid">
+                <div class="stat-card">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-heartbeat"></i>
+                    </div>
+                    <div class="stat-label">Average Heart Rate</div>
+                    <div class="stat-value">75 <span class="unit">BPM</span></div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>5% from last week</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon secondary">
+                        <i class="fas fa-fire"></i>
+                    </div>
+                    <div class="stat-label">Calories Burned</div>
+                    <div class="stat-value">450 <span class="unit">kcal</span></div>
+                    <div class="stat-trend down">
+                        <i class="fas fa-arrow-down"></i>
+                        <span>2% from last week</span>
+                    </div>
+                </div>
+                
+                <div class="stat-card">
+                    <div class="stat-icon info">
+                        <i class="fas fa-walking"></i>
+                    </div>
+                    <div class="stat-label">Steps Taken</div>
+                    <div class="stat-value">12,345</div>
+                    <div class="stat-trend up">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>10% from last week</span>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Charts Grid -->
+            <section class="charts-grid">
+                <div class="chart-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-chart-line"></i>
+                            Workout Progress
+                        </h3>
+                        <div class="chart-actions">
+                            <button class="chart-btn">
+                                <i class="fas fa-sync-alt"></i>
+                            </button>
+                            <button class="chart-btn">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="chart-container">
+                        <img src="https://via.placeholder.com/800x300/f8faf8/4caf50?text=Workout+Progress+Chart" alt="Workout Progress Chart" class="chart-placeholder">
+                    </div>
+                </div>
+                
+                <div class="chart-card activity-card">
+                    <div class="chart-header">
+                        <h3 class="chart-title">
+                            <i class="fas fa-history"></i>
+                            Recent Activity
+                        </h3>
+                        <div class="chart-actions">
+                            <button class="chart-btn">
+                                <i class="fas fa-ellipsis-v"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="activity-list">
+                        <div class="activity-item">
+                            <div class="activity-icon workout">
+                                <i class="fas fa-dumbbell"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Completed Chest Workout</div>
+                                <div class="activity-time">
+                                    <i class="far fa-clock"></i>
+                                    <span>2 hours ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon achievement">
+                                <i class="fas fa-medal"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">New Personal Record: Bench Press</div>
+                                <div class="activity-time">
+                                    <i class="far fa-clock"></i>
+                                    <span>Yesterday</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon nutrition">
+                                <i class="fas fa-apple-alt"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Logged Nutrition Plan</div>
+                                <div class="activity-time">
+                                    <i class="far fa-clock"></i>
+                                    <span>2 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item">
+                            <div class="activity-icon workout">
+                                <i class="fas fa-running"></i>
+                            </div>
+                            <div class="activity-content">
+                                <div class="activity-title">Completed 5K Run</div>
+                                <div class="activity-time">
+                                    <i class="far fa-clock"></i>
+                                    <span>3 days ago</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Adding a Class Schedule Section after the Charts Grid -->
+            <section class="schedule-section">
+                <h3 class="section-title">
+                    <i class="fas fa-calendar-check"></i>
+                    Upcoming Classes
+                </h3>
+                
+                <div class="class-grid">
+                    <div class="class-card">
+                        <div class="class-time">
+                            <div class="day">MON</div>
+                            <div class="time">08:00</div>
+                        </div>
+                        <div class="class-info">
+                            <h4 class="class-name">Morning HIIT</h4>
+                            <div class="class-details">
+                                <span><i class="fas fa-map-marker-alt"></i> Studio A</span>
+                                <span><i class="fas fa-user"></i> John Trainer</span>
+                            </div>
+                        </div>
+                        <div class="class-action">
+                            <button class="btn-book">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="class-card">
+                        <div class="class-time">
+                            <div class="day">TUE</div>
+                            <div class="time">18:30</div>
+                        </div>
+                        <div class="class-info">
+                            <h4 class="class-name">Yoga Flow</h4>
+                            <div class="class-details">
+                                <span><i class="fas fa-map-marker-alt"></i> Studio B</span>
+                                <span><i class="fas fa-user"></i> Sarah Smith</span>
+                            </div>
+                        </div>
+                        <div class="class-action">
+                            <button class="btn-book">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="class-card">
+                        <div class="class-time">
+                            <div class="day">WED</div>
+                            <div class="time">12:15</div>
+                        </div>
+                        <div class="class-info">
+                            <h4 class="class-name">Strength Training</h4>
+                            <div class="class-details">
+                                <span><i class="fas fa-map-marker-alt"></i> Weights Area</span>
+                                <span><i class="fas fa-user"></i> Mike Strong</span>
+                            </div>
+                        </div>
+                        <div class="class-action">
+                            <button class="btn-book">
+                                <i class="fas fa-plus"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Add a Nutrition Summary Section -->
+            <section class="nutrition-summary">
+                <h3 class="section-title">
+                    <i class="fas fa-utensils"></i>
+                    Daily Nutrition Summary
+                </h3>
+                
+                <div class="nutrition-grid">
+                    <div class="nutrition-card">
+                        <div class="nutrition-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="nutrition-data">
+                            <div class="nutrition-value">1,850 <span>kcal</span></div>
+                            <div class="nutrition-label">Calories</div>
+                            <div class="nutrition-progress">
+                                <div class="nutrition-bar" style="width: 65%"></div>
+                            </div>
+                            <div class="nutrition-target">2,200 daily target</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nutrition-card">
+                        <div class="nutrition-icon">
+                            <i class="fas fa-drumstick-bite"></i>
+                        </div>
+                        <div class="nutrition-data">
+                            <div class="nutrition-value">120 <span>g</span></div>
+                            <div class="nutrition-label">Protein</div>
+                            <div class="nutrition-progress">
+                                <div class="nutrition-bar" style="width: 75%"></div>
+                            </div>
+                            <div class="nutrition-target">160g daily target</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nutrition-card">
+                        <div class="nutrition-icon">
+                            <i class="fas fa-bread-slice"></i>
+                        </div>
+                        <div class="nutrition-data">
+                            <div class="nutrition-value">210 <span>g</span></div>
+                            <div class="nutrition-label">Carbs</div>
+                            <div class="nutrition-progress">
+                                <div class="nutrition-bar" style="width: 70%"></div>
+                            </div>
+                            <div class="nutrition-target">300g daily target</div>
+                        </div>
+                    </div>
+                    
+                    <div class="nutrition-card">
+                        <div class="nutrition-icon">
+                            <i class="fas fa-oil-can"></i>
+                        </div>
+                        <div class="nutrition-data">
+                            <div class="nutrition-value">45 <span>g</span></div>
+                            <div class="nutrition-label">Fats</div>
+                            <div class="nutrition-progress">
+                                <div class="nutrition-bar" style="width: 60%"></div>
+                            </div>
+                            <div class="nutrition-target">70g daily target</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Workout Plan Section -->
+            <section class="workout-plan-section">
+                <h3 class="section-title">
+                    <i class="fas fa-calendar-week"></i>
+                    Weekly Workout Plan
+                </h3>
+                
+                <div class="workout-plan-grid">
+                    <div class="workout-day-card">
+                        <div class="workout-day-header">
+                            <span class="day-name">Monday</span>
+                            <span class="workout-type">Upper Body</span>
+                        </div>
+                        <ul class="workout-exercises">
+                            <li class="exercise-item">
+                                <i class="fas fa-dumbbell"></i>
+                                <span>Bench Press</span>
+                                <span class="exercise-detail">4 sets × 10 reps</span>
+                            </li>
+                            <li class="exercise-item">
+                                <i class="fas fa-dumbbell"></i>
+                                <span>Shoulder Press</span>
+                                <span class="exercise-detail">3 sets × 12 reps</span>
+                            </li>
+                            <li class="exercise-item">
+                                <i class="fas fa-dumbbell"></i>
+                                <span>Tricep Extensions</span>
+                                <span class="exercise-detail">3 sets × 15 reps</span>
+                            </li>
+                        </ul>
+                        <button class="btn-workout-details">
+                            <i class="fas fa-arrow-right"></i>
+                        </button>
+                    </div>
+                    
+                    <!-- Additional workout day cards -->
+                </div>
+            </section>
+            
+            <!-- Achievements Section -->
+            <section class="achievements-section">
+                <h3 class="section-title">
+                    <i class="fas fa-trophy"></i>
+                    Your Achievements
+                </h3>
+                
+                <div class="achievements-grid">
+                    <div class="achievement-card unlocked">
+                        <div class="achievement-icon">
+                            <i class="fas fa-fire"></i>
+                        </div>
+                        <div class="achievement-info">
+                            <div class="achievement-name">Calorie Crusher</div>
+                            <div class="achievement-desc">Burn 5,000 calories in a week</div>
+                        </div>
+                        <div class="achievement-date">Jul 15</div>
+                    </div>
+                    
+                    <div class="achievement-card unlocked">
+                        <div class="achievement-icon">
+                            <i class="fas fa-shoe-prints"></i>
+                        </div>
+                        <div class="achievement-info">
+                            <div class="achievement-name">Step Master</div>
+                            <div class="achievement-desc">Reach 100,000 steps in a week</div>
+                        </div>
+                        <div class="achievement-date">Aug 2</div>
+                    </div>
+                    
+                    <div class="achievement-card locked">
+                        <div class="achievement-icon">
+                            <i class="fas fa-dumbbell"></i>
+                        </div>
+                        <div class="achievement-info">
+                            <div class="achievement-name">Gym Warrior</div>
+                            <div class="achievement-desc">Complete 20 workouts in a month</div>
+                            <div class="achievement-progress">
+                                <div class="progress-bar" style="width: 65%"></div>
+                                <span>13/20</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Tips Section -->
+            <section class="tips-section">
+                <h3 class="section-title">
+                    <i class="fas fa-lightbulb"></i>
+                    Fitness Tips
+                </h3>
+                
+                <div class="tips-carousel">
+                    <div class="tip-card active" id="tip-1">
+                        <div class="tip-image">
+                            <img src="https://images.unsplash.com/photo-1550259979-ed79b48d2a30?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Stay Hydrated">
+                        </div>
+                        <div class="tip-content">
+                            <h4 class="tip-title">Stay Hydrated</h4>
+                            <p class="tip-text">Drinking water before, during, and after your workout helps maintain energy levels and improves performance. Try to consume at least 16-20 ounces of water 2-3 hours before exercise.</p>
+                            <a href="#" class="tip-link">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-card" id="tip-2">
+                        <div class="tip-image">
+                            <img src="https://images.unsplash.com/photo-1532465614-6cc8d45f647f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Proper Nutrition">
+                        </div>
+                        <div class="tip-content">
+                            <h4 class="tip-title">Protein After Workout</h4>
+                            <p class="tip-text">Consuming protein within 30 minutes after your workout helps with muscle recovery and growth. Aim for 20-30g of high-quality protein to maximize results.</p>
+                            <a href="#" class="tip-link">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="tip-card" id="tip-3">
+                        <div class="tip-image">
+                            <img src="https://images.unsplash.com/photo-1552693673-1bf958298935?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Rest and Recovery">
+                        </div>
+                        <div class="tip-content">
+                            <h4 class="tip-title">Rest Days Matter</h4>
+                            <p class="tip-text">Giving your body time to recover is just as important as exercise. Rest days help prevent injury and improve performance. Aim for 1-2 rest days per week in your training schedule.</p>
+                            <a href="#" class="tip-link">Read more <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                    
+                    <div class="carousel-controls">
+                        <button class="carousel-btn prev" id="tip-prev-btn"><i class="fas fa-chevron-left"></i></button>
+                        <div class="carousel-dots" id="tip-dots">
+                            <span class="dot active" data-index="0"></span>
+                            <span class="dot" data-index="1"></span>
+                            <span class="dot" data-index="2"></span>
+                        </div>
+                        <button class="carousel-btn next" id="tip-next-btn"><i class="fas fa-chevron-right"></i></button>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- Share Progress Button -->
+            <section class="share-section">
+                <div class="share-container">
+                    <button class="btn-share" id="shareProgressBtn">
+                        <i class="fas fa-share-alt"></i>
+                        Share Progress
+                    </button>
+                    <div class="share-options" id="shareOptions">
+                        <a href="#" class="share-option facebook">
+                            <i class="fab fa-facebook-f"></i>
+                            Facebook
+                        </a>
+                        <a href="#" class="share-option twitter">
+                            <i class="fab fa-twitter"></i>
+                            Twitter
+                        </a>
+                        <a href="#" class="share-option instagram">
+                            <i class="fab fa-instagram"></i>
+                            Instagram
+                        </a>
+                        <a href="#" class="share-option whatsapp">
+                            <i class="fab fa-whatsapp"></i>
+                            WhatsApp
+                        </a>
+                    </div>
+                </div>
+            </section>
+        </main>
+        
+        <!-- Edit Profile Modal -->
+        <div class="modal-overlay" id="editModal">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3 class="modal-title">
+                        <i class="fas fa-user-edit"></i>
+                        Edit Profile
+                    </h3>
+                    <button class="modal-close" onclick="closeEditModal()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="modal-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="message {% if message.tags == 'success' %}success{% else %}error{% endif %}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <form method="POST" action="{% url 'update_profile' %}" class="edit-form">
+                        {% csrf_token %}
+                        <div class="form-group">
+                            <label for="full_name" class="form-label">
+                                <i class="fas fa-user"></i>
+                                Full Name
+                            </label>
+                            <input type="text" id="full_name" name="full_name" value="{{ user.full_name }}" class="form-control" required>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="location" class="form-label">
+                                <i class="fas fa-map-marker-alt"></i>
+                                Location
+                            </label>
+                            <input type="text" id="location" name="location" value="{{ user.location|default:'' }}" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="fitness_goal" class="form-label">
+                                <i class="fas fa-bullseye"></i>
+                                Fitness Goal
+                            </label>
+                            <input type="text" id="fitness_goal" name="fitness_goal" value="{{ user.fitness_goal|default:'' }}" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                New Password (optional)
+                            </label>
+                            <input type="password" id="password" name="password" placeholder="Enter new password" class="form-control">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="confirm_password" class="form-label">
+                                <i class="fas fa-lock"></i>
+                                Confirm Password
+                            </label>
+                            <input type="password" id="confirm_password" name="confirm_password" placeholder="Confirm new password" class="form-control">
+                        </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline" onclick="closeEditModal()">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Save Changes</button>
+                    </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Menu Button -->
+        <button class="mobile-menu-btn" id="mobileMenuBtn">
+            <i class="fas fa-bars"></i>
+        </button>
+    </div>
+
+    <script>
+        // Open and close edit modal
+        function openEditModal() {
+            document.getElementById('editModal').classList.add('active');
+        }
+        
+        function closeEditModal() {
+            document.getElementById('editModal').classList.remove('active');
+        }
+        
+        // Handle image preview and upload
+        document.getElementById('profile_image').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    document.querySelector('.profile-avatar-image').src = e.target.result;
+                    document.querySelector('.user-avatar').src = e.target.result;
+                };
+                reader.readAsDataURL(file);
+                
+                // Submit the image to the server
+                const formData = new FormData();
+                formData.append('profile_image', file);
+                fetch('{% url "update_profile" %}', {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'X-CSRFToken': '{{ csrf_token }}'
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.profile_image_url) {
+                        document.querySelector('.profile-avatar-image').src = data.profile_image_url;
+                        document.querySelector('.user-avatar').src = data.profile_image_url;
+                    }
+                })
+                .catch(error => console.error('Error uploading image:', error));
+            }
+        });
+        
+        // Mobile menu toggle
+        const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+        const sidebar = document.getElementById('sidebar');
+        
+        mobileMenuBtn.addEventListener('click', function() {
+            sidebar.classList.toggle('open');
+        });
+        
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function(event) {
+            if (window.innerWidth <= 768 && sidebar.classList.contains('open') && 
+                !sidebar.contains(event.target) && event.target !== mobileMenuBtn) {
+                sidebar.classList.remove('open');
+            }
+        });
+        
+        // Real-time date and time update
+        function updateDateTime() {
+            const now = new Date();
+            
+            // Format date: Saturday, 22 March 2024
+            const options = { 
+                weekday: 'long', 
+                day: 'numeric', 
+                month: 'long', 
+                year: 'numeric',
+                timeZone: 'Asia/Kolkata' // IST timezone (Indian Standard Time)
+            };
+            const dateStr = now.toLocaleDateString('en-IN', options);
+            
+            // Format time: 12:00:00 (IST)
+            const timeStr = now.toLocaleTimeString('en-IN', { 
+                hour12: true,
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit',
+                timeZone: 'Asia/Kolkata'
+            });
+            
+            document.getElementById('current-date').textContent = dateStr;
+            document.getElementById('current-time').textContent = timeStr + ' IST';
+        }
+        
+        // Update time immediately and then every second
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+        
+        // Fitness Tips Carousel
+        const tipCards = document.querySelectorAll('.tip-card');
+        const tipDots = document.querySelectorAll('.carousel-dots .dot');
+        const tipPrevBtn = document.getElementById('tip-prev-btn');
+        const tipNextBtn = document.getElementById('tip-next-btn');
+        let currentTipIndex = 0;
+        
+        function showTip(index) {
+            // Hide all tips
+            tipCards.forEach(card => {
+                card.style.display = 'none';
+                card.classList.remove('active');
+            });
+            
+            // Remove active class from all dots
+            tipDots.forEach(dot => {
+                dot.classList.remove('active');
+            });
+            
+            // Show the selected tip and activate corresponding dot
+            tipCards[index].style.display = 'flex';
+            tipCards[index].classList.add('active');
+            tipDots[index].classList.add('active');
+            
+            // Update current index
+            currentTipIndex = index;
+        }
+        
+        // Initialize - show first tip
+        showTip(0);
+        
+        // Event listeners for dots
+        tipDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                showTip(index);
+            });
+        });
+        
+        // Previous button
+        tipPrevBtn.addEventListener('click', () => {
+            let newIndex = currentTipIndex - 1;
+            if (newIndex < 0) {
+                newIndex = tipCards.length - 1;
+            }
+            showTip(newIndex);
+        });
+        
+        // Next button
+        tipNextBtn.addEventListener('click', () => {
+            let newIndex = currentTipIndex + 1;
+            if (newIndex >= tipCards.length) {
+                newIndex = 0;
+            }
+            showTip(newIndex);
+        });
+        
+        // Auto-advance tips every 7 seconds
+        setInterval(() => {
+            let newIndex = currentTipIndex + 1;
+            if (newIndex >= tipCards.length) {
+                newIndex = 0;
+            }
+            showTip(newIndex);
+        }, 7000);
+        
+        // Share Progress Button
+        const shareProgressBtn = document.getElementById('shareProgressBtn');
+        const shareOptions = document.getElementById('shareOptions');
+        
+        shareProgressBtn.addEventListener('click', function() {
+            shareOptions.classList.toggle('active');
+        });
+        
+        // Close share options when clicking outside
+        document.addEventListener('click', function(event) {
+            if (!shareProgressBtn.contains(event.target) && !shareOptions.contains(event.target)) {
+                shareOptions.classList.remove('active');
+            }
+        });
+        
+        // Social sharing functionality
+        document.querySelectorAll('.share-option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                e.preventDefault();
+                
+                const platform = this.classList[1]; // facebook, twitter, etc.
+                const message = "Check out my fitness progress on FitnessClub! 💪";
+                const url = window.location.href;
+                
+                let shareUrl = '';
+                
+                switch(platform) {
+                    case 'facebook':
+                        shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}&quote=${message}`;
+                        break;
+                    case 'twitter':
+                        shareUrl = `https://twitter.com/intent/tweet?text=${message}&url=${url}`;
+                        break;
+                    case 'whatsapp':
+                        shareUrl = `https://wa.me/?text=${message} ${url}`;
+                        break;
+                    case 'instagram':
+                        // Instagram doesn't support direct sharing via URL
+                        alert("Instagram sharing is not directly supported. You can take a screenshot and share on Instagram!");
+                        return;
+                }
+                
+                // Open share dialog
+                if (shareUrl) {
+                    window.open(shareUrl, '_blank', 'width=600,height=400');
+                }
+                
+                // Hide the share options
+                shareOptions.classList.remove('active');
+            });
+        });
+
+        // Improved sharing functionality
+        document.querySelectorAll('.share-button').forEach(button => {
+            const shareOptions = document.createElement('div');
+            shareOptions.className = 'share-options';
+            shareOptions.innerHTML = `
+                <div class="share-option" data-platform="facebook">
+                    <i class="fab fa-facebook"></i> Facebook
+                </div>
+                <div class="share-option" data-platform="twitter">
+                    <i class="fab fa-twitter"></i> Twitter
+                </div>
+                <div class="share-option" data-platform="linkedin">
+                    <i class="fab fa-linkedin"></i> LinkedIn
+                </div>
+                <div class="share-option" data-platform="whatsapp">
+                    <i class="fab fa-whatsapp"></i> WhatsApp
+                </div>
+                <div class="share-option" data-platform="instagram">
+                    <i class="fab fa-instagram"></i> Instagram
+                </div>
+                <div class="share-option" data-platform="email">
+                    <i class="far fa-envelope"></i> Email
+                </div>
+                <div class="share-option" data-platform="copy">
+                    <i class="far fa-copy"></i> Copy Link
+                </div>
+            `;
+            
+            document.body.appendChild(shareOptions);
+            shareOptions.style.display = 'none';
+            
+            // Toggle share options
+            button.addEventListener('click', (e) => {
+                e.stopPropagation();
+                
+                // Position the share options near the button
+                const rect = button.getBoundingClientRect();
+                shareOptions.style.top = `${rect.bottom + window.scrollY + 5}px`;
+                shareOptions.style.left = `${rect.left + window.scrollX}px`;
+                
+                // Toggle display
+                if (shareOptions.style.display === 'none') {
+                    // Hide any other open share options first
+                    document.querySelectorAll('.share-options').forEach(el => {
+                        el.style.display = 'none';
+                    });
+                    shareOptions.style.display = 'block';
+                } else {
+                    shareOptions.style.display = 'none';
+                }
+            });
+            
+            // Close share options when clicking outside
+            document.addEventListener('click', () => {
+                shareOptions.style.display = 'none';
+            });
+            
+            // Prevent closing when clicking inside the options
+            shareOptions.addEventListener('click', (e) => {
+                e.stopPropagation();
+            });
+            
+            // Create a function to show modal
+            function showModal(title, content, actions) {
+                const modal = document.createElement('div');
+                modal.className = 'share-modal';
+                
+                modal.innerHTML = `
+                    <div class="share-modal-content">
+                        <h3>${title}</h3>
+                        <div>${content}</div>
+                        <div class="share-modal-buttons">
+                            ${actions}
+                        </div>
+                    </div>
+                `;
+                
+                document.body.appendChild(modal);
+                
+                // Close modal when clicking outside
+                modal.addEventListener('click', (e) => {
+                    if (e.target === modal) {
+                        document.body.removeChild(modal);
+                    }
+                });
+                
+                return modal;
+            }
+            
+            // Function to copy to clipboard
+            function copyToClipboard(text) {
+                return new Promise((resolve, reject) => {
+                    try {
+                        if (navigator.clipboard) {
+                            navigator.clipboard.writeText(text)
+                                .then(() => resolve(true))
+                                .catch(err => {
+                                    console.error('Could not copy text: ', err);
+                                    reject(err);
+                                });
+                        } else {
+                            // Fallback for older browsers
+                            const textarea = document.createElement('textarea');
+                            textarea.value = text;
+                            textarea.style.position = 'fixed';  // Avoid scrolling to bottom
+                            document.body.appendChild(textarea);
+                            textarea.focus();
+                            textarea.select();
+                            
+                            const successful = document.execCommand('copy');
+                            document.body.removeChild(textarea);
+                            
+                            if (successful) {
+                                resolve(true);
+                            } else {
+                                reject(new Error('execCommand returned false'));
+                            }
+                        }
+                    } catch (err) {
+                        console.error('Failed to copy: ', err);
+                        reject(err);
+                    }
+                });
+            }
+            
+            // Function to track sharing (you can connect this to your analytics)
+            function trackShare(platform) {
+                console.log(`Shared via ${platform}`);
+                // Implement your analytics tracking here
+            }
+            
+            // Handle share option clicks
+            shareOptions.querySelectorAll('.share-option').forEach(option => {
+                option.addEventListener('click', async () => {
+                    const platform = option.getAttribute('data-platform');
+                    const url = encodeURIComponent(window.location.href);
+                    const title = encodeURIComponent(document.title);
+                    const message = encodeURIComponent(`Check out this dashboard: ${document.title}`);
+                    let shareUrl = '';
+                    
+                    try {
+                        switch (platform) {
+                            case 'facebook':
+                                shareUrl = `https://www.facebook.com/sharer/sharer.php?u=${url}`;
+                                break;
+                            case 'twitter':
+                                shareUrl = `https://twitter.com/intent/tweet?url=${url}&text=${message}`;
+                                break;
+                            case 'linkedin':
+                                shareUrl = `https://www.linkedin.com/sharing/share-offsite/?url=${url}`;
+                                break;
+                            case 'whatsapp':
+                                shareUrl = `https://wa.me/?text=${message} ${url}`;
+                                break;
+                            case 'email':
+                                shareUrl = `mailto:?subject=${title}&body=${message} ${url}`;
+                                break;
+                            case 'instagram':
+                                // Instagram doesn't support direct sharing via URL
+                                const instagramModal = showModal(
+                                    'Share to Instagram',
+                                    `<p>Instagram doesn't support direct URL sharing. You can:</p>
+                                    <ul>
+                                        <li>Take a screenshot and share on Instagram</li>
+                                        <li>Copy the link and add to your bio or story</li>
+                                    </ul>`,
+                                    `<button class="copy-link primary-button">Copy Link</button>
+                                    <button class="close-modal">Close</button>`
+                                );
+                                
+                                instagramModal.querySelector('.copy-link').addEventListener('click', async () => {
+                                    try {
+                                        await copyToClipboard(window.location.href);
+                                        alert('Link copied to clipboard!');
+                                    } catch (err) {
+                                        alert('Failed to copy link. Please copy it manually.');
+                                    }
+                                });
+                                
+                                instagramModal.querySelector('.close-modal').addEventListener('click', () => {
+                                    document.body.removeChild(instagramModal);
+                                });
+                                
+                                trackShare('instagram');
+                                return;
+                                
+                            case 'copy':
+                                try {
+                                    await copyToClipboard(window.location.href);
+                                    alert('Link copied to clipboard!');
+                                    trackShare('copy');
+                                } catch (err) {
+                                    alert('Failed to copy link. Please copy it manually.');
+                                }
+                                shareOptions.style.display = 'none';
+                                return;
+                        }
+                        
+                        // Open share dialog with error handling
+                        if (shareUrl) {
+                            const shareWindow = window.open(shareUrl, '_blank', 'width=600,height=400');
+                            if (!shareWindow || shareWindow.closed || typeof shareWindow.closed === 'undefined') {
+                                // Popup was blocked
+                                showModal(
+                                    'Popup Blocked',
+                                    '<p>The share window was blocked by your browser. Please allow popups for this site or copy the link manually.</p>',
+                                    `<button class="copy-link primary-button">Copy Link</button>
+                                    <button class="close-modal">Close</button>`
+                                );
+                            } else {
+                                trackShare(platform);
+                            }
+                        }
+                        
+                    } catch (error) {
+                        console.error("Sharing error:", error);
+                        alert("There was an error while sharing. Please try again.");
+                    }
+                    
+                    // Hide the share options
+                    shareOptions.style.display = 'none';
+                });
+            });
+        });
+        
+        // Check if the device is mobile for better touch handling
+        const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+        
+        if (isMobile) {
+            // Add additional mobile-specific event handlers if needed
+            // For example, handle touch events differently or adjust UI elements
+        }
+    </script>
+</body>
+</html>
