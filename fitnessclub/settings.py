@@ -13,12 +13,17 @@ from decouple import config
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 # SECURITY WARNING: Keep the secret key secret in production!
-SECRET_KEY = os.getenv('SECRET_KEY', 'p3rj8ptb$y0#wx9vl3z)b3qzh1l5=!=^2934_%ikb9-*4fjlu=')
+SECRET_KEY = os.environ.get('SECRET_KEY', 'p3rj8ptb$y0#wx9vl3z)b3qzh1l5=!=^2934_%ikb9-*4fjlu=')
 
 # SECURITY WARNING: Don't run with debug turned on in production!
-DEBUG = False
+DEBUG = os.environ.get('DEBUG', 'False').lower() == 'true'
 
 ALLOWED_HOSTS = ['localhost', '127.0.0.1', 'fitnessclub.onrender.com']
+
+# Add this to handle the RENDER_EXTERNAL_HOSTNAME
+RENDER_EXTERNAL_HOSTNAME = os.environ.get('RENDER_EXTERNAL_HOSTNAME')
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
 
 
 
