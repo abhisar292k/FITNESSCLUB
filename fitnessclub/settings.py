@@ -15,7 +15,8 @@ SECRET_KEY = os.getenv('SECRET_KEY', 'p3rj8ptb$y0#wx9vl3z)b3qzh1l5=!=^2934_%ikb9
 # SECURITY WARNING: Don't run with debug turned on in production!
 DEBUG = False
 
-ALLOWED_HOSTS = ['your-render-app.onrender.com', 'localhost']
+ALLOWED_HOSTS = ['your-app-name.onrender.com', 'localhost', '127.0.0.1']
+
 
 # Application definition
 INSTALLED_APPS = [
